@@ -27,10 +27,6 @@ namespace msa {
                 
                 void setup();
                 
-//                void loadXml();
-//                void saveXml();
-//                void setAutoSave(bool b);
-                void setAlignRight(bool b);
                 void setDefaultKeys(bool b);
                 
                 void setDraw(bool b);
@@ -43,19 +39,26 @@ namespace msa {
                 void prevPage();
                 void setPage(int i);				// 1 based index of page
                 void setPage(string name);
-                void setForceHeight(int h);
-                void autoHeight();
-                
+
                 void nextPageWithBlank();		// cycles through pages, and closes after last page
                 
-                Panel& page(int i);				// 1 based index of page
-                Panel& page(string name);			// returns page by name
-                Panel& currentPage();				// returns current page
+                int getNumPages();
+                Panel& getPage(int i);				// 1 based index of page
+                Panel& getPage(string name);			// returns page by name
+                Panel& getCurrentPage();				// returns current page
 //                vector <Panel*>&	getPages();
                 
+                // create and add a page with given name
                 Panel& addPage(string name = "");
                 
-                void addParameters(ParameterGroup &parameters);
+                // create and add a page from the given parameter group
+                Panel& addPage(ParameterGroup &parameters);
+                
+                // append given parameter group to current page
+                Panel& addParameters(ParameterGroup &parameters);
+                
+                // add a page
+                Panel& addPanel(Panel *page);
                 
 
                 //--------------------------------------------------------------
@@ -81,31 +84,16 @@ namespace msa {
 
                 
             protected:
-                bool        isSetup;
-                bool        doAutoEvents;
-                bool        eventsAreRegistered;
-
-                bool		doAutoSave;
-                
-                bool		alignRight;
-                bool		doDefaultKeys;
-//                bool		doSave;//, doSaveBackup;
-                bool		changePage;
-                int			forceHeight;
-                int			currentPageIndex;			// 1 based index of page (0 is for global controls)
-                
-                bool		doDraw;
-                float		border;
-                
-                BoolButton				*titleButton;
-                vector<PanelPtr>		pages;				// 0 is for headerPage
+                bool    isSetup;
+                bool    doAutoEvents;
+                bool    eventsAreRegistered;
+                bool    doDefaultKeys;
+                int     currentPageIndex;
+                bool    doDraw;
+                vector<PanelPtr> pages;
                 
                 void addListeners();
                 void removeListeners();
-                
-                void drawFocus(float x, float y);
-                
-                ParameterGroup paramsRoot;
             };
             
         }

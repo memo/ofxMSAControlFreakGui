@@ -31,6 +31,7 @@ namespace msa {
                 friend class Gui;
                 friend class LayoutManager;
                 
+                Panel(Panel *parent, string s);
                 Panel(Panel *parent, Parameter *p);
                 ~Panel();
                 
@@ -47,22 +48,22 @@ namespace msa {
                 void keyReleased(ofKeyEventArgs &e);
 //                vector<ControlPtr>&	getControls();
                 
-                void addParameter(Parameter *p);
-                void addParameters(ParameterGroup &parameters);
-                
             protected:
+                bool isOpen;
+                
+                void init();
+                
                 float heightScale;              // height scale of this panel
                 float getParentHeightScale();   // height scale of parent
                 float getHeightScale();         // inherited height scale
                 
-                bool isOpen;
                 void showPanel(bool bOpen, bool bRecursive = false);
                 
                 LayoutManagerPtr layoutManager;
                 
                 vector<ControlPtr> controls;    // all controls
-                Control         *activeControl; // currently active control (only this control receives events)
-                BoolTitle       *titleButton;   // button which controls the title of the panel
+                Control         *pactiveControl; // currently active control (only this control receives events)
+                BoolTitle       *ptitleButton;   // button which controls the title of the panel
 
                 
                 Control			&addControl(Control *control);
@@ -79,6 +80,9 @@ namespace msa {
                 SliderFloat		&addSliderFloat(Parameter *p);
                 BoolTitle		&addTitle(Parameter *p);
                 BoolToggle		&addToggle(Parameter *p);
+                
+                void addParameter(Parameter *p);
+                void addParameters(ParameterGroup &parameters);
             };
             
             typedef std::tr1::shared_ptr<Panel> PanelPtr;

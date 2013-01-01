@@ -16,6 +16,12 @@ namespace msa {
                 //--------------------------------------------------------------
                 BoolBase(Panel *parent, Parameter *p) : ControlParameterT<ParameterBool>(parent, p) {
                 }
+
+                //--------------------------------------------------------------
+                void setup() {
+                    width   = getConfig().layout.columnWidth;
+                    height  = getConfig().layout.buttonHeight;
+                }
                 
                 //--------------------------------------------------------------
                 void toggle() {

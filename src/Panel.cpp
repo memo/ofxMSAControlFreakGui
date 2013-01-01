@@ -8,14 +8,16 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
+            Panel::Panel(Panel *parent, string s) : ControlParameterT<ParameterGroup>(parent, s) {
+//                pconfig = config;
+                init();
+            }
+            
             Panel::Panel(Panel *parent, Parameter *p) : ControlParameterT<ParameterGroup>(parent, p) {
-                disableAllEvents();
-                width = 0;
-                height = 0;
-                activeControl = NULL;
-                isOpen = false;
+//                pconfig = config;
+                init();
                 
-                heightScale = 1.0;
+                addParameters(dynamic_cast<ParameterGroup&>(*p));
             }
             
             //--------------------------------------------------------------
@@ -23,6 +25,16 @@ namespace msa {
                 // delete all controls
             }
             
+            //--------------------------------------------------------------
+            void Panel::init() {
+                disableAllEvents();
+                width = 0;
+                height = 0;
+                pactiveControl = NULL;
+                isOpen = false;
+                heightScale = 1.0;
+//                _proot = getParent() ? getParent()->getRoot() : this;
+            }
             
             //--------------------------------------------------------------
             float Panel::getParentHeightScale() {
@@ -37,7 +49,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Panel::showPanel(bool bOpen, bool bRecursive) {
                 isOpen = bOpen;
-                titleButton->getParameter().setValue(bOpen);
+                ptitleButton->getParameter().setValue(bOpen);
                 if(bRecursive) {
                     for(int i=0; i<controls.size(); i++) {
                         Panel *p = dynamic_cast<Panel*>(controls[i].get());
@@ -124,7 +136,7 @@ namespace msa {
                 ParameterGroup *pc = dynamic_cast<ParameterGroup*>(p);
                 if(pc && pc->getNumParams() > 0) {
                     Panel &panel = addPanel(pc);
-                    panel.addParameters(*pc);
+//                    panel.addParameters(*pc);
                 }
                 
                 switch(p->getType()) {
@@ -154,9 +166,9 @@ namespace msa {
                 
 //                if(!_config) setup();
                 
-                titleButton = new BoolTitle(this, parameter->getName());
-                titleButton->getParameter().setValue(true);
-                addControl(titleButton);
+                ptitleButton = new BoolTitle(this, parameter->getName());
+                ptitleButton->getParameter().setValue(true);
+                addControl(ptitleButton);
                 int np = parameters.getNumParams();
                 for(int i=0; i<np; i++) {
                     addParameter(&parameters.getParameter(i));
@@ -166,14 +178,14 @@ namespace msa {
             //--------------------------------------------------------------
             void Panel::setActiveControl(Control* control) {
                 // if old control exists, put it at the back
-                if(activeControl) activeControl->z = 0;
+                if(pactiveControl) pactiveControl->z = 0;
                 
-                activeControl = control;
+                pactiveControl = control;
                 
                 // put new active control at the front
-                if(activeControl) {
-                    activeControl->z = -1000;
-//                    ofLogNotice() << "setting active control [" << activeControl->name << "] for panel [" << name;
+                if(pactiveControl) {
+                    pactiveControl->z = -1000;
+//                    ofLogNotice() << "setting active control [" << pactiveControl->name << "] for panel [" << name;
 //                } else {
 //                    ofLogNotice() << "setting active control NULL for panel [" << name;
                 }
@@ -181,7 +193,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Control* Panel::getActiveControl() {
-                return activeControl;
+                return pactiveControl;
             }
             
             //--------------------------------------------------------------
@@ -191,33 +203,33 @@ namespace msa {
             
             //--------------------------------------------------------------
 //            bool Panel::getActive() {
-//                bool b = activeControl == titleButton;//activeControl != NULL;
+//                bool b = pactiveControl == ptitleButton;//pactiveControl != NULL;
 //                return parent ? b | parent->getActive() : b;
 //            }
 
             
             //--------------------------------------------------------------
             void Panel::update() {
-                if(controls[0]) controls[0]->update();
+                if(controls.size()>0 && controls[0]) controls[0]->update();
                 if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->update();
             }
             
             //--------------------------------------------------------------
             void Panel::mouseMoved(ofMouseEventArgs &e) {
-                if(activeControl)
-                    activeControl->_mouseMoved(e);
+                if(pactiveControl)
+                    pactiveControl->_mouseMoved(e);
                 else {
-                    if(controls[0]) controls[0]->_mouseMoved(e);
+                    if(controls.size()>0 && controls[0]) controls[0]->_mouseMoved(e);
                     if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->_mouseMoved(e);
                 }
             }
             
             //--------------------------------------------------------------
             void Panel::mousePressed(ofMouseEventArgs &e) {
-                if(activeControl)
-                    activeControl->_mousePressed(e);
+                if(pactiveControl)
+                    pactiveControl->_mousePressed(e);
                 else {
-                    if(controls[0]) {
+                    if(controls.size()>0 && controls[0]) {
                         controls[0]->_mousePressed(e);
                         if(controls[0]->hitTest(e.x, e.y)) getRoot()->setActiveControl(controls[0].get());
                     }
@@ -230,20 +242,20 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::mouseDragged(ofMouseEventArgs &e) {
-                if(activeControl)
-                    activeControl->_mouseDragged(e);
+                if(pactiveControl)
+                    pactiveControl->_mouseDragged(e);
                 else {
-                    if(controls[0]) controls[0]->_mouseDragged(e);
+                    if(controls.size()>0 && controls[0]) controls[0]->_mouseDragged(e);
                     if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->_mouseDragged(e);
                 }
             }
             
             //--------------------------------------------------------------
             void Panel::mouseReleased(ofMouseEventArgs &e) {
-                if(activeControl)
-                    activeControl->_mouseReleased(e);
+                if(pactiveControl)
+                    pactiveControl->_mouseReleased(e);
                 else {
-                    if(controls[0]) controls[0]->_mouseReleased(e);
+                    if(controls.size()>0 && controls[0]) controls[0]->_mouseReleased(e);
                     if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->_mouseReleased(e);
                 }
                 

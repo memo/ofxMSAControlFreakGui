@@ -8,8 +8,17 @@ namespace msa {
             
             class FPSCounter : public ControlParameterT<Parameter> {
             public:
+                
+                //--------------------------------------------------------------
                 FPSCounter(Panel *parent) : ControlParameterT<Parameter>(parent, NULL) {}
                 
+                //--------------------------------------------------------------
+                void setup() {
+                    width   = getConfig().layout.columnWidth;
+                    height  = getConfig().layout.buttonHeight;
+                }
+
+                //--------------------------------------------------------------
                 void onDraw() {
                     glPushMatrix();
                     glTranslatef(x, y, 0);

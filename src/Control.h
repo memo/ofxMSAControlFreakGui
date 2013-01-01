@@ -31,7 +31,7 @@ namespace msa {
                 Control& setNewColumn(bool b);
                 
                 Panel *getParent();     // parent panel
-                Panel *getRoot();       // root panel
+                Panel *getRoot(bool bUpdate = false);       // root panel
                 int getDepth();         // how deep in the heirarchy it is (how many levels deep)
                 bool getActive();       // whether the control is active or not
                 bool getParentActive(); // whether any of the controls parents are active or not
@@ -78,10 +78,12 @@ namespace msa {
                 
                 virtual void draw();
                 
-            private:
-                Config  *_config;
-                Panel   *_parent;
+              private:
+                Panel   *_pparent;
+                Panel   *_proot;
+                Config  *_pconfig;
                 float    _alpha;
+                
 
 //            private:
             };

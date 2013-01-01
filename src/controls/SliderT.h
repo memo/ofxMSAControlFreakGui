@@ -14,6 +14,12 @@ namespace msa {
                 SliderT(Panel *parent, Parameter *p) : ControlParameterT<ParameterSingleValueT<T> >(parent, p) {}
 
                 //--------------------------------------------------------------
+                void setup() {
+                    this->width   = this->getConfig().layout.columnWidth;
+                    this->height  = this->getConfig().layout.buttonHeight;
+                }
+
+                //--------------------------------------------------------------
                 void inc(T amount) {
                     if(!this->parameter) return;
                     this->parameter->inc(amount);

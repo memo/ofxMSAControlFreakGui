@@ -9,8 +9,16 @@ namespace msa {
             class DropdownList : public ControlParameterT<ParameterNamedIndex> {
             public:
                 
+                //--------------------------------------------------------------
                 DropdownList(Panel *parent, Parameter *p) : ControlParameterT<ParameterNamedIndex>(parent, p) {}
 
+                //--------------------------------------------------------------
+                void setup() {
+                    width   = getConfig().layout.columnWidth;
+                    height  = getConfig().layout.buttonHeight;
+                }
+
+                //--------------------------------------------------------------
                 void onDragOutside(int x, int y, int button) {
                     if(!parameter) return;
                     int a = this->y + height;

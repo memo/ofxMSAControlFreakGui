@@ -18,7 +18,7 @@ namespace msa {
 
                 // how open is this panel
                 float openSpeed = 0.1f;
-                if(panel.titleButton->getParameter().getValue() != panel.isOpen) panel.showPanel(panel.titleButton->getParameter().getValue(), panel.titleButton->bRecursive);
+                if(panel.ptitleButton->getParameter().getValue() != panel.isOpen) panel.showPanel(panel.ptitleButton->getParameter().getValue(), panel.ptitleButton->bRecursive);
                 if(panel.isOpen) {
                     //                    if(heightScale<0.95) heightScale += (1-heightScale) * openSpeed;
                     if(panel.heightScale < 1) panel.heightScale += openSpeed;
@@ -32,7 +32,7 @@ namespace msa {
                 // if we are drawing this Panel inside another Panel, use auto-layout parameters of that
 //                if(panel.getParent()) layoutManager = panel.getParent()->layoutManager;
                 
-                panel.titleButton->z = -10000;
+                panel.ptitleButton->z = -10000;
                 Config &config      = panel.getConfig();
                 ofVec2f maxPos      = getMaxPos();
                 curPos              = clampPoint(curPos);
@@ -45,6 +45,8 @@ namespace msa {
                 
                 for(int i=0; i<numControls; i++) {
                     Control& control = *panel.controls[i];
+                    
+                    control.setConfig(&config);
                     
                     int indent = i==0 ? panelDepth * config.layout.indent : (panelDepth+1) * config.layout.indent;
                     
@@ -68,7 +70,7 @@ namespace msa {
                 // add some padding at end of group
                 curPos.y += config.layout.buttonHeight;// * getParentHeightScale();
                 
-                panel.set(*panel.titleButton);
+                panel.set(*panel.ptitleButton);
             }
             
             //--------------------------------------------------------------
@@ -79,13 +81,13 @@ namespace msa {
                 
                 ofFill();
                 ofSetColor(config.colors.slider.full[0]);
-                int by = ofMap(scrollY, rect.y, rect.y + rect.height, 0, ofGetHeight());
-                int bh = ofMap(ofGetHeight(), 0, rect.height, 0, ofGetHeight());
+                int by = ofMap(scrollY, rect.y, rect.y + rect.height, 2, ofGetHeight()-4);
+                int bh = ofMap(ofGetHeight(), 0, rect.height, 2, ofGetHeight()-4);
                 ofRect(2, by, config.layout.padding.x-4, bh);
                 
                 ofNoFill();
                 ofSetColor(config.colors.border[0]);
-                ofRect(2, 0, config.layout.padding.x-4, ofGetHeight());
+                ofRect(2, 2, config.layout.padding.x-4, ofGetHeight()-4);
                 
                 ofPopStyle();
             }

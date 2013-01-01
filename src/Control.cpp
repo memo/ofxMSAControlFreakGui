@@ -7,12 +7,14 @@ namespace msa {
             
             
             Control::Control(Panel *parent) {
-                this->_parent = parent;
-                if(_parent) {
-                    this->_config = &_parent->getConfig();
-                    width   = getConfig().layout.columnWidth;
-                    height  = getConfig().layout.buttonHeight;
-                }
+                this->_pparent = parent;
+                getRoot(true);
+                
+//                if(getParent()) {
+//                    this->pconfig = &getParent()->getConfig();
+//                    width   = getConfig().layout.columnWidth;
+//                    height  = getConfig().layout.buttonHeight;
+//                }
                 
                 z = 0;
                 _alpha = 1;
@@ -29,7 +31,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Control &Control::setConfig(Config *config) {
-                this->_config = config;
+                _pconfig = config;
                 setup();
                 return *this;
             }
@@ -43,19 +45,21 @@ namespace msa {
             
             //--------------------------------------------------------------
             Panel *Control::getParent() {
-                return _parent;
+                return _pparent;
             }
             
             //--------------------------------------------------------------
-            Panel *Control::getRoot() {
-                return getParent() ? getParent()->getRoot() : dynamic_cast<Panel*>(this);
+            Panel *Control::getRoot(bool bUpdate) {
+                if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Panel*>(this) );
+                else return _proot;
+//                return getParent() ? getParent()->_proot : _proot;
             }
             
             //--------------------------------------------------------------
             Config &Control::getConfig() {
-                return *_config;
+                return *_pconfig;
             }
-            
+//
             //--------------------------------------------------------------
             int Control::getDepth() {
                 return getParent() ? getParent()->getDepth() + 1 : 0;

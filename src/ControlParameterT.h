@@ -22,9 +22,11 @@ namespace msa {
 
                 //--------------------------------------------------------------
                 ControlParameterT(Panel *parent, Parameter *p) : Control(parent) {
-                    parameter = dynamic_cast<T*>(p);
-                    if(!parameter) ofLogError() << "msa::ControlFreak::gui::Control - type-casting parameter " << p->getPath();
-//                    if(parameter) name = parameter->getPath();
+                    if(p) {
+                        parameter = dynamic_cast<T*>(p);
+                        if(!parameter) ofLogError() << "msa::ControlFreak::gui::Control - type-casting parameter " << p->getPath();
+                        //                    if(parameter) name = parameter->getPath();
+                    }
                     parameterOwner = false;
                 }
 

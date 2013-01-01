@@ -58,6 +58,9 @@ namespace msa {
                 void drawString(string s, float x, float y);
             };
             
+            
+//            typedef std::tr1::shared_ptr<Config> ConfigPtr;
+            
         }
     }
 }
