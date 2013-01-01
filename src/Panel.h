@@ -34,8 +34,6 @@ namespace msa {
                 Panel(Panel *parent, Parameter *p);
                 ~Panel();
                 
-//                void setLayout(int x, int y);
-                
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
                 Control* getActiveControl();
@@ -53,7 +51,6 @@ namespace msa {
                 void addParameters(ParameterGroup &parameters);
                 
             protected:
-                
                 float heightScale;              // height scale of this panel
                 float getParentHeightScale();   // height scale of parent
                 float getHeightScale();         // inherited height scale
@@ -63,12 +60,10 @@ namespace msa {
                 
                 LayoutManagerPtr layoutManager;
                 
-                BoolTitle *titleButton;       // button which controls the title of the panel
-                
-                // currently active control (only this control receives events)
-                Control         *activeControl;
-                
-                vector<ControlPtr> controls;
+                vector<ControlPtr> controls;    // all controls
+                Control         *activeControl; // currently active control (only this control receives events)
+                BoolTitle       *titleButton;   // button which controls the title of the panel
+
                 
                 Control			&addControl(Control *control);
                 

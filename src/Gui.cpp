@@ -342,7 +342,8 @@ namespace msa {
                 layoutManager.update(panel);
                 
                 // sort and draw
-                Renderer::instance().draw(&config);
+                Renderer::instance().draw(config);
+                layoutManager.draw(config);
                 
                 ofPopStyle();
             }

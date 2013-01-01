@@ -6,6 +6,13 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
+            
+            //--------------------------------------------------------------
+            LayoutManager::LayoutManager() {
+                doWrap = false;
+                scrollY = 0;
+            }
+            
             //--------------------------------------------------------------
             void LayoutManager::update(Panel &panel) {
 
@@ -42,13 +49,13 @@ namespace msa {
                     int indent = i==0 ? panelDepth * config.layout.indent : (panelDepth+1) * config.layout.indent;
                     
                     // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-                    if(control.newColumn || curPos.y + (control.height + config.layout.padding.y) * heightMult > maxPos.y) {
+                    if(control.newColumn || (doWrap && curPos.y + (control.height + config.layout.padding.y) * heightMult > maxPos.y)) {
                         curPos.x = rect.x + rect.width + config.layout.padding.x;
                         curPos.y = maxRect.y;
                     }
                     
                     control.setWidth(config.layout.columnWidth - indent);
-                    control.setPosition(curPos.x + indent, curPos.y);
+                    control.setPosition(curPos.x + indent, curPos.y - scrollY);
                     Renderer::instance().addControl(&control);
                     rect.growToInclude((ofRectangle&)control);
                     
@@ -64,6 +71,25 @@ namespace msa {
                 panel.set(*panel.titleButton);
             }
             
+            //--------------------------------------------------------------
+            void LayoutManager::draw(Config &config) {
+                ofPushStyle();
+                
+                ofSetLineWidth(1);
+                
+                ofFill();
+                ofSetColor(config.colors.slider.full[0]);
+                int by = ofMap(scrollY, rect.y, rect.y + rect.height, 0, ofGetHeight());
+                int bh = ofMap(ofGetHeight(), 0, rect.height, 0, ofGetHeight());
+                ofRect(2, by, config.layout.padding.x-4, bh);
+                
+                ofNoFill();
+                ofSetColor(config.colors.border[0]);
+                ofRect(2, 0, config.layout.padding.x-4, ofGetHeight());
+                
+                ofPopStyle();
+            }
+
             
             //--------------------------------------------------------------
             ofVec2f LayoutManager::getMaxPos() {

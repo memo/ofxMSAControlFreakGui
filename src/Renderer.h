@@ -28,7 +28,7 @@ namespace msa {
                 
                 void addControl(Control *c);
                 void clearControls();
-                void draw(Config *config);
+                void draw(Config &config);
                 
                 void setToolTip(string s, int x = -1, int y = -1);
                 

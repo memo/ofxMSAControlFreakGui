@@ -53,10 +53,6 @@ namespace msa {
                 
                 Control& setKeyboardShortcut(char c);
                 
-                //                virtual void readFromXml(ofxXmlSettings &XML) {}
-                //                virtual void writeToXml(ofxXmlSettings &XML) {}
-                
-//                virtual void setLayout(int x, int y) { setPosition(floor(x), floor(y)); }
                 virtual void onDraw() {}
                 
                 virtual void onKeyUp() {}			// up key is pressed
