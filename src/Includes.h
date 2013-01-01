@@ -1,0 +1,18 @@
+#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Panel.h"
+#include "ofxMSAControlFreakGui/src/Config.h"
+#include "ofxMSAControlFreakGui/src/Controls/BoolButton.h"
+#include "ofxMSAControlFreakGui/src/Controls/BoolTitle.h"
+#include "ofxMSAControlFreakGui/src/Controls/BoolToggle.h"
+#include "ofxMSAControlFreakGui/src/Controls/ColorPicker.h"
+#include "ofxMSAControlFreakGui/src/Controls/DropdownList.h"
+#include "ofxMSAControlFreakGui/src/Controls/Content.h"
+#include "ofxMSAControlFreakGui/src/Controls/FPSCounter.h"
+#include "ofxMSAControlFreakGui/src/Controls/QuadWarp.h"
+#include "ofxMSAControlFreakGui/src/Controls/Slider2d.h"
+#include "ofxMSAControlFreakGui/src/Controls/SliderT.h"
+
+#include "ofxMSAControlFreakGui/src/Renderer.h"
+
+//#include "ofxMSAControlFreakGui/src/Option.h"
+//#include "ofxMSAControlFreakGui/src/OptionGroup.h"
