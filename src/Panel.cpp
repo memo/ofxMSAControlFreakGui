@@ -9,20 +9,18 @@ namespace msa {
             
             //--------------------------------------------------------------
             Panel::Panel(Panel *parent, string s) : ControlParameterT<ParameterGroup>(parent, s) {
-//                pconfig = config;
                 init();
             }
-            
+
+            //--------------------------------------------------------------
             Panel::Panel(Panel *parent, Parameter *p) : ControlParameterT<ParameterGroup>(parent, p) {
-//                pconfig = config;
                 init();
-                
                 addParameters(dynamic_cast<ParameterGroup&>(*p));
             }
             
             //--------------------------------------------------------------
             Panel::~Panel() {
-                // delete all controls
+                // delete all controls NOT NEEDED, using smart pointers
             }
             
             //--------------------------------------------------------------
@@ -33,7 +31,6 @@ namespace msa {
                 pactiveControl = NULL;
                 isOpen = false;
                 heightScale = 1.0;
-//                _proot = getParent() ? getParent()->getRoot() : this;
             }
             
             //--------------------------------------------------------------
@@ -57,7 +54,6 @@ namespace msa {
                     }
                 }
             }
-            
             
             //--------------------------------------------------------------
             Control& Panel::addControl(Control *control) {
@@ -134,10 +130,7 @@ namespace msa {
                 // if parameter already exists, remove it first
                 
                 ParameterGroup *pc = dynamic_cast<ParameterGroup*>(p);
-                if(pc && pc->getNumParams() > 0) {
-                    Panel &panel = addPanel(pc);
-//                    panel.addParameters(*pc);
-                }
+                if(pc) addPanel(pc);
                 
                 switch(p->getType()) {
                     case Type::kFloat: addSliderFloat(p); break;
