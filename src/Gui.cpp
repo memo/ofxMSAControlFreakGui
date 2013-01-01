@@ -1,3 +1,4 @@
+
 #include "ofxMSAControlFreakGui/src/Gui.h"
 #include "ofxMSAControlFreakGui/src/Includes.h"
 
@@ -314,22 +315,33 @@ namespace msa {
                 if(!doDraw) return;
                 
                 ofPushStyle();
+                ofDisableSmoothing();
+                ofDisableNormalizedTexCoords();
+                ofDisableLighting();
                 glDisable(GL_DEPTH_TEST);
-                ofSetLineWidth(3);
-                glDisableClientState(GL_COLOR_ARRAY);
+//                ofSetLineWidth(3);
+//                glDisableClientState(GL_COLOR_ARRAY);
                 
 //                headerPage->draw(0, 0);		// this is the header
 //                pages[currentPageIndex]->maxRect.set(config.padding.x, headerPage->height + config.padding.y, 0, 0);
 //                pages[currentPageIndex]->draw(config.padding.x, headerPage->height + config.padding.y);
-                if(pages[currentPageIndex]->layoutManager == NULL) pages[currentPageIndex]->layoutManager = LayoutManagerPtr(new LayoutManager);
+                Panel &panel = *pages[currentPageIndex];
+                
+                // create layout manager for the panel if one doesn't exist
+                if(panel.layoutManager == NULL) panel.layoutManager = LayoutManagerPtr(new LayoutManager);
                
-                LayoutManager &l = *pages[currentPageIndex]->layoutManager;
-                l.maxRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);
-                l.curPos.set(0, 0);
-                l.rect.set(l.maxRect.x, l.maxRect.y, 0, 0);
+                // configure layout manager
+                LayoutManager &layoutManager = *panel.layoutManager;
+                layoutManager.maxRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
+                layoutManager.curPos.set(0, 0); // start in top left
+                layoutManager.rect.set(0, 0, 0, 0);
 
                 Renderer::instance().clearControls();
-                pages[currentPageIndex]->setLayout(config.layout.padding.x, config.layout.padding.y);
+//                panel.setLayout(config.layout.padding.x, config.layout.padding.y);
+                
+                layoutManager.update(panel);
+                
+                // sort and draw
                 Renderer::instance().draw(&config);
                 
                 ofPopStyle();

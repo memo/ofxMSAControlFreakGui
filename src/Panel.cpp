@@ -1,3 +1,4 @@
+
 #include "ofxMSAControlFreakGui/src/Includes.h"
 
 #include "ofxMSAControlFreak/src/ControlFreak.h"
@@ -10,10 +11,9 @@ namespace msa {
             Panel::Panel(Panel *parent, Parameter *p) : ControlParameterT<ParameterGroup>(parent, p) {
                 disableAllEvents();
                 width = 0;
-                height = 0;//ofGetHeight();
+                height = 0;
                 activeControl = NULL;
                 isOpen = false;
-//                setXMLName(p->getName() + "_settings.xml");
                 
                 heightScale = 1.0;
             }
@@ -22,51 +22,6 @@ namespace msa {
             Panel::~Panel() {
                 // delete all controls
             }
-            
-            
-            //--------------------------------------------------------------
-//            Panel& Panel::setXMLName(string s) {
-//                xmlFilename = s;
-//                return *this;
-//            }
-            
-            
-            //--------------------------------------------------------------
-//            void Panel::loadXml() {
-//                ofLog(OF_LOG_VERBOSE,  "ofxMSAControlFreakGui/src/Panel::loadXml: " + xmlFilename);
-//                
-//                if(xmlFilename.compare("") == 0) return;
-//                
-//                if(XML.loadFile(xmlFilename) == false) {
-//                    ofLog(OF_LOG_ERROR, "Error loading xmlFilename: " + xmlFilename);
-//                    return;
-//                }
-//                
-//                XML.pushTag("controls");
-//                for(int i=0; i < controls.size(); i++) {
-//                    controls[i]->readFromXml(XML);
-//                }
-//                XML.popTag();
-//            }
-            
-            
-            //--------------------------------------------------------------
-//            void Panel::saveXml() {
-//                if(controls.size() <= 1 || xmlFilename.compare("") == 0) return;	// if it has no controls (title counts as one control)
-//                
-//                XML.clear();	// clear cause we are building a new xml file
-//                
-//                XML.addTag("controls");
-//                XML.pushTag("controls");
-//                for(int i=0; i < controls.size(); i++) {
-//                    controls[i]->writeToXml(XML);
-//                }
-//                XML.popTag();
-//                
-//                XML.saveFile(xmlFilename);
-//                //	if(doSaveBackup)
-//                ofLog(OF_LOG_VERBOSE,  "ofxMSAControlFreakGui/src/Panel::saveXml: " + xmlFilename + " " + ofToString(controls.size(), 0) + " items");
-//            }
             
             
             //--------------------------------------------------------------
@@ -92,67 +47,67 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Panel::setLayout(int x, int y) {
-                titleButton->z = -10000;
-                
-                // how open is this panel
-                float openSpeed = 0.1f;
-                if(titleButton->getParameter().getValue() != isOpen) showPanel(titleButton->getParameter().getValue(), titleButton->bRecursive);
-                if(isOpen) {
-//                    if(heightScale<0.95) heightScale += (1-heightScale) * openSpeed;
-                    if(heightScale < 1) heightScale += openSpeed;
-                    else heightScale = 1.0f;
-                } else {
-//                    if(heightScale > 0.05) heightScale += (0-heightScale) * openSpeed;
-                    if(heightScale > 0) heightScale -= openSpeed;
-                    else heightScale = 0.0f;
-                }
-
-                // if we are drawing this Panel inside another Panel, use auto-layout parameters of that
-                if(getParent()) layoutManager = getParent()->layoutManager;
-                
-                // find the maximum position we are allowed to draw at before wrapping
-                ofVec2f maxPos(layoutManager->getMaxPos());
-                
-                // save reference to current position for quick access
-                ofVec2f &curPos = layoutManager->curPos;
-                
-                // set start position for panel
-                curPos = layoutManager->clampPoint(curPos);
-                setPosition(curPos);
-                
-                width = 0;
-                height = 0;
-
-                int panelDepth = getDepth();// * getConfig().layout.indent;
-                
-                int numControls = getHeightScale() ? controls.size() : 1;
-                
-                float heightMult = getHeightScale();//i ? getHeightScale() : getParentHeightScale();
-                for(int i=0; i<numControls; i++) {
-                    Control& control = *controls[i];
-
-                    int indent = i==0 ? panelDepth * getConfig().layout.indent : (panelDepth+1) * getConfig().layout.indent;
-                    
-                    // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-                    if(control.newColumn || curPos.y + (control.height + getConfig().layout.padding.y) * heightMult > maxPos.y) {
-                        curPos.x = layoutManager->rect.x + layoutManager->rect.width + getConfig().layout.padding.x;
-                        curPos.y = layoutManager->maxRect.y;
-                    }
-                    
-                    control.setWidth(getConfig().layout.columnWidth - indent);
-                    control.setLayout(curPos.x + indent, curPos.y);
-                    Renderer::instance().addControl(&control);  // TODO: why does this break the order?
-                    layoutManager->rect.growToInclude((ofRectangle&)control);
-                    
-                    curPos.y += (control.height + getConfig().layout.padding.y) * heightMult;
-                }
-                
-                // add some padding at end of group
-                curPos.y += getConfig().layout.buttonHeight;// * getParentHeightScale();
-                
-                ofRectangle::set(*titleButton);
-            }
+//            void Panel::setLayout(int x, int y) {
+//                titleButton->z = -10000;
+//                
+//                // how open is this panel
+//                float openSpeed = 0.1f;
+//                if(titleButton->getParameter().getValue() != isOpen) showPanel(titleButton->getParameter().getValue(), titleButton->bRecursive);
+//                if(isOpen) {
+////                    if(heightScale<0.95) heightScale += (1-heightScale) * openSpeed;
+//                    if(heightScale < 1) heightScale += openSpeed;
+//                    else heightScale = 1.0f;
+//                } else {
+////                    if(heightScale > 0.05) heightScale += (0-heightScale) * openSpeed;
+//                    if(heightScale > 0) heightScale -= openSpeed;
+//                    else heightScale = 0.0f;
+//                }
+//
+//                // if we are drawing this Panel inside another Panel, use auto-layout parameters of that
+//                if(getParent()) layoutManager = getParent()->layoutManager;
+//                
+//                // find the maximum position we are allowed to draw at before wrapping
+//                ofVec2f maxPos(layoutManager->getMaxPos());
+//                
+//                // save reference to current position for quick access
+//                ofVec2f &curPos = layoutManager->curPos;
+//                
+//                // set start position for panel
+//                curPos = layoutManager->clampPoint(curPos);
+//                setPosition(curPos);
+//                
+//                width = 0;
+//                height = 0;
+//
+//                int panelDepth = getDepth();// * getConfig().layout.indent;
+//                
+//                int numControls = getHeightScale() ? controls.size() : 1;
+//                
+//                float heightMult = getHeightScale();//i ? getHeightScale() : getParentHeightScale();
+//                for(int i=0; i<numControls; i++) {
+//                    Control& control = *controls[i];
+//
+//                    int indent = i==0 ? panelDepth * getConfig().layout.indent : (panelDepth+1) * getConfig().layout.indent;
+//                    
+//                    // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
+//                    if(control.newColumn || curPos.y + (control.height + getConfig().layout.padding.y) * heightMult > maxPos.y) {
+//                        curPos.x = layoutManager->rect.x + layoutManager->rect.width + getConfig().layout.padding.x;
+//                        curPos.y = layoutManager->maxRect.y;
+//                    }
+//                    
+//                    control.setWidth(getConfig().layout.columnWidth - indent);
+//                    control.setLayout(curPos.x + indent, curPos.y);
+//                    Renderer::instance().addControl(&control);  // TODO: why does this break the order?
+//                    layoutManager->rect.growToInclude((ofRectangle&)control);
+//                    
+//                    curPos.y += (control.height + getConfig().layout.padding.y) * heightMult;
+//                }
+//                
+//                // add some padding at end of group
+//                curPos.y += getConfig().layout.buttonHeight;// * getParentHeightScale();
+//                
+//                ofRectangle::set(*titleButton);
+//            }
             
             
 //            //--------------------------------------------------------------

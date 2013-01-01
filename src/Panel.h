@@ -29,18 +29,16 @@ namespace msa {
             public:
                 
                 friend class Gui;
+                friend class LayoutManager;
                 
                 Panel(Panel *parent, Parameter *p);
                 ~Panel();
                 
-                void setLayout(int x, int y);
+//                void setLayout(int x, int y);
                 
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
                 Control* getActiveControl();
-                
-                // returns whether this panel, or any of it's parents have an active control
-//                bool getActive();
                 
                 void update();
                 void mouseMoved(ofMouseEventArgs &e);
@@ -60,21 +58,17 @@ namespace msa {
                 float getParentHeightScale();   // height scale of parent
                 float getHeightScale();         // inherited height scale
                 
-//                float alphaScale;              // alpha scale of this panel
-//                float getParentAlphaScale();   // alpha scale of parent
-//                float getAlphaScale();         // inherited height alpha
-
                 bool isOpen;
                 void showPanel(bool bOpen, bool bRecursive = false);
                 
                 LayoutManagerPtr layoutManager;
                 
-                vector<ControlPtr>	controls;
-                
                 BoolTitle *titleButton;       // button which controls the title of the panel
                 
-                // currently active control (only that receives events)
+                // currently active control (only this control receives events)
                 Control         *activeControl;
+                
+                vector<ControlPtr> controls;
                 
                 Control			&addControl(Control *control);
                 
