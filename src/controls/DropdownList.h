@@ -23,7 +23,7 @@ namespace msa {
                     if(!parameter) return;
                     int a = this->y + height;
                     int b = this->y + height + getConfig().layout.dropdownListTextHeight * parameter->getNumLabels();
-                    int v = ofMap(y, a, b, 0, parameter->getNumLabels()-1, true);
+                    int v = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, parameter->getNumLabels()-1, true));
                     parameter->setValue(v);
                 }
                 
