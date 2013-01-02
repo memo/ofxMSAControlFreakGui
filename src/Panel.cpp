@@ -77,7 +77,6 @@ namespace msa {
                             parameter->saveXml(false, f.getPath() + "-" + parameter->getPath());
                         }
                     }
-                        
                         break;
                 }
             }
