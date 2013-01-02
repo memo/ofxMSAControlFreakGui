@@ -9,7 +9,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             LayoutManager::LayoutManager() {
-                doWrap = false;
+                doWrap = true;  // TODO: finish wrapping and scrolling
                 scrollY = 0;
             }
             
@@ -68,13 +68,15 @@ namespace msa {
                 }
                 
                 // add some padding at end of group
-                curPos.y += config.layout.buttonHeight;// * getParentHeightScale();
+//                curPos.y += config.layout.buttonHeight;// * getParentHeightScale();
                 
                 panel.set(*panel.ptitleButton);
             }
             
             //--------------------------------------------------------------
             void LayoutManager::draw(Config &config) {
+                return;
+                
                 ofPushStyle();
                 
                 ofSetLineWidth(1);
