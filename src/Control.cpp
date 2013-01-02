@@ -161,7 +161,20 @@ namespace msa {
                 _alpha += diff * getConfig().colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;
                 
+                ofPushMatrix();
+                ofPushStyle();
                 onDraw();
+                ofPopStyle();
+                ofPopMatrix();
+                
+//                if(isMouseOver()) {
+//                    ofFill();
+//                    setColor(ofColor(255, 128));
+//                    int ts = height * 0.5;
+//                    ofTriangle(width, height, width, height - ts, width - ts, height);
+//                    if(getMouseX() > x + width - ts && getMouseY() > y + height - ts) Renderer::instance().setToolTip("Open config menu");
+//                }
+
                 
                 drawBorder();
                 

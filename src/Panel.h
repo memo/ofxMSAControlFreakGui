@@ -28,6 +28,7 @@ namespace msa {
             class Panel : public ControlParameterT<ParameterGroup> {
             public:
                 
+                friend class BoolTitle;
                 friend class Gui;
                 friend class LayoutManager;
                 
@@ -50,21 +51,20 @@ namespace msa {
                 
             protected:
                 bool isOpen;
-                
-                void init();
-                
                 float heightScale;              // height scale of this panel
+                LayoutManagerPtr layoutManager;
+                vector<ControlPtr> controls;    // all controls
+                Control         *pactiveControl; // currently active control (only this control receives events)
+                BoolTitle       *ptitleButton;   // button which controls the title of the panel
+
+                void init();
                 float getParentHeightScale();   // height scale of parent
                 float getHeightScale();         // inherited height scale
                 
                 void showPanel(bool bOpen, bool bRecursive = false);
                 
-                LayoutManagerPtr layoutManager;
+                void buttonPressed(int i);
                 
-                vector<ControlPtr> controls;    // all controls
-                Control         *pactiveControl; // currently active control (only this control receives events)
-                BoolTitle       *ptitleButton;   // button which controls the title of the panel
-
                 
                 Control			&addControl(Control *control);
                 

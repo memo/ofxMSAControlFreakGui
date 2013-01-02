@@ -122,11 +122,6 @@ namespace msa {
                         ofRect(width-w-1, 0, w, h);
                     }
                     
-                    if(this->isMouseOver()) {
-                        this->setColor(c.colors.text[0]);
-                        int ts = height * 0.5;
-                        ofTriangle(width, height, width, height - ts, width - ts, height);
-                    }
                     
                     // draw border
 //                    this->drawBorder();

@@ -56,6 +56,33 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
+            void Panel::buttonPressed(int i) {
+                switch(i) {
+                    case 0:
+                        break;
+                        
+                    case 1: // load
+                    {
+                        ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
+                        if(f.bSuccess) {
+                            parameter->loadXml(false, f.filePath);
+                        }
+                    }
+                        break;
+                        
+                    case 2: // save
+                    {
+                        ofFileDialogResult f = ofSystemSaveDialog("defaults", "Save preset");
+                        if(f.bSuccess) {
+                            parameter->saveXml(false, f.getPath() + "-" + parameter->getPath());
+                        }
+                    }
+                        
+                        break;
+                }
+            }
+
+            //--------------------------------------------------------------
             Control& Panel::addControl(Control *control) {
                 controls.push_back(ControlPtr(control));
                 return *control;
