@@ -72,9 +72,14 @@ namespace msa {
                         
                     case 2: // save
                     {
-                        ofFileDialogResult f = ofSystemSaveDialog("defaults", "Save preset");
+                        ofFileDialogResult f = ofSystemSaveDialog(parameter->getPath() + "-defaults.xml", "Save preset");
                         if(f.bSuccess) {
-                            parameter->saveXml(false, f.getPath() + "-" + parameter->getPath());
+                            parameter->saveXml(false, f.getPath());
+//                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));
+//                            parameter->saveXml(false, path + "/" + parameter->getPath() + "-" + f.fileName + ".xml");
+//                            ofDirectory dir(path + "/" + parameter->getPath());
+//                            if(!dir.exists()) dir.create(true);
+//                            parameter->saveXml(false, dir.getAbsolutePath() + "/" + f.fileName + ".xml");
                         }
                     }
                         break;
