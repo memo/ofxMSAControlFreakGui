@@ -17,16 +17,15 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                                        
                     if(isMouseOver()) setColor(ofColor(255, 100));
                     else setColor(ofColor(0, 100));
                     ofPushMatrix();
                     ofScale(width, height);
                     ofFill();
-                    ofCircle(0, 0, 1);
+                    ofCircle(0.5, 0.5, 0.5);
                     ofPopMatrix();
 
-                    drawText(0, 0);
+                    drawTextCentered();
                     
                     BoolBase::onDraw();
                 }

@@ -25,6 +25,9 @@ namespace msa {
             
             class Container : public Control {
             public:
+                
+                friend class Control;
+                
                 Container(Container *parent, string s);
                 Container(Container *parent, ParameterPtr p);
                 
@@ -33,10 +36,6 @@ namespace msa {
                 Control* addControl(Control *control);
                 Control* getControl(int i) const;
 //                Control* operator[](int index);
-                
-                void setActiveControl(Control *control);
-                void releaseActiveControl();
-                Control* getActiveControl();
                 
                 
                 Panel           &addPanel(ParameterGroupPtr p);
@@ -54,7 +53,6 @@ namespace msa {
                 
                 void addParameter(ParameterPtr p);
                 void addParameters(ParameterGroupPtr parameters);
-
                 
                 
                 // events from ofxMSAInteractiveObject
@@ -70,6 +68,11 @@ namespace msa {
             private:
                 vector<ControlPtr> _controls;
                 Control *_pactiveControl; // currently active control (only this control receives events)
+                
+                void setActiveControl(Control *control);
+                void releaseActiveControl();
+                Control* getActiveControl();
+                
             };
             
         }

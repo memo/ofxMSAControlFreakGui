@@ -187,15 +187,14 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mouseMoved(e);
                 else {
-                    if(getNumControls()>0 && getControl(0)) getControl(0)->_mouseMoved(e);
-                    if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) getControl(i)->_mouseMoved(e);
+                    if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) getControl(i)->_mouseMoved(e);
                 }
             }
             
             //--------------------------------------------------------------
             void Container::update() {
-                if(getNumControls()>0 && getControl(0)) getControl(0)->update();
-                if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) getControl(i)->update();
+                Control::update();
+                if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) getControl(i)->update();
             }
             
             
@@ -204,11 +203,7 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mousePressed(e);
                 else {
-                    if(getNumControls()>0 && getControl(0)) {
-                        getControl(0)->_mousePressed(e);
-                        if(getControl(0)->hitTest(e.x, e.y)) getRoot()->setActiveControl(getControl(0));
-                    }
-                    if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) {
+                    if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) {
                         getControl(i)->_mousePressed(e);
                         if(getControl(i)->hitTest(e.x, e.y)) getRoot()->setActiveControl(getControl(i));
                     }
@@ -220,8 +215,7 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mouseDragged(e);
                 else {
-                    if(getNumControls()>0 && getControl(0)) getControl(0)->_mouseDragged(e);
-                    if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) getControl(i)->_mouseDragged(e);
+                    if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) getControl(i)->_mouseDragged(e);
                 }
             }
             
@@ -230,8 +224,7 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mouseReleased(e);
                 else {
-                    if(getNumControls()>0 && getControl(0)) getControl(0)->_mouseReleased(e);
-                    if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) getControl(i)->_mouseReleased(e);
+                    if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) getControl(i)->_mouseReleased(e);
                 }
                 
                 getRoot()->releaseActiveControl();
@@ -245,17 +238,7 @@ namespace msa {
                 bool keyRight	= e.key == OF_KEY_RIGHT;
                 bool keyEnter	= e.key == OF_KEY_RETURN;
                 
-                Control *c = getControl(0);
-                if(c->isMouseOver()) {
-                    if(keyUp)		c->onKeyUp();
-                    if(keyDown)		c->onKeyDown();
-                    if(keyLeft)		c->onKeyLeft();
-                    if(keyRight)	c->onKeyRight();
-                    if(keyEnter)	c->onKeyEnter();
-                    c->_keyPressed(e);
-                }
-                
-                if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) {
+                if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) {
                     Control *c = getControl(i);
                     if(c->isMouseOver()) {
                         if(keyUp)		c->onKeyUp();
@@ -270,8 +253,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Container::keyReleased(ofKeyEventArgs &e) {
-                if(getControl(0)->isMouseOver()) getControl(0)->_keyReleased(e);
-                if(getInheritedScale().y>0.9) for(int i=1; i<getNumControls(); i++) if(getControl(i)->isMouseOver()) getControl(i)->_keyReleased(e);
+                if(getInheritedScale().y>0.9) for(int i=0; i<getNumControls(); i++) if(getControl(i)->isMouseOver()) getControl(i)->_keyReleased(e);
             }
 
 

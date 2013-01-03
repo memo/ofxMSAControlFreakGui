@@ -29,8 +29,8 @@ namespace msa {
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
-                    setTextColor();
-                    getConfig().drawString("FPS: " + ofToString(ofGetFrameRate()), 3, 15);
+                    drawText(3, 15, "FPS: " + ofToString(ofGetFrameRate()));
+                    drawBorder();
                     
                     glPopMatrix();
                 }

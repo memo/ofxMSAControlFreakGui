@@ -19,6 +19,7 @@ namespace msa {
                 doAutoLayout = true;
                 localRect.set(0, 0, 0, 0);
 
+                
                 _alpha = 1;
                 
                 setup();
@@ -169,9 +170,25 @@ namespace msa {
 
             //--------------------------------------------------------------
             void Control::drawText(int x, int y, string s, ofColor *c) {
+                s = s.empty() ? getName() : s;
                 setColor(c ? c : getConfig().colors.text);
-                getConfig().drawString(s.empty() ? getName() : s, x, y);
+                getConfig().drawString(s, x, y);
             }
+            
+            //--------------------------------------------------------------
+            void Control::drawTextCentered(string s, ofColor *c) {
+                s = s.empty() ? getName() : s;
+                ofRectangle r = getTextRect(0, 0, s);
+                drawText(-r.x + width/2 - r.width/2, -r.y + height/2 - r.height/2, s, c);
+                
+            }
+            
+            //--------------------------------------------------------------
+            ofRectangle Control::getTextRect(int x, int y, string s) {
+                s = s.empty() ? getName() : s;
+                return getConfig().font.getStringBoundingBox(s, x, y);
+            }
+
             
             //--------------------------------------------------------------
 //            Control &Control::setKeyboardShortcut(char c) {
@@ -192,6 +209,11 @@ namespace msa {
                 glLineWidth(1.0);
                 ofRect(0, 0, width, height);
             }
+
+            //--------------------------------------------------------------
+            void Control::update() {
+                onUpdate();
+            }
             
             //--------------------------------------------------------------
             void Control::draw() {
@@ -202,7 +224,7 @@ namespace msa {
                 ofTranslate(x, y);
                 ofEnableAlphaBlending();
                 
-                float targetAlpha = getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;//TODO
+                float targetAlpha = getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;
                 float diff = (targetAlpha - _alpha);
                 _alpha += diff * getConfig().colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;
@@ -221,9 +243,6 @@ namespace msa {
 //                    if(getMouseX() > x + width - ts && getMouseY() > y + height - ts) Renderer::instance().setToolTip("Open config menu");
 //                }
 
-                
-                drawBorder();
-                
                 ofPopMatrix();
                 ofPopStyle();
             }

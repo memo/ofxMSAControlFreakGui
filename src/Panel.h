@@ -11,7 +11,8 @@ namespace msa {
             class Gui;
             class BoolButton;
             class BoolTitle;
-            class BoolTitle;
+            class BoolSimpleBox;
+            class BoolSimpleCircle;
             class BoolToggle;
             class ColorPicker;
             class DropdownList;
@@ -36,21 +37,23 @@ namespace msa {
                 Panel(Container *parent, ParameterGroupPtr p);
                 ~Panel();
                 
+                void onUpdate();
+                
             protected:
                 bool isOpen;
                 ParameterGroup  *paramT;
                 LayoutManagerPtr layoutManager;
                 
                 BoolTitle       *titleButton;   // button which controls the title of the panel
-                BoolButton      *expandAllButton;
-                BoolButton      *collapseAllButton;
+                BoolSimpleCircle *expandAllButton;
+                BoolSimpleCircle *collapseAllButton;
+                BoolSimpleCircle *loadButton;
+                BoolSimpleCircle *saveButton;
                 Container       *children;
                 
                 void init();
                 
                 void showPanel(bool bOpen, bool bRecursive = false);
-                
-                void buttonPressed(int i);
             };
             
             

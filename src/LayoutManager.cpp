@@ -15,6 +15,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void LayoutManager::prepareForDraw(Container &container) {
+//                printf("\n");
                 
                 Panel *panel = dynamic_cast<Panel*>(&container);
                 if(panel) {
@@ -43,13 +44,11 @@ namespace msa {
                 
                 if(container.doAutoLayout) {
                     curPos              = clampPoint(curPos);
-                    container.position  = curPos;
-                    container.width     = 0;
-                    container.height    = 0;
+//                    container.position  = curPos; // TODO, check this
                 } else {
-                    curPos = container.position;
+//                    curPos = container.position;
                 }
-//
+
                 int panelDepth          = container.getDepth();// * config.layout.indent;
                 ofVec2f containerScale  = container.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
                 
@@ -60,7 +59,7 @@ namespace msa {
                         
                         ofVec2f curScale = containerScale * control.scale;
                         
-                        int indent = panelDepth * config.layout.indent;
+                        int indent = panelDepth * config.layout.indent * curScale.x;
                         
                         control.width = control.localRect.width ? control.localRect.width : config.layout.columnWidth - indent;
                         control.height = control.localRect.height ? control.localRect.height : config.layout.buttonHeight;
@@ -75,12 +74,16 @@ namespace msa {
                                 curPos.y = boundRect.y;
                             }
                             
+                            curPos += control.localRect.position * curScale;
+                            
                             control.setPosition(curPos.x + indent, curPos.y - scrollY);
                             curPos.y += control.height + config.layout.padding.y * curScale.y;
                         } else {
                             control.setPosition(container.position + control.localRect.position);
                         }
                         
+//                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter()->getPath().c_str(), control.x, control.y, container.getParameter()->getPath().c_str(), container.x, container.y);
+
                         Renderer::instance().addControl(&control);
                         rect.growToInclude((ofRectangle&)control);
                         
@@ -89,10 +92,9 @@ namespace msa {
                     }
                     
                     // add some padding at end of group
-//                    curPos.y += config.layout.buttonHeight * containerScale.y;
+//                    curPos.y += config.layout.buttonHeight * containerScale.y/2;
                 }
                 
-                //                container.set(*container.titleButton);
             }
             
             //--------------------------------------------------------------

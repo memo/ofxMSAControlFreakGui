@@ -125,6 +125,9 @@ namespace msa {
                         ofRect(0, 0, w, h);
                         ofRect(width-w-1, 0, w, h);
                     }
+                    
+                    drawBorder();
+
                 }
                 
                 

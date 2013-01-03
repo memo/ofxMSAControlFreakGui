@@ -19,6 +19,7 @@ namespace msa {
             public:
                 
                 friend class Container;
+                friend class Renderer;
                 
                 int         z;  // draw order (0 draw last, i.e. drawn on top)
                 bool		newColumn;
@@ -51,28 +52,11 @@ namespace msa {
                 string getPath();
                 
                 ParameterPtr getParameter();
-                
-                // 0: normal, 1:over, 2:active
-                int getState();
-                
-                ofColor setColor(ofColor c);
-                ofColor setColor(ofColor *c);
-                ofColor setBGColor();
-                ofColor setTextColor();
-                ofColor setSliderColor(bool b);
-                ofColor setToggleColor(bool b);
-                ofColor setBorderColor();
-                
-                bool doTooltip(int millis = -1);
-                void setTooltip(string s="");
-                
-                void drawBorder(ofColor *c = NULL);
-                void drawText(int x, int y, string s = "", ofColor *c = NULL);
-                void draw();
-                
-                
 //                Control& setKeyboardShortcut(char c);
                 
+                // overrider these
+                
+                virtual void onUpdate() {}
                 virtual void onDraw() {}
                 
                 virtual void onKeyUp() {}			// up key is pressed
@@ -95,6 +79,31 @@ namespace msa {
                 
                 virtual void keyPressed( int key ){}
                 virtual void keyReleased( int key ){}
+
+            protected:
+                
+                
+                // 0: normal, 1:over, 2:active
+                int getState();
+                
+                ofColor setColor(ofColor c);
+                ofColor setColor(ofColor *c);
+                ofColor setBGColor();
+                ofColor setTextColor();
+                ofColor setSliderColor(bool b);
+                ofColor setToggleColor(bool b);
+                ofColor setBorderColor();
+                
+                bool doTooltip(int millis = -1);
+                void setTooltip(string s="");
+                
+                void drawBorder(ofColor *c = NULL);
+                void drawText(int x, int y, string s = "", ofColor *c = NULL);
+                void drawTextCentered(string s="", ofColor *c = NULL);
+                ofRectangle getTextRect(int x=0, int y=0, string s = "");
+                
+                void update();
+                void draw();
                 
             private:
                 Container *_pparent;

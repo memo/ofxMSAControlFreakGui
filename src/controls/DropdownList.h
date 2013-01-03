@@ -35,8 +35,8 @@ namespace msa {
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
-                    setTextColor();
-                    getConfig().drawString(getName() + ": " + paramT->getSelectedLabel(), getConfig().layout.textPos.x, getConfig().layout.textPos.y);
+                    drawText(getConfig().layout.textPos.x, getConfig().layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
+                    drawBorder();
                     
                     int ty = height/3;
                     int tl = ty*1.5;

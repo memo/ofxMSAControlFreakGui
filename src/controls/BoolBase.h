@@ -26,10 +26,9 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-//                void setup() {
-//                    localRect.width   = getConfig().layout.columnWidth;
-//                    localRect.height  = getConfig().layout.buttonHeight;
-//                }
+                void setMode(ParameterBool::Mode mode) {
+                    paramT->setMode(mode);
+                }
                 
                 //--------------------------------------------------------------
                 void toggle() {

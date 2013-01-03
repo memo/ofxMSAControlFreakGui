@@ -17,16 +17,14 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                                        
-                    if(getName().empty()) return;
-                    
                     // draw bg
                     ofFill();
                     setToggleColor(paramT->getValue());
                     ofRect(0, 0, width, height);
                     
-                    drawText(3, 15);
-//                    drawBorder();
+//                    drawText(3, 15);
+                    drawTextCentered();
+                    drawBorder();
                     
                     BoolBase::onDraw();
                 }

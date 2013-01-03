@@ -216,7 +216,7 @@ namespace msa {
                 if(!pages.size()) return;
                 
                 ofPushStyle();
-                ofDisableSmoothing();
+                ofEnableSmoothing();
                 ofDisableNormalizedTexCoords();
                 ofDisableLighting();
                 glDisable(GL_DEPTH_TEST);
