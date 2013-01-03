@@ -19,7 +19,7 @@ namespace msa {
                 Panel *panel = dynamic_cast<Panel*>(&container);
                 if(panel) {
                     // how open is this panel
-                    float openSpeed = 0.01f;
+                    float openSpeed = 0.1f;
                     ParameterBool &titleBool = static_cast<ParameterBool&>(*panel->titleButton->getParameter().get());
                     if(titleBool.getValue() != panel->isOpen) panel->showPanel(titleBool.getValue(), false);//panel->titleButton->bRecursive); // TODO
                     
@@ -76,7 +76,7 @@ namespace msa {
                             }
                             
                             control.setPosition(curPos.x + indent, curPos.y - scrollY);
-                            curPos.y += control.height;// + config.layout.padding.y * curScale.y;
+                            curPos.y += control.height + config.layout.padding.y * curScale.y;
                         } else {
                             control.setPosition(container.position + control.localRect.position);
                         }
