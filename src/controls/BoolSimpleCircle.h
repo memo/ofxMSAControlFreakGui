@@ -20,8 +20,12 @@ namespace msa {
                                         
                     if(isMouseOver()) setColor(ofColor(255, 100));
                     else setColor(ofColor(0, 100));
-                    ofCircle(x, y, height/2);
-                    
+                    ofPushMatrix();
+                    ofScale(width, height);
+                    ofFill();
+                    ofCircle(0, 0, 1);
+                    ofPopMatrix();
+
                     drawText(0, 0);
                     
                     BoolBase::onDraw();

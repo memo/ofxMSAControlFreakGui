@@ -57,7 +57,7 @@ namespace msa {
                 Panel& addPanel(PanelPtr page);
                 
                 // append given parameter group to current page
-                Panel& addParameters(ParameterGroupPtr parameters);
+//                Panel& addParameters(ParameterGroupPtr parameters);
                 
 
                 //--------------------------------------------------------------

@@ -17,7 +17,7 @@ namespace msa {
             class LayoutManager {
             public:
                 bool doWrap;
-                ofRectangle maxRect;
+                ofRectangle boundRect;
                 ofVec2f     curPos;
                 ofRectangle rect;
                 

@@ -38,32 +38,19 @@ namespace msa {
                 
             protected:
                 bool isOpen;
-                ParameterGroup *paramT;
+                ParameterGroup  *paramT;
                 LayoutManagerPtr layoutManager;
-                BoolTitle       *ptitleButton;   // button which controls the title of the panel
-
+                
+                BoolTitle       *titleButton;   // button which controls the title of the panel
+                BoolButton      *expandAllButton;
+                BoolButton      *collapseAllButton;
+                Container       *children;
+                
                 void init();
                 
                 void showPanel(bool bOpen, bool bRecursive = false);
                 
                 void buttonPressed(int i);
-                
-                
-                Panel           &addPanel(ParameterGroupPtr p);
-                BoolButton		&addButton(ParameterPtr p);
-                ColorPicker		&addColorPicker(ParameterPtr p);
-                DropdownList&   addDropdownList(ParameterPtr p);
-                Content			&addContent(ParameterPtr p, ofBaseDraws &content, float fixwidth = -1);
-                FPSCounter		&addFPSCounter();
-                QuadWarp		&addQuadWarper(ParameterPtr p);
-                Slider2d		&addSlider2d(ParameterPtr p);
-                SliderInt		&addSliderInt(ParameterPtr p);
-                SliderFloat		&addSliderFloat(ParameterPtr p);
-                BoolTitle		&addTitle(ParameterPtr p);
-                BoolToggle		&addToggle(ParameterPtr p);
-                
-                void addParameter(ParameterPtr p);
-                void addParameters(ParameterGroupPtr parameters);
             };
             
             

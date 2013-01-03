@@ -27,10 +27,10 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void setup() {
-                    width   = getConfig().layout.columnWidth;
-                    height  = getConfig().layout.buttonHeight;
-                }
+//                void setup() {
+//                    width   = getConfig().layout.columnWidth;
+//                    height  = getConfig().layout.buttonHeight;
+//                }
 
                 //--------------------------------------------------------------
                 void inc(T amount) {

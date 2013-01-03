@@ -19,69 +19,80 @@ namespace msa {
                 Panel *panel = dynamic_cast<Panel*>(&container);
                 if(panel) {
                     // how open is this panel
-                    float openSpeed = 0.1f;
-                    ParameterBool &titleBool = static_cast<ParameterBool&>(*panel->ptitleButton->getParameter().get());
-                    if(titleBool.getValue() != panel->isOpen) panel->showPanel(titleBool.getValue(), false);//panel->ptitleButton->bRecursive); // TODO
+                    float openSpeed = 0.01f;
+                    ParameterBool &titleBool = static_cast<ParameterBool&>(*panel->titleButton->getParameter().get());
+                    if(titleBool.getValue() != panel->isOpen) panel->showPanel(titleBool.getValue(), false);//panel->titleButton->bRecursive); // TODO
                     
                     if(panel->isOpen) {
                         //                    if(scale.y<0.95) scale.y += (1-scale.y) * openSpeed;
-                        if(panel->scale.y < 1) panel->scale.y += openSpeed;
-                        else panel->scale.y = 1.0f;
+                        if(panel->children->scale.y < 1) panel->children->scale.y += openSpeed;
+                        else panel->children->scale.y = 1.0f;
                     } else {
                         //                    if(scale.y > 0.05) scale.y += (0-scale.y) * openSpeed;
-                        if(panel->scale.y > 0) panel->scale.y -= openSpeed;
-                        else panel->scale.y = 0.0f;
+                        if(panel->children->scale.y > 0) panel->children->scale.y -= openSpeed;
+                        else panel->children->scale.y = 0.0f;
                     }
                     // if we are drawing this Panel inside another Panel, use auto-layout parameters of that
                     //                if(panel->getParent()) layoutManager = panel->getParent()->layoutManager;
                     
-                    panel->ptitleButton->z = -10000;
+                    //                    panel->titleButton->z = -10000;
                 }
                 
                 Config &config      = container.getConfig();
                 ofVec2f maxPos      = getMaxPos();
-                curPos              = clampPoint(curPos);
-                container.position      = curPos;
-                container.width         = 0;
-                container.height        = 0;
-                int panelDepth      = container.getDepth();// * config.layout.indent;
-                int numControls     = container.getNumControls();//container.getInheritedScale().y ? container.getNumControls() : 1;
-                ofVec2f scale       = container.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
                 
-                for(int i=0; i<numControls; i++) {
-                    Control& control = *container.getControl(i);
-                    control.setConfig(&config);
-                    
-                    if(control.doAutoLayout) {
-                        int indent = i==0 ? panelDepth * config.layout.indent : (panelDepth+1) * config.layout.indent;
+                if(container.doAutoLayout) {
+                    curPos              = clampPoint(curPos);
+                    container.position  = curPos;
+                    container.width     = 0;
+                    container.height    = 0;
+                } else {
+                    curPos = container.position;
+                }
+//
+                int panelDepth          = container.getDepth();// * config.layout.indent;
+                ofVec2f containerScale  = container.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
+                
+                if(containerScale.y > 0) {
+                    for(int i=0; i<container.getNumControls(); i++) {
+                        Control& control = *container.getControl(i);
+                        control.setConfig(&config);
                         
-                        // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-                        if(control.newColumn || (doWrap && curPos.y + (control.height + config.layout.padding.y) * scale.y > maxPos.y)) {
-                            curPos.x = rect.x + rect.width + config.layout.padding.x;
-                            curPos.y = maxRect.y;
+                        ofVec2f curScale = containerScale * control.scale;
+                        
+                        int indent = panelDepth * config.layout.indent;
+                        
+                        control.width = control.localRect.width ? control.localRect.width : config.layout.columnWidth - indent;
+                        control.height = control.localRect.height ? control.localRect.height : config.layout.buttonHeight;
+                        
+                        control.width *= curScale.x;
+                        control.height *= curScale.y;
+                        
+                        if(control.doAutoLayout) {
+                            // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
+                            if(control.newColumn || (doWrap && curPos.y + control.height > maxPos.y)) {
+                                curPos.x = rect.x + rect.width + config.layout.padding.x;
+                                curPos.y = boundRect.y;
+                            }
+                            
+                            control.setPosition(curPos.x + indent, curPos.y - scrollY);
+                            curPos.y += control.height;// + config.layout.padding.y * curScale.y;
+                        } else {
+                            control.setPosition(container.position + control.localRect.position);
                         }
                         
-                        control.setWidth(config.layout.columnWidth - indent);
-                        control.setPosition(curPos.x + indent, curPos.y - scrollY);
                         Renderer::instance().addControl(&control);
-                        
                         rect.growToInclude((ofRectangle&)control);
                         
                         Container *c = dynamic_cast<Container*>(&control);
                         if(c) prepareForDraw(*c);
-                        
-                        curPos.y += (control.height + config.layout.padding.y) * scale.y;
-                    } else {
-                        control.setPosition(container.position + control.localRect.position);
-                        control.width = control.localRect.width * container.getInheritedScale().x;
-                        control.height = control.localRect.height * container.getInheritedScale().y;
                     }
+                    
+                    // add some padding at end of group
+//                    curPos.y += config.layout.buttonHeight * containerScale.y;
                 }
                 
-                // add some padding at end of group
-                curPos.y += config.layout.buttonHeight * container.getParentScale().y;
-                
-//                container.set(*container.ptitleButton);
+                //                container.set(*container.titleButton);
             }
             
             //--------------------------------------------------------------
@@ -108,13 +119,13 @@ namespace msa {
             
             //--------------------------------------------------------------
             ofVec2f LayoutManager::getMaxPos() {
-                return ofVec2f(maxRect.width ? maxRect.x + maxRect.width : ofGetWidth(), maxRect.height ? maxRect.y + maxRect.height : ofGetHeight());
+                return ofVec2f(boundRect.width ? boundRect.x + boundRect.width : ofGetWidth(), boundRect.height ? boundRect.y + boundRect.height : ofGetHeight());
             }
             
             //--------------------------------------------------------------
             ofVec2f LayoutManager::clampPoint(ofVec2f p) {
                 ofVec2f maxPos(getMaxPos());
-                return ofVec2f(ofClamp(p.x, maxRect.getLeft(), maxPos.x), ofClamp(p.y, maxRect.getTop(), maxPos.y));
+                return ofVec2f(ofClamp(p.x, boundRect.getLeft(), maxPos.x), ofClamp(p.y, boundRect.getTop(), maxPos.y));
             }
             
             

@@ -42,8 +42,9 @@ namespace msa {
                 int getDepth();         // how deep in the heirarchy it is (how many levels deep)
                 bool isActive();       // whether the control is active or not
                 bool getParentActive(); // whether any of the controls parents are active or not
+                ofVec2f getScale();
                 ofVec2f getInheritedScale();// inherited scale
-                ofVec2f getParentScale();   // scale of parent
+                ofVec2f getParentScale();   // inherited scale of parent
                 
                 
                 string getName();

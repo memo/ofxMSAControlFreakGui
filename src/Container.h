@@ -6,11 +6,26 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
+            
+            class Gui;
+            class Panel;
+            class BoolButton;
+            class BoolTitle;
+            class BoolTitle;
+            class BoolToggle;
+            class ColorPicker;
+            class DropdownList;
+            class Content;
+            class FPSCounter;
+            class QuadWarp;
+            class Slider2d;
+            class SliderInt;
+            class SliderFloat;
+
+            
             class Container : public Control {
             public:
-                
-//                friend class Control;
-                
+                Container(Container *parent, string s);
                 Container(Container *parent, ParameterPtr p);
                 
                 void clear();
@@ -24,7 +39,25 @@ namespace msa {
                 Control* getActiveControl();
                 
                 
+                Panel           &addPanel(ParameterGroupPtr p);
+                BoolButton		&addButton(ParameterPtr p);
+                ColorPicker		&addColorPicker(ParameterPtr p);
+                DropdownList&   addDropdownList(ParameterPtr p);
+                Content			&addContent(ParameterPtr p, ofBaseDraws &content, float fixwidth = -1);
+                FPSCounter		&addFPSCounter();
+                QuadWarp		&addQuadWarper(ParameterPtr p);
+                Slider2d		&addSlider2d(ParameterPtr p);
+                SliderInt		&addSliderInt(ParameterPtr p);
+                SliderFloat		&addSliderFloat(ParameterPtr p);
+                BoolTitle		&addTitle(ParameterPtr p);
+                BoolToggle		&addToggle(ParameterPtr p);
                 
+                void addParameter(ParameterPtr p);
+                void addParameters(ParameterGroupPtr parameters);
+
+                
+                
+                // events from ofxMSAInteractiveObject
                 void update();
                 void mouseMoved(ofMouseEventArgs &e);
                 void mousePressed(ofMouseEventArgs &e);

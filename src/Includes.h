@@ -3,6 +3,8 @@
 #include "ofxMSAControlFreakGui/src/Panel.h"
 #include "ofxMSAControlFreakGui/src/Config.h"
 #include "ofxMSAControlFreakGui/src/Controls/BoolButton.h"
+#include "ofxMSAControlFreakGui/src/Controls/BoolSimpleBox.h"
+#include "ofxMSAControlFreakGui/src/Controls/BoolSimpleCircle.h"
 #include "ofxMSAControlFreakGui/src/Controls/BoolTitle.h"
 #include "ofxMSAControlFreakGui/src/Controls/BoolToggle.h"
 #include "ofxMSAControlFreakGui/src/Controls/ColorPicker.h"

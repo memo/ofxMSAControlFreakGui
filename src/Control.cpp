@@ -73,10 +73,14 @@ namespace msa {
                 return getParent() ? isActive() || getParent()->isActive() || getParent()->getParentActive() : isActive();
             }
             
+            //--------------------------------------------------------------
+            ofVec2f Control::getScale() {
+                return scale;
+            }
             
             //--------------------------------------------------------------
             ofVec2f Control::getInheritedScale() {
-                return scale * getParentScale();
+                return getParent() ? scale * getParent()->getInheritedScale() : scale;
             }
             
             //--------------------------------------------------------------

@@ -7,6 +7,13 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
+            
+            //--------------------------------------------------------------
+            Container::Container(Container *parent, string s):Control(parent, ParameterGroup::create(s, NULL)) {
+                _pactiveControl = NULL;
+            }
+
+            //--------------------------------------------------------------
             Container::Container(Container *parent, ParameterPtr p):Control(parent, p) {
                 _pactiveControl = NULL;
             }
@@ -50,9 +57,6 @@ namespace msa {
                 // put new active control at the front
                 if(_pactiveControl) {
                     _pactiveControl->z = -1000;
-                    //                    ofLogNotice() << "setting active control [" << pactiveControl->name << "] for panel [" << name;
-                    //                } else {
-                    //                    ofLogNotice() << "setting active control NULL for panel [" << name;
                 }
             }
             
@@ -68,9 +72,114 @@ namespace msa {
             
             //--------------------------------------------------------------
             //            bool Container::isActive() {
-            //                bool b = pactiveControl == ptitleButton;//pactiveControl != NULL;
+            //                bool b = pactiveControl == titleButton;//pactiveControl != NULL;
             //                return parent ? b | parent->isActive() : b;
             //            }
+            
+            
+            
+            
+            //--------------------------------------------------------------
+            Panel& Container::addPanel(ParameterGroupPtr p) {
+                return (Panel&)*addControl(new Panel(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            BoolButton& Container::addButton(ParameterPtr p) {
+                return (BoolButton&)*addControl(new BoolButton(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            ColorPicker& Container::addColorPicker(ParameterPtr p) {
+                //                return (ColorPicker&)*addControl(new ColorPicker(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            DropdownList& Container::addDropdownList(ParameterPtr p) {
+                return (DropdownList&)*addControl(new DropdownList(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            Content& Container::addContent(ParameterPtr p, ofBaseDraws &content, float fixwidth) {
+                if(fixwidth == -1) fixwidth = getConfig().layout.columnWidth;
+                return (Content&)*addControl(new Content(this, p, content, fixwidth));
+            }
+            
+            //--------------------------------------------------------------
+            FPSCounter& Container::addFPSCounter() {
+                return (FPSCounter&)*addControl(new FPSCounter(this));
+            }
+            
+            //--------------------------------------------------------------
+            QuadWarp& Container::addQuadWarper(ParameterPtr p) {
+                //                return (QuadWarp&)*addControl(new QuadWarp(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            SliderInt& Container::addSliderInt(ParameterPtr p) {
+                return (SliderInt&)*addControl(new SliderT<int>(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            SliderFloat& Container::addSliderFloat(ParameterPtr p) {
+                return (SliderFloat&)*addControl(new SliderT<float>(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            Slider2d& Container::addSlider2d(ParameterPtr p) {
+                //                return (Slider2d&)*addControl(new Slider2d(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            BoolTitle& Container::addTitle(ParameterPtr p) {
+                return (BoolTitle&)*addControl(new BoolTitle(this, p));
+            }
+            
+            //--------------------------------------------------------------
+            BoolToggle& Container::addToggle(ParameterPtr p) {
+                return (BoolToggle&)*addControl(new BoolToggle(this,p));
+            }
+            
+            
+
+            //--------------------------------------------------------------
+            void Container::addParameter(ParameterPtr p) {
+                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameter: " << getPath() << ": " << p->getPath();
+                // if parameter already exists, remove it first
+                
+                ParameterGroupPtr pg(std::tr1::dynamic_pointer_cast<ParameterGroup>(p));
+                if(pg) addPanel(pg);
+                
+                switch(p->getType()) {
+                    case Type::kFloat: addSliderFloat(p); break;
+                    case Type::kInt: addSliderInt(p); break;
+                    case Type::kBool: {
+                        ParameterBool &pb = *(ParameterBool*)p.get();
+                        if(pb.getMode() == ParameterBool::kToggle) addToggle(p);
+                        else addButton(p);
+                    }
+                        break;
+                        
+                    case Type::kNamedIndex: addDropdownList(p);
+                        
+                    case Type::kGroup:
+                        break;
+                        
+                    default:
+                        ofLogWarning() << "msa::ControlFreak::gui::Container::addParameter: unknown type adding parameter " << p->getPath() << " " << p->getTypeName();
+                        break;
+                }
+            }
+            
+            //--------------------------------------------------------------
+            void Container::addParameters(ParameterGroupPtr parameters) {
+                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameters: " << getPath() << ": " << parameters->getPath();
+                
+                int np = parameters->getNumParams();
+                for(int i=0; i<np; i++) {
+                    addParameter(parameters->getParameter(i));
+                }
+            }
             
 
             //--------------------------------------------------------------

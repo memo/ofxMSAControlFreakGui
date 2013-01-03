@@ -175,12 +175,12 @@ namespace msa {
             }
 
             //--------------------------------------------------------------
-            Panel& Gui::addParameters(ParameterGroupPtr parameters) {
-                if(!isSetup) setup();
-                if(getNumPages() == 0) addPage(parameters);
-                else getCurrentPage().addParameters(parameters);
-                return getCurrentPage();
-            }
+//            Panel& Gui::addParameters(ParameterGroupPtr parameters) {
+//                if(!isSetup) setup();
+//                if(getNumPages() == 0) addPage(parameters);
+//                else getCurrentPage().addParameters(parameters);
+//                return getCurrentPage();
+//            }
             
             
             //--------------------------------------------------------------
@@ -231,7 +231,7 @@ namespace msa {
                 if(!panel.layoutManager) panel.layoutManager = LayoutManagerPtr(new LayoutManager);
                
                 // configure layout manager
-                panel.layoutManager->maxRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
+                panel.layoutManager->boundRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
                 panel.layoutManager->curPos.set(0, 0); // start in top left
                 panel.layoutManager->rect.set(0, 0, 0, 0);
                 
