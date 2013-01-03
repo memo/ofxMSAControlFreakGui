@@ -11,14 +11,15 @@ namespace msa {
                 setParameter(parameter);
                 setParent(parent);
                 
-                scale.set(1, 1);
-                
                 z = 0;
-                _alpha = 1;
                 newColumn = false;
+                keyboardShortcut = 0;
+//                setKeyboardShortcut(0);
+                scale.set(1, 1);
+                doAutoLayout = true;
                 localRect.set(0, 0, 0, 0);
-                
-                setKeyboardShortcut(0);
+
+                _alpha = 1;
                 
                 setup();
                 
@@ -80,7 +81,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             ofVec2f Control::getParentScale() {
-                return getParent() ? getParent()->getInheritedScale() : scale;
+                return getParent() ? getParent()->getInheritedScale() : ofVec2f(1, 1);
             }
 
             //--------------------------------------------------------------
@@ -169,16 +170,16 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Control &Control::setKeyboardShortcut(char c) {
-                keyboardShortcut = c;
-                if(c) {
-                    //	printf("ofxMSAControlFreakGui/src/Control::setKeyboardShortcut %s %c\n", name.c_str(), c);
-                    //                    name = origName + " (" + c + ")";
-                } else {
-                    //                    name = origName;
-                }
-                return *this;
-            }
+//            Control &Control::setKeyboardShortcut(char c) {
+//                keyboardShortcut = c;
+//                if(c) {
+//                    //	printf("ofxMSAControlFreakGui/src/Control::setKeyboardShortcut %s %c\n", name.c_str(), c);
+//                    //                    name = origName + " (" + c + ")";
+//                } else {
+//                    //                    name = origName;
+//                }
+//                return *this;
+//            }
             
             //--------------------------------------------------------------
             void Control::drawBorder(ofColor *c) {

@@ -24,9 +24,9 @@ namespace msa {
                 bool		newColumn;
                 char		keyboardShortcut;
                 ofVec2f     scale;
+
+                // if this is true, do autoLayout, otherwise use localRect (in relation to parent)
                 bool        doAutoLayout;
-                
-                // if this is set (i.e. nonzero), override auto-layout and set position and size in relation to parent
                 ofRectangle localRect;
                 
                 Control(Container *parent, ParameterPtr p);
@@ -70,7 +70,7 @@ namespace msa {
                 void draw();
                 
                 
-                Control& setKeyboardShortcut(char c);
+//                Control& setKeyboardShortcut(char c);
                 
                 virtual void onDraw() {}
                 

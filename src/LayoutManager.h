@@ -22,7 +22,7 @@ namespace msa {
                 ofRectangle rect;
                 
                 LayoutManager();
-                void prepareForDraw(Panel &panel);
+                void prepareForDraw(Container &container);
                 void draw(Config &config);
                 
             protected:
