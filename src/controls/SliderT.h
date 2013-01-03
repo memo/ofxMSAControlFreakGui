@@ -90,8 +90,6 @@ namespace msa {
                 void onDraw() {
                     ofFill();
                     
-                    float width = width;
-                    float height = height;
                     Config &c = getConfig();
                     
                     float barwidth = ofClamp(paramT->getMappedTo(0, width), 0, width);
