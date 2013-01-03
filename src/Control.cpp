@@ -8,8 +8,8 @@ namespace msa {
             
             //--------------------------------------------------------------
             Control::Control(Container *parent, ParameterPtr parameter) {
-                setParent(parent);
                 setParameter(parameter);
+                setParent(parent);
                 
                 scale.set(1, 1);
                 
@@ -47,7 +47,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Container* Control::getRoot(bool bUpdate) {
-                if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Panel*>(this) );
+                if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Container*>(this) );
                 else return _proot;
 //                return getParent() ? getParent()->_proot : _proot;
             }
@@ -64,7 +64,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             bool Control::isActive() {
-                return _active;//getRoot()->getActiveControl() && getRoot()->getActiveControl() == this;// TODO
+                return getRoot()->getActiveControl() && getRoot()->getActiveControl() == this;
             }
             
             //--------------------------------------------------------------
@@ -197,7 +197,7 @@ namespace msa {
                 ofTranslate(x, y);
                 ofEnableAlphaBlending();
                 
-                float targetAlpha = 1.0;//getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;//TODO
+                float targetAlpha = getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;//TODO
                 float diff = (targetAlpha - _alpha);
                 _alpha += diff * getConfig().colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;

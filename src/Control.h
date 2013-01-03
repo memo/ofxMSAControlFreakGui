@@ -100,10 +100,9 @@ namespace msa {
                 Container *_proot;
                 Config *_pconfig;
                 float _alpha;
-                bool _active;
+//                bool _active;
                 
                 ParameterPtr _parameter;
-                bool parameterOwner;
                 
                 void setParent(Container *parent);
                 void setParameter(ParameterPtr parameter);

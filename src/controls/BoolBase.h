@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                BoolBase(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterBool(NULL, s))) {
+                BoolBase(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterBool(s, NULL))) {
                     init();
                 }
                 

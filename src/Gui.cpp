@@ -205,13 +205,15 @@ namespace msa {
             //void Gui::setup(ofEventArgs& e) {
             void Gui::update(ofEventArgs& e) {
                 if(!isSetup) setup();
-                
+                if(!pages.size()) return;
+
                 pages[currentPageIndex]->_update(e);
             }
             
             //--------------------------------------------------------------
             void Gui::draw(ofEventArgs& e) {
                 if(!doDraw) return;
+                if(!pages.size()) return;
                 
                 ofPushStyle();
                 ofDisableSmoothing();
@@ -222,8 +224,6 @@ namespace msa {
                 
                 
                 Renderer::instance().clearControls();
-                
-
                 
                 Panel &panel = *pages[currentPageIndex];
                 
@@ -249,24 +249,28 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::mouseMoved(ofMouseEventArgs& e) {
+                if(!pages.size()) return;
 //                headerPage->_mouseMoved(e);
                 pages[currentPageIndex]->_mouseMoved(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mousePressed(ofMouseEventArgs& e) {
+                if(!pages.size()) return;
 //                headerPage->_mousePressed(e);
                 pages[currentPageIndex]->_mousePressed(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseDragged(ofMouseEventArgs& e) {
+                if(!pages.size()) return;
 //                headerPage->_mouseDragged(e);
                 pages[currentPageIndex]->_mouseDragged(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseReleased(ofMouseEventArgs& e) {
+                if(!pages.size()) return;
 //                headerPage->_mouseReleased(e);
                 pages[currentPageIndex]->_mouseReleased(e);
                 //	if(doAutoSave) doSave = true;
@@ -275,6 +279,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::keyPressed(ofKeyEventArgs& e) {
+                if(!pages.size()) return;
                 if(doDefaultKeys) {
                     if(e.key == ' ') {
                         toggleDraw();
@@ -298,6 +303,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::keyReleased(ofKeyEventArgs& e) {
+                if(!pages.size()) return;
 //                headerPage->_keyReleased(e);
                 pages[currentPageIndex]->_keyReleased(e);
             }

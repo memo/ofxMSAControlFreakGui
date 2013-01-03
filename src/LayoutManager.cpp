@@ -18,7 +18,9 @@ namespace msa {
 
                 // how open is this panel
                 float openSpeed = 0.1f;
-//                if(panel.ptitleButton->getParameter().getValue() != panel.isOpen) panel.showPanel(panel.ptitleButton->getParameter().getValue(), panel.ptitleButton->bRecursive); // TODO
+                ParameterBool &titleBool = static_cast<ParameterBool&>(*panel.ptitleButton->getParameter().get());
+                if(titleBool.getValue() != panel.isOpen) panel.showPanel(titleBool.getValue(), false);//panel.ptitleButton->bRecursive); // TODO
+                
                 if(panel.isOpen) {
                     //                    if(scale.y<0.95) scale.y += (1-scale.y) * openSpeed;
                     if(panel.scale.y < 1) panel.scale.y += openSpeed;
@@ -58,6 +60,7 @@ namespace msa {
                     
                     control.setWidth(config.layout.columnWidth - indent);
                     control.setPosition(curPos.x + indent, curPos.y - scrollY);
+//                    control.draw();
                     Renderer::instance().addControl(&control);
 
 //                    ofLogVerbose() << "layout " << curPos << " " << control.getPath() << " " << control.x << " " << control.y << " " << control.width  << " " << control.height;
@@ -69,7 +72,6 @@ namespace msa {
                     if(p) prepareForDraw(*p);
                     
                     curPos.y += (control.height + config.layout.padding.y) * scale.y;
-                    
                 }
                 
                 // add some padding at end of group

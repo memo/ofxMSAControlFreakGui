@@ -8,7 +8,7 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
-            Panel::Panel(Container *parent, string s) : Container(parent, ParameterPtr(new ParameterGroup(NULL, s))) {
+            Panel::Panel(Container *parent, string s) : Container(parent, ParameterGroup::create(s, NULL)) {
                 init();
             }
 

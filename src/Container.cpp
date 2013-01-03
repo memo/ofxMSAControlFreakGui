@@ -31,7 +31,7 @@ namespace msa {
             //--------------------------------------------------------------
             Control* Container::addControl(Control *control) {
                 _controls.push_back(ControlPtr(control));
-                control->setParent(_pparent);
+                control->setParent(this);
                 return control;
             }
             
