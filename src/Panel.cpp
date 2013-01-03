@@ -65,7 +65,7 @@ namespace msa {
                     {
                         ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
                         if(f.bSuccess) {
-                            parameter->loadXml(false, f.filePath);
+                            parameter->loadXmlValues(f.filePath);
                         }
                     }
                         break;
@@ -74,7 +74,7 @@ namespace msa {
                     {
                         ofFileDialogResult f = ofSystemSaveDialog(parameter->getPath() + "-defaults.xml", "Save preset");
                         if(f.bSuccess) {
-                            parameter->saveXml(false, f.getPath());
+                            parameter->saveXmlValues(f.getPath());
 //                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));
 //                            parameter->saveXml(false, path + "/" + parameter->getPath() + "-" + f.fileName + ".xml");
 //                            ofDirectory dir(path + "/" + parameter->getPath());
