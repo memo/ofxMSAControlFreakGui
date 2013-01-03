@@ -9,19 +9,30 @@ namespace msa {
             class Container : public Control {
             public:
                 
-                friend class Control;
+//                friend class Control;
                 
-                Container();
+                Container(Container *parent, ParameterPtr p);
                 
                 void clear();
-                int size() const;
-                Control* add(Control *control);
-                Control* get(int i) const;
-                Control* operator[](int index);
+                int getNumControls() const;
+                Control* addControl(Control *control);
+                Control* getControl(int i) const;
+//                Control* operator[](int index);
                 
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
                 Control* getActiveControl();
+                
+                
+                
+                void update();
+                void mouseMoved(ofMouseEventArgs &e);
+                void mousePressed(ofMouseEventArgs &e);
+                void mouseDragged(ofMouseEventArgs &e);
+                void mouseReleased(ofMouseEventArgs &e);
+                void keyPressed(ofKeyEventArgs &e);
+                void keyReleased(ofKeyEventArgs &e);
+
                 
             private:
                 vector<ControlPtr> _controls;

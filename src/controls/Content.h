@@ -1,18 +1,19 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class Content  : public ControlParameterT<Parameter> {
+            class Content  : public Control {
             public:
                 float			fixwidth;
                 float			fixheight;
                 ofBaseDraws		*content;
                 
-                Content(Panel *parent, Parameter *p, ofBaseDraws& content, float fixwidth=250.0);
+                Content(Container *parent, ParameterPtr p, ofBaseDraws& content, float fixwidth=250.0);
                 void setup();
                 void onDraw();
             };

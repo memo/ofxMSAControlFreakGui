@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
 
 namespace msa {
     namespace ControlFreak {
@@ -15,7 +15,7 @@ namespace msa {
 //                float		barwidth[4];
 //                float		pct[4];
 //                
-//                ColorPicker(Panel *parent, Parameter *p);
+//                ColorPicker(Container *parent, ParameterPtr p);
 //                void setup();
 ////                void readFromXml(ofxXmlSettings &XML);
 ////                void writeToXml(ofxXmlSettings &XML);

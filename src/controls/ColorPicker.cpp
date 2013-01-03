@@ -13,7 +13,7 @@
 //    namespace ControlFreak {
 //        namespace gui {
 //            
-//            ColorPicker::ColorPicker(Panel *parent, Parameter *p) : Control(parent, p) {
+//            ColorPicker::ColorPicker(Container *parent, ParameterPtr p) : Control(parent, p) {
 ////                this->value = &color;
 ////                this->min	= 0;
 ////                this->max	= max;

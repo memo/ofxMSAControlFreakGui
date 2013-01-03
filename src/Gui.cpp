@@ -127,13 +127,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::setPage(string name) {
-                //	Panel *page;
-                //                for(int i=1; i < pages.size(); i++) {
-                //                    if(name.compare(pages[i]->name) == 0) {
-                //                        setPage(i);
-                //                        break;
-                //                    }
-                //                }
+                // TODO
             }
             
             //--------------------------------------------------------------
@@ -159,38 +153,35 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-//            vector <Panel*>&	Gui::getPages() {
-//                return pages;
+//            Panel& Gui::addPage(string name) {
+//                PanelPtr panel(new Panel(NULL, name));
+//                return addPanel(panel);
 //            }
-            
+
             //--------------------------------------------------------------
-            Panel& Gui::addPage(string name) {
-                return addPanel(new Panel(NULL, name));
+            Panel& Gui::addPage(ParameterGroupPtr parameters) {
+                PanelPtr panel(new Panel(NULL, parameters));
+                return addPanel(panel);
             }
 
             //--------------------------------------------------------------
-            Panel& Gui::addPage(ParameterGroup &parameters) {
-                return addPanel(new Panel(NULL, &parameters));
+            Panel& Gui::addPanel(PanelPtr page) {
+                if(!isSetup) setup();
+                
+                pages.push_back(page);
+                page->setConfig(&config);
+                setPage(pages.size() - 1);
+                return *page;
             }
-            
+
             //--------------------------------------------------------------
-            Panel& Gui::addParameters(ParameterGroup &parameters) {
+            Panel& Gui::addParameters(ParameterGroupPtr parameters) {
                 if(!isSetup) setup();
                 if(getNumPages() == 0) addPage(parameters);
                 else getCurrentPage().addParameters(parameters);
                 return getCurrentPage();
             }
             
-            //--------------------------------------------------------------
-            Panel& Gui::addPanel(Panel *page) {
-                if(!isSetup) setup();
-                
-                pages.push_back(PanelPtr(page));
-                page->setConfig(&config);
-                setPage(pages.size() - 1);
-                return *page;
-            }
-
             
             //--------------------------------------------------------------
             void Gui::enableAutoEvents() {
@@ -237,7 +228,7 @@ namespace msa {
                 Panel &panel = *pages[currentPageIndex];
                 
                 // create layout manager for the panel if one doesn't exist
-                if(panel.layoutManager == NULL) panel.layoutManager = LayoutManagerPtr(new LayoutManager);
+                if(!panel.layoutManager) panel.layoutManager = LayoutManagerPtr(new LayoutManager);
                
                 // configure layout manager
                 panel.layoutManager->maxRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window

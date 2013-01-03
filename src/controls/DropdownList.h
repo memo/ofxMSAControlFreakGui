@@ -1,16 +1,19 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class DropdownList : public ControlParameterT<ParameterNamedIndex> {
+            class DropdownList : public Control {
             public:
                 
                 //--------------------------------------------------------------
-                DropdownList(Panel *parent, Parameter *p) : ControlParameterT<ParameterNamedIndex>(parent, p) {}
+                DropdownList(Container *parent, ParameterPtr p) : Control(parent, p) {
+                    paramT = dynamic_cast<ParameterNamedIndex*>(getParameter().get());
+                }
 
                 //--------------------------------------------------------------
                 void setup() {
@@ -20,30 +23,27 @@ namespace msa {
 
                 //--------------------------------------------------------------
                 void onDragOutside(int x, int y, int button) {
-                    if(!parameter) return;
                     int a = this->y + height;
-                    int b = this->y + height + getConfig().layout.dropdownListTextHeight * parameter->getNumLabels();
-                    int v = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, parameter->getNumLabels()-1, true));
-                    parameter->setValue(v);
+                    int b = this->y + height + getConfig().layout.dropdownListTextHeight * paramT->getNumLabels();
+                    int v = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+                    paramT->setValue(v);
                 }
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(!parameter) return;
-                    
                     ofFill();
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
                     setTextColor();
-                    getConfig().drawString(getName() + ": " + parameter->getSelectedLabel(), getConfig().layout.textPos.x, getConfig().layout.textPos.y);
+                    getConfig().drawString(getName() + ": " + paramT->getSelectedLabel(), getConfig().layout.textPos.x, getConfig().layout.textPos.y);
                     
                     int ty = height/3;
                     int tl = ty*1.5;
                     ofTriangle(width - ty - tl, ty, width - ty, ty, width - ty - tl/2, height - ty);
                     
                     if(isActive()) {
-                        int numLabels = parameter->getNumLabels();
+                        int numLabels = paramT->getNumLabels();
                         setBGColor();
                         ofRect(0, height, width, getConfig().layout.dropdownListTextHeight * (numLabels + 0.5));
                         
@@ -56,16 +56,18 @@ namespace msa {
                         for(int i=0; i < numLabels; i++) {
                             setTextColor();
                             float curY = height + i*getConfig().layout.dropdownListTextHeight;
-                            if(i == parameter->getValue()) {
+                            if(i == paramT->getValue()) {
                                 ofRect(0, curY+3, width, getConfig().layout.dropdownListTextHeight);
                                 setBGColor();
                             }
                             
-                            getConfig().drawString(parameter->getLabel(i), getConfig().layout.textPos.x, curY + getConfig().layout.textPos.y);
+                            getConfig().drawString(paramT->getLabel(i), getConfig().layout.textPos.x, curY + getConfig().layout.textPos.y);
                         }
                     }
                 }
                 
+            protected:
+                ParameterNamedIndex *paramT;
             };
             
         }

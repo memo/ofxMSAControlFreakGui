@@ -1,4 +1,4 @@
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
 #include "ofxMSAControlFreakGui/src/Container.h"
 #include "ofxMSAControlFreakGui/src/Panel.h"
 #include "ofxMSAControlFreakGui/src/Config.h"

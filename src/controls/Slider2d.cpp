@@ -6,7 +6,7 @@ namespace msa {
         namespace gui {
             
             
-//            Slider2d::Slider2d(Panel *parent, Parameter *p) : Control(parent, p) {
+//            Slider2d::Slider2d(Container *parent, Parameter *p) : Control(parent, p) {
 //                min.set(xmin, ymin);
 //                max.set(xmax, ymax);
 //                this->value = &value;

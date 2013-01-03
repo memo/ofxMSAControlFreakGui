@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofxMSAControlFreakGui/src/controls/BoolBase.h"
+#include "ofxMSAControlFreakGui/src/Renderer.h"
 
 namespace msa {
     namespace ControlFreak {
@@ -20,10 +21,10 @@ namespace msa {
                 vector<ButtonState> buttons;
                 
                 //--------------------------------------------------------------
-                BoolTitle(Panel *parent, string s) : BoolBase(parent, s) { }
+                BoolTitle(Container *parent, string s) : BoolBase(parent, s) { }
                 
                 //--------------------------------------------------------------
-                BoolTitle(Panel *parent, Parameter *p) : BoolBase(parent, p) { }
+                BoolTitle(Container *parent, ParameterPtr p) : BoolBase(parent, p) { }
                 
                 //--------------------------------------------------------------
                 void setup() {
@@ -58,14 +59,13 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(!parameter) return;
-                    
+                                        
                     if(getName().empty()) return;
                     
                     
                     // draw bg
                     ofFill();
-                    setToggleColor(parameter->getValue());
+                    setToggleColor(paramT->getValue());
                     ofRect(0, 0, width, height);
                     
                     // circle buttons
@@ -86,7 +86,7 @@ namespace msa {
                     ofRect(0, 0, buttonWidth, height);
 
                     
-                    drawText(buttonWidth/2-3, 15, (parameter->getValue() ? "-" : "+"));
+                    drawText(buttonWidth/2-3, 15, (paramT->getValue() ? "-": "+"));
                     drawText(buttonWidth + 5, 15);
                     ofSetLineWidth(2);
                     drawBorder(getConfig().colors.text);
@@ -102,9 +102,9 @@ namespace msa {
                             Renderer::instance().setToolTip("Save preset");
                             
 //                        } else {
-                            string sverb = parameter->getValue() ? "close" : "open";
-//                            string starget = bMouseOverRecursive ? "panel and all sub-panels" : "panel. Right-click to temporarily isolate";
-    //                        if(parameter->getValue()) s = "Click to close panel [" + getName() + "]";
+                            string sverb = paramT->getValue() ? "close": "open";
+//                            string starget = bMouseOverRecursive ? "panel and all sub-panels": "panel. Right-click to temporarily isolate";
+    //                        if(getParameter().getValue()) s = "Click to close panel [" + getName() + "]";
     //                        else s = "Click to open panel";
 //                            Renderer::instance().setToolTip("Click to " + sverb + " " + starget);
 //                        }

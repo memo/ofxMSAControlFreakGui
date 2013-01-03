@@ -40,11 +40,11 @@ namespace msa {
                 panel.width         = 0;
                 panel.height        = 0;
                 int panelDepth      = panel.getDepth();// * config.layout.indent;
-                int numControls     = panel.children.size();//panel.getInheritedScale().y ? panel.children.size() : 1;
+                int numControls     = panel.getNumControls();//panel.getInheritedScale().y ? panel.getNumControls() : 1;
                 ofVec2f scale       = panel.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
                 
                 for(int i=0; i<numControls; i++) {
-                    Control& control = *panel.children[i];
+                    Control& control = *panel.getControl(i);
                     
                     control.setConfig(&config);
                     
@@ -60,7 +60,7 @@ namespace msa {
                     control.setPosition(curPos.x + indent, curPos.y - scrollY);
                     Renderer::instance().addControl(&control);
 
-                    ofLogVerbose() << "layout " << curPos << " " << control.getPath() << " " << control.x << " " << control.y << " " << control.width  << " " << control.height;
+//                    ofLogVerbose() << "layout " << curPos << " " << control.getPath() << " " << control.x << " " << control.y << " " << control.width  << " " << control.height;
                     
                     
                     rect.growToInclude((ofRectangle&)control);

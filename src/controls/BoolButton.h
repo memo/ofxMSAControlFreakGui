@@ -10,20 +10,19 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                BoolButton(Panel *parent, string s) : BoolBase(parent, s) {}
+                BoolButton(Container *parent, string s) : BoolBase(parent, s) {}
 
                 //--------------------------------------------------------------
-                BoolButton(Panel *parent, Parameter *p) : BoolBase(parent, p) {}
+                BoolButton(Container *parent, ParameterPtr p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(!parameter) return;
-                    
+                                        
                     if(getName().empty()) return;
                     
                     // draw bg
                     ofFill();
-                    setToggleColor(parameter->getValue());
+                    setToggleColor(paramT->getValue());
                     ofRect(0, 0, width, height);
                     
                     drawText(3, 15);

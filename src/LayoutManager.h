@@ -9,6 +9,10 @@ namespace msa {
             class Gui;
             class Panel;
             
+            class LayoutManager;
+            typedef std::tr1::shared_ptr<LayoutManager> LayoutManagerPtr;
+
+            
             // for auto-layout
             class LayoutManager {
             public:
@@ -28,8 +32,6 @@ namespace msa {
                 
             };
             
-            
-            typedef std::tr1::shared_ptr<LayoutManager> LayoutManagerPtr;
             
         }
     }

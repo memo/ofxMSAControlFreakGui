@@ -6,8 +6,10 @@ namespace msa {
         namespace gui {
             
             
-            Control::Control(Panel *parent) {
+            //--------------------------------------------------------------
+            Control::Control(Container *parent, ParameterPtr parameter) {
                 setParent(parent);
+                setParameter(parameter);
                 
                 scale.set(1, 1);
                 
@@ -39,12 +41,12 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Control *Control::getParent() {
+            Container* Control::getParent() {
                 return _pparent;
             }
             
             //--------------------------------------------------------------
-            Control *Control::getRoot(bool bUpdate) {
+            Container* Control::getRoot(bool bUpdate) {
                 if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Panel*>(this) );
                 else return _proot;
 //                return getParent() ? getParent()->_proot : _proot;
@@ -81,7 +83,21 @@ namespace msa {
                 return getParent() ? getParent()->getInheritedScale() : scale;
             }
 
+            //--------------------------------------------------------------
+            string Control::getName() {
+                return getParameter()->getName();
+            }
             
+            //--------------------------------------------------------------
+            string Control::getPath() {
+                return getParameter()->getPath();
+            }
+            
+            //--------------------------------------------------------------
+            ParameterPtr Control::getParameter() {
+                return _parameter;
+            }
+
             //--------------------------------------------------------------
             int Control::getState() {
                 if(isMousePressed()) return 2;
@@ -137,6 +153,22 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
+            void Control::setTooltip(string s) {
+                // if s is empty, use string from parameter
+                if(s.empty()) s = getParameter()->getTooltip();
+                if(doTooltip() && !s.empty()) {
+                    Renderer::instance().setToolTip(getParameter()->getTooltip());
+                }
+            }
+            
+
+            //--------------------------------------------------------------
+            void Control::drawText(int x, int y, string s, ofColor *c) {
+                setColor(c ? c : getConfig().colors.text);
+                getConfig().drawString(s.empty() ? getName() : s, x, y);
+            }
+            
+            //--------------------------------------------------------------
             Control &Control::setKeyboardShortcut(char c) {
                 keyboardShortcut = c;
                 if(c) {
@@ -158,6 +190,8 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Control::draw() {
+                setTooltip();
+
                 ofPushStyle();
                 ofPushMatrix();
                 ofTranslate(x, y);
@@ -191,15 +225,14 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            void Control::setParent(Control *parent) {
+            void Control::setParent(Container *parent) {
                 _pparent = parent;
                 getRoot(true);
-                
-                //                if(getParent()) {
-                //                    this->pconfig = &getParent()->getConfig();
-                //                    width   = getConfig().layout.columnWidth;
-                //                    height  = getConfig().layout.buttonHeight;
-                //                }
+            }
+            
+            //--------------------------------------------------------------
+            void Control::setParameter(ParameterPtr parameter) {
+                _parameter = parameter;
             }
 
             

@@ -1,16 +1,17 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class FPSCounter : public ControlParameterT<Parameter> {
+            class FPSCounter : public Control {
             public:
                 
                 //--------------------------------------------------------------
-                FPSCounter(Panel *parent) : ControlParameterT<Parameter>(parent, NULL) {}
+                FPSCounter(Container *parent) : Control(parent, ParameterPtr(new Parameter(NULL, "FPS"))) {}
                 
                 //--------------------------------------------------------------
                 void setup() {

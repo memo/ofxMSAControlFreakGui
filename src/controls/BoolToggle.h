@@ -10,20 +10,19 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                BoolToggle(Panel *parent, string s) : BoolBase(parent, s) {}
+                BoolToggle(Container *parent, string s) : BoolBase(parent, s) {}
                 
                 //--------------------------------------------------------------
-                BoolToggle(Panel *parent, Parameter *p) : BoolBase(parent, p) {}
+                BoolToggle(Container *parent, ParameterPtr p) : BoolBase(parent, p) {}
                
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(!parameter) return;
-                    
+                                        
                     ofFill();
-                    setToggleColor(parameter->getValue());
+                    setToggleColor(paramT->getValue());
                     ofRect(0, 0, height, height);
                     
-                    if(parameter->getValue()) {
+                    if(paramT->getValue()) {
                         setTextColor();
                         ofSetLineWidth(2);
                         ofLine(0, 0, height, height);

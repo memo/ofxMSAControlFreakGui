@@ -1,43 +1,53 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
             template <typename T>
-            class SliderT : public ControlParameterT<ParameterSingleValueT<T> > {
+            class SliderT : public Control {
             public:
 
                 //--------------------------------------------------------------
-                SliderT(Panel *parent, Parameter *p) : ControlParameterT<ParameterSingleValueT<T> >(parent, p) {}
+                SliderT(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterSingleValueT<T>(NULL, s))) {
+                    init();
+                }
+                
+                //--------------------------------------------------------------
+                SliderT(Container *parent, ParameterPtr p) : Control(parent, p) {
+                    init();
+                }
 
                 //--------------------------------------------------------------
+                void init() {
+                    paramT = dynamic_cast<ParameterSingleValueT<T>*>(getParameter().get());
+                }
+                
+                //--------------------------------------------------------------
                 void setup() {
-                    this->width   = this->getConfig().layout.columnWidth;
-                    this->height  = this->getConfig().layout.buttonHeight;
+                    width   = getConfig().layout.columnWidth;
+                    height  = getConfig().layout.buttonHeight;
                 }
 
                 //--------------------------------------------------------------
                 void inc(T amount) {
-                    if(!this->parameter) return;
-                    this->parameter->inc(amount);
+                    paramT->inc(amount);
                 }
                 
                 //--------------------------------------------------------------
                 void dec(T amount) {
-                    if(!this->parameter) return;
-                    this->parameter->dec(amount);
+                    paramT->dec(amount);
                 }
                 
                 
                 //--------------------------------------------------------------
                 void updateSlider() {
-                    if(!this->enabled) return;
-                    if(!this->parameter) return;
-                    if(this->isMousePressed()) {
-                        this->parameter->setMappedFrom(ofGetMouseX(), this->x, this->x + this->width);
+                    if(!enabled) return;
+                    if(isMousePressed()) {
+                        paramT->setMappedFrom(ofGetMouseX(), x, x + width);
                     }
                 }
                 
@@ -78,35 +88,31 @@ namespace msa {
 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(!this->parameter) return;
-                    
                     ofFill();
                     
-                    float width = this->width;
-                    float height = this->height;
-                    Config &c = this->getConfig();
+                    float width = width;
+                    float height = height;
+                    Config &c = getConfig();
                     
-                    ParameterSingleValueT<T> &p = *this->parameter;
+                    float barwidth = ofClamp(paramT->getMappedTo(0, width), 0, width);
                     
-                    float barwidth = ofClamp(p.getMappedTo(0, width), 0, width);
-                    
-                    this->setBGColor();
+                    setBGColor();
                     ofRect(0, 0, width, height);
                     
-                    this->setSliderColor(false);
+                    setSliderColor(false);
                     ofRect(0, 0, width, c.layout.sliderHeight);
                     
-                    this->setSliderColor(true);
+                    setSliderColor(true);
                     ofRect(0, 0, barwidth, c.layout.sliderHeight);
                     
-                    string s = p.getName() + ": " + ofToString(p.getValue());
-                    this->drawText(c.layout.textPos.x, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
+                    string s = paramT->getName() + ": " + ofToString(paramT->getValue());
+                    drawText(c.layout.textPos.x, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
                     
                     
-                    if(p.getSnap()) {
-                        float xinc = ofMap(p.getIncrement(), p.getMin(), p.getMax(), 0, width);
+                    if(paramT->getSnap()) {
+                        float xinc = ofMap(paramT->getIncrement(), paramT->getMin(), paramT->getMax(), 0, width);
                         if(xinc >=2) {
-                            this->setColor(c.colors.bg[0]);
+                            setColor(c.colors.bg[0]);
                             ofSetLineWidth(1);
                             for(float f=0; f<=width; f+=xinc) {
                                 ofLine(f, 0, f, c.layout.sliderHeight);
@@ -114,18 +120,18 @@ namespace msa {
                         }
                     }
                     
-                    if(p.getClamp()) {
-                        this->setColor(ofColor(c.colors.text[1].r, c.colors.text[1].g, c.colors.text[1].b, 128));
+                    if(paramT->getClamp()) {
+                        setColor(ofColor(c.colors.text[1].r, c.colors.text[1].g, c.colors.text[1].b, 128));
                         int w = 2;
                         int h = c.layout.sliderHeight;
                         ofRect(0, 0, w, h);
                         ofRect(width-w-1, 0, w, h);
                     }
-                    
-                    
-                    // draw border
-//                    this->drawBorder();
                 }
+                
+                
+            protected:
+                ParameterSingleValueT<T> *paramT;
                 
             };
         }

@@ -1,22 +1,30 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class BoolBase : public ControlParameterT<ParameterBool> {
+            class BoolBase : public Control {
             public:
                 
                 //--------------------------------------------------------------
-                BoolBase(Panel *parent, string s) : ControlParameterT<ParameterBool>(parent, s) {
+                BoolBase(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterBool(NULL, s))) {
+                    init();
                 }
                 
                 //--------------------------------------------------------------
-                BoolBase(Panel *parent, Parameter *p) : ControlParameterT<ParameterBool>(parent, p) {
+                BoolBase(Container *parent, ParameterPtr p) : Control(parent, p) {
+                    init();
                 }
-
+                
+                //--------------------------------------------------------------
+                void init() {
+                    paramT = dynamic_cast<ParameterBool*>(getParameter().get());
+                }
+                
                 //--------------------------------------------------------------
                 void setup() {
                     width   = getConfig().layout.columnWidth;
@@ -25,8 +33,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void toggle() {
-                    if(!parameter) return;
-                    parameter->setValue(!parameter->getValue());
+                    paramT->setValue(!paramT->getValue());
                 }
                 
                 //--------------------------------------------------------------
@@ -41,22 +48,24 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onPress(int x, int y, int button) {
-                    if(!parameter) return;
                     if(button == 0) {
-                        if(parameter->getMode() == ParameterBool::kBang || parameter->getMode() == ParameterBool::kPush) parameter->setValue(true);
+                        if(paramT->getMode() == ParameterBool::kBang || paramT->getMode() == ParameterBool::kPush) paramT->setValue(true);
                         else toggle();
                     }
                 }
                 
                 //--------------------------------------------------------------
                 void onRelease(int x, int y, int button) {
-                    if(parameter->getMode() == ParameterBool::kPush) parameter->setValue(false);
+                    if(paramT->getMode() == ParameterBool::kPush) paramT->setValue(false);
                 }
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(parameter->getMode() == ParameterBool::kBang && parameter->getValue()) parameter->setValue(false);
+                    if(paramT->getMode() == ParameterBool::kBang && paramT->getValue()) paramT->setValue(false);
                 }
+                
+            protected:
+                ParameterBool *paramT;
             };
             
         }

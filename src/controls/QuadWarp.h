@@ -1,13 +1,14 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/ControlParameterT.h"
+#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class QuadWarp : public ControlParameterT<Parameter> {
+            class QuadWarp : public Control {
             public:
 //                ofPoint			*pts;
 //                ofPoint			*curPoint;
@@ -17,7 +18,7 @@ namespace msa {
 //                ofPoint			lastPressPlace;
 //                float			lastPressTime;
 //                
-//                QuadWarp(Panel *parent, string name, ofBaseDraws &baseDraw, ofPoint *pts);
+//                QuadWarp(Container *parent, string name, ofBaseDraws &baseDraw, ofPoint *pts);
 //                void setup();
 ////                void readFromXml(ofxXmlSettings &XML);
 ////                void writeToXml(ofxXmlSettings &XML);

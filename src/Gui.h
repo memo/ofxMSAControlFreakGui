@@ -46,19 +46,18 @@ namespace msa {
                 Panel& getPage(int i);				// 1 based index of page
                 Panel& getPage(string name);			// returns page by name
                 Panel& getCurrentPage();				// returns current page
-//                vector <Panel*>&	getPages();
                 
-                // create and add a page with given name
-                Panel& addPage(string name = "");
+//                // create and add a page with given name
+//                Panel& addPage(string name = "");
                 
                 // create and add a page from the given parameter group
-                Panel& addPage(ParameterGroup &parameters);
-                
-                // append given parameter group to current page
-                Panel& addParameters(ParameterGroup &parameters);
+                Panel& addPage(ParameterGroupPtr parameters);
                 
                 // add a page
-                Panel& addPanel(Panel *page);
+                Panel& addPanel(PanelPtr page);
+                
+                // append given parameter group to current page
+                Panel& addParameters(ParameterGroupPtr parameters);
                 
 
                 //--------------------------------------------------------------

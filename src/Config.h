@@ -6,6 +6,10 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
+            
+            class Config;
+            typedef std::tr1::shared_ptr<Config> ConfigPtr;
+            
             class Config {
             public:
                 ofTrueTypeFont font;
@@ -57,9 +61,6 @@ namespace msa {
                 Config();
                 void drawString(string s, float x, float y);
             };
-            
-            
-//            typedef std::tr1::shared_ptr<Config> ConfigPtr;
             
         }
     }

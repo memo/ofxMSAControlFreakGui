@@ -2,7 +2,7 @@
 
 #include "ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.h"
 
-//#include "ofxXmlSettings.h"
+#include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
@@ -11,6 +11,10 @@ namespace msa {
             class Config;
             class Container;
             
+            class Control;
+            typedef std::tr1::shared_ptr<Control> ControlPtr;
+            
+
             class Control : public ofxMSAInteractiveObject {
             public:
                 
@@ -20,14 +24,16 @@ namespace msa {
                 bool		newColumn;
                 char		keyboardShortcut;
                 ofVec2f     scale;
-
+                bool        doAutoLayout;
+                
                 // if this is set (i.e. nonzero), override auto-layout and set position and size in relation to parent
                 ofRectangle localRect;
                 
-                Control(Container *parent);
+                Control(Container *parent, ParameterPtr p);
+                
                 Control& setConfig(Config *config);
                 Config &getConfig();
-
+                
                 Control& setNewColumn(bool b);
                 
                 Container *getParent();     // parent panel
@@ -36,15 +42,14 @@ namespace msa {
                 int getDepth();         // how deep in the heirarchy it is (how many levels deep)
                 bool isActive();       // whether the control is active or not
                 bool getParentActive(); // whether any of the controls parents are active or not
-                float getAlpha();       // alpha of this control
-                
-                virtual string getName() { return "Control: no name"; }
-                virtual string getPath() { return "Control: no path"; }
-                
-                
                 ofVec2f getInheritedScale();// inherited scale
                 ofVec2f getParentScale();   // scale of parent
-
+                
+                
+                string getName();
+                string getPath();
+                
+                ParameterPtr getParameter();
                 
                 // 0: normal, 1:over, 2:active
                 int getState();
@@ -58,7 +63,12 @@ namespace msa {
                 ofColor setBorderColor();
                 
                 bool doTooltip(int millis = -1);
+                void setTooltip(string s="");
+                
                 void drawBorder(ofColor *c = NULL);
+                void drawText(int x, int y, string s = "", ofColor *c = NULL);
+                void draw();
+                
                 
                 Control& setKeyboardShortcut(char c);
                 
@@ -85,22 +95,21 @@ namespace msa {
                 virtual void keyPressed( int key ){}
                 virtual void keyReleased( int key ){}
                 
-                virtual void draw();
-                
-              private:
+            private:
                 Container *_pparent;
                 Container *_proot;
                 Config *_pconfig;
                 float _alpha;
                 bool _active;
                 
-                void setParent(Control *parent);
+                ParameterPtr _parameter;
+                bool parameterOwner;
+                
+                void setParent(Container *parent);
+                void setParameter(ParameterPtr parameter);
             };
             
-            typedef std::tr1::shared_ptr<Control> ControlPtr;
-
             
-              
         }
     }
 }
