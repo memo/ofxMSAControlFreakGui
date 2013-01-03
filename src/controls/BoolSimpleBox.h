@@ -6,28 +6,24 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class BoolButton : public BoolBase {
+            class BoolSimpleBox : public BoolBase {
             public:
                 
                 //--------------------------------------------------------------
-                BoolButton(Panel *parent, string s) : BoolBase(parent, s) {}
-
+                BoolSimpleBox(Panel *parent, string s) : BoolBase(parent, s) {}
+                
                 //--------------------------------------------------------------
-                BoolButton(Panel *parent, Parameter *p) : BoolBase(parent, p) {}
+                BoolSimpleBox(Panel *parent, Parameter *p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
                 void onDraw() {
                     if(!parameter) return;
                     
-                    if(getName().empty()) return;
+                    if(isMouseOver()) setColor(ofColor(255, 100));
+                    else setColor(ofColor(0, 100));
+                    ofCircle(x, y, height/2);
                     
-                    // draw bg
-                    ofFill();
-                    setToggleColor(parameter->getValue());
-                    ofRect(0, 0, width, height);
-                    
-                    drawText(3, 15);
-//                    drawBorder();
+                    drawText(0, 0);
                     
                     BoolBase::onDraw();
                 }

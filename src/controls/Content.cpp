@@ -40,7 +40,7 @@ namespace msa {
                 ofRect(0, fixheight, width, getConfig().layout.buttonHeight);
                 
                 setTextColor();
-                getConfig().drawString(parameter->getName(), 3, fixheight + 15);
+                getConfig().drawString(getName(), 3, fixheight + 15);
                 ofDisableAlphaBlending();
                 glPopMatrix();
             }

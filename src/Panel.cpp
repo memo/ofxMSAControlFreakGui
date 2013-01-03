@@ -28,28 +28,16 @@ namespace msa {
                 disableAllEvents();
                 width = 0;
                 height = 0;
-                pactiveControl = NULL;
                 isOpen = false;
-                heightScale = 1.0;
             }
             
-            //--------------------------------------------------------------
-            float Panel::getParentHeightScale() {
-                return getParent() ? getParent()->getHeightScale() : heightScale;
-            }
-            
-            //--------------------------------------------------------------
-            float Panel::getHeightScale() {
-                return heightScale * getParentHeightScale();
-            }
-
             //--------------------------------------------------------------
             void Panel::showPanel(bool bOpen, bool bRecursive) {
                 isOpen = bOpen;
                 ptitleButton->getParameter().setValue(bOpen);
                 if(bRecursive) {
-                    for(int i=0; i<controls.size(); i++) {
-                        Panel *p = dynamic_cast<Panel*>(controls[i].get());
+                    for(int i=0; i<children.size(); i++) {
+                        Panel *p = dynamic_cast<Panel*>(children[i]);
                         if(p) p->showPanel(bOpen, true);
                     }
                 }
@@ -72,12 +60,12 @@ namespace msa {
                         
                     case 2: // save
                     {
-                        ofFileDialogResult f = ofSystemSaveDialog(parameter->getPath() + "-defaults.xml", "Save preset");
+                        ofFileDialogResult f = ofSystemSaveDialog(getPath() + "-defaults.xml", "Save preset");
                         if(f.bSuccess) {
                             parameter->saveXmlValues(f.getPath());
 //                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));
-//                            parameter->saveXml(false, path + "/" + parameter->getPath() + "-" + f.fileName + ".xml");
-//                            ofDirectory dir(path + "/" + parameter->getPath());
+//                            parameter->saveXml(false, path + "/" + getPath() + "-" + f.fileName + ".xml");
+//                            ofDirectory dir(path + "/" + getPath());
 //                            if(!dir.exists()) dir.create(true);
 //                            parameter->saveXml(false, dir.getAbsolutePath() + "/" + f.fileName + ".xml");
                         }
@@ -87,77 +75,71 @@ namespace msa {
             }
 
             //--------------------------------------------------------------
-            Control& Panel::addControl(Control *control) {
-                controls.push_back(ControlPtr(control));
-                return *control;
-            }
-            
-            //--------------------------------------------------------------
             Panel& Panel::addPanel(Parameter *p) {
-                return (Panel&)addControl(new Panel(this, p));
+                return (Panel&)*children.add(new Panel(this, p));
             }
             
             //--------------------------------------------------------------
             BoolButton& Panel::addButton(Parameter *p) {
-                return (BoolButton&)addControl(new BoolButton(this, p));
+                return (BoolButton&)*children.add(new BoolButton(this, p));
             }
             
             //--------------------------------------------------------------
             ColorPicker& Panel::addColorPicker(Parameter *p) {
-//                return (ColorPicker&)addControl(new ColorPicker(this, p));
+//                return (ColorPicker&)*children.add(new ColorPicker(this, p));
             }
             
             //--------------------------------------------------------------
             DropdownList& Panel::addDropdownList(Parameter *p) {
-                return (DropdownList&)addControl(new DropdownList(this, p));
+                return (DropdownList&)*children.add(new DropdownList(this, p));
             }
             
             //--------------------------------------------------------------
             Content& Panel::addContent(Parameter *p, ofBaseDraws &content, float fixwidth) {
                 if(fixwidth == -1) fixwidth = getConfig().layout.columnWidth;
-                return (Content&)addControl(new Content(this, p, content, fixwidth));
+                return (Content&)*children.add(new Content(this, p, content, fixwidth));
             }
             
             //--------------------------------------------------------------
             FPSCounter& Panel::addFPSCounter() {
-                return (FPSCounter&)addControl(new FPSCounter(this));
+                return (FPSCounter&)*children.add(new FPSCounter(this));
             }
             
             //--------------------------------------------------------------
             QuadWarp& Panel::addQuadWarper(Parameter *p) {
-//                return (QuadWarp&)addControl(new QuadWarp(this, p));
+//                return (QuadWarp&)*children.add(new QuadWarp(this, p));
             }
             
             //--------------------------------------------------------------
             SliderInt& Panel::addSliderInt(Parameter *p) {
-                return (SliderInt&)addControl(new SliderT<int>(this, p));
+                return (SliderInt&)*children.add(new SliderT<int>(this, p));
             }
             
             //--------------------------------------------------------------
             SliderFloat& Panel::addSliderFloat(Parameter *p) {
-                return (SliderFloat&)addControl(new SliderT<float>(this, p));
+                return (SliderFloat&)*children.add(new SliderT<float>(this, p));
             }
             
             //--------------------------------------------------------------
             Slider2d& Panel::addSlider2d(Parameter *p) {
-//                return (Slider2d&)addControl(new Slider2d(this, p));
+//                return (Slider2d&)*children.add(new Slider2d(this, p));
             }
             
             //--------------------------------------------------------------
             BoolTitle& Panel::addTitle(Parameter *p) {
-                return (BoolTitle&)addControl(new BoolTitle(this, p));
+                return (BoolTitle&)*children.add(new BoolTitle(this, p));
             }
             
             //--------------------------------------------------------------
             BoolToggle& Panel::addToggle(Parameter *p) {
-                return (BoolToggle&)addControl(new BoolToggle(this,p));
+                return (BoolToggle&)*children.add(new BoolToggle(this,p));
             }
             
             
             
             //--------------------------------------------------------------
             void Panel::addParameter(Parameter *p) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Panel::addParameter - " << parameter->getPath() << ": " << p->getPath();
+                ofLogVerbose() << "msa::ControlFreak::gui::Panel::addParameter - " << getPath() << ": " << p->getPath();
                 // if parameter already exists, remove it first
                 
                 ParameterGroup *pc = dynamic_cast<ParameterGroup*>(p);
@@ -186,56 +168,23 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::addParameters(ParameterGroup& parameters) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Panel::addParameters - " << parameter->getPath() << ": " << parameters.getPath();
+                ofLogVerbose() << "msa::ControlFreak::gui::Panel::addParameters - " << getPath() << ": " << parameters.getPath();
                 
 //                if(!_config) setup();
                 
-                ptitleButton = new BoolTitle(this, parameter->getName());
+                ptitleButton = new BoolTitle(this, getName());
                 ptitleButton->getParameter().setValue(true);
-                addControl(ptitleButton);
+                children.add(ptitleButton);
                 int np = parameters.getNumParams();
                 for(int i=0; i<np; i++) {
-                    addParameter(&parameters.getParameter(i));
+                    addParameter(parameters.getParameter(i));
                 }
             }
-            
-            //--------------------------------------------------------------
-            void Panel::setActiveControl(Control* control) {
-                // if old control exists, put it at the back
-                if(pactiveControl) pactiveControl->z = 0;
-                
-                pactiveControl = control;
-                
-                // put new active control at the front
-                if(pactiveControl) {
-                    pactiveControl->z = -1000;
-//                    ofLogNotice() << "setting active control [" << pactiveControl->name << "] for panel [" << name;
-//                } else {
-//                    ofLogNotice() << "setting active control NULL for panel [" << name;
-                }
-            }
-            
-            //--------------------------------------------------------------
-            Control* Panel::getActiveControl() {
-                return pactiveControl;
-            }
-            
-            //--------------------------------------------------------------
-            void Panel::releaseActiveControl() {
-                setActiveControl(NULL);
-            }
-            
-            //--------------------------------------------------------------
-//            bool Panel::getActive() {
-//                bool b = pactiveControl == ptitleButton;//pactiveControl != NULL;
-//                return parent ? b | parent->getActive() : b;
-//            }
-
             
             //--------------------------------------------------------------
             void Panel::update() {
-                if(controls.size()>0 && controls[0]) controls[0]->update();
-                if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->update();
+                if(children.size()>0 && children[0]) children[0]->update();
+                if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) children[i]->update();
             }
             
             //--------------------------------------------------------------
@@ -243,8 +192,8 @@ namespace msa {
                 if(pactiveControl)
                     pactiveControl->_mouseMoved(e);
                 else {
-                    if(controls.size()>0 && controls[0]) controls[0]->_mouseMoved(e);
-                    if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->_mouseMoved(e);
+                    if(children.size()>0 && children[0]) children[0]->_mouseMoved(e);
+                    if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) children[i]->_mouseMoved(e);
                 }
             }
             
@@ -253,13 +202,13 @@ namespace msa {
                 if(pactiveControl)
                     pactiveControl->_mousePressed(e);
                 else {
-                    if(controls.size()>0 && controls[0]) {
-                        controls[0]->_mousePressed(e);
-                        if(controls[0]->hitTest(e.x, e.y)) getRoot()->setActiveControl(controls[0].get());
+                    if(children.size()>0 && children[0]) {
+                        children[0]->_mousePressed(e);
+                        if(children[0]->hitTest(e.x, e.y)) getRoot()->setActiveControl(children[0]);
                     }
-                    if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) {
-                        controls[i]->_mousePressed(e);
-                        if(controls[i]->hitTest(e.x, e.y)) getRoot()->setActiveControl(controls[i].get());
+                    if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) {
+                        children[i]->_mousePressed(e);
+                        if(children[i]->hitTest(e.x, e.y)) getRoot()->setActiveControl(children[i]);
                     }
                 }
             }
@@ -269,8 +218,8 @@ namespace msa {
                 if(pactiveControl)
                     pactiveControl->_mouseDragged(e);
                 else {
-                    if(controls.size()>0 && controls[0]) controls[0]->_mouseDragged(e);
-                    if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->_mouseDragged(e);
+                    if(children.size()>0 && children[0]) children[0]->_mouseDragged(e);
+                    if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) children[i]->_mouseDragged(e);
                 }
             }
             
@@ -279,8 +228,8 @@ namespace msa {
                 if(pactiveControl)
                     pactiveControl->_mouseReleased(e);
                 else {
-                    if(controls.size()>0 && controls[0]) controls[0]->_mouseReleased(e);
-                    if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) controls[i]->_mouseReleased(e);
+                    if(children.size()>0 && children[0]) children[0]->_mouseReleased(e);
+                    if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) children[i]->_mouseReleased(e);
                 }
                 
                 getRoot()->releaseActiveControl();
@@ -294,7 +243,7 @@ namespace msa {
                 bool keyRight	= e.key == OF_KEY_RIGHT;
                 bool keyEnter	= e.key == OF_KEY_RETURN;
                 
-                Control *c = controls[0].get();
+                Control *c = children[0];
                 if(c->isMouseOver()) {
                     if(keyUp)		c->onKeyUp();
                     if(keyDown)		c->onKeyDown();
@@ -304,8 +253,8 @@ namespace msa {
                     c->_keyPressed(e);
                 }
                 
-                if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) {
-                    Control *c = controls[i].get();
+                if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) {
+                    Control *c = children[i];
                     if(c->isMouseOver()) {
                         if(keyUp)		c->onKeyUp();
                         if(keyDown)		c->onKeyDown();
@@ -319,8 +268,8 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::keyReleased(ofKeyEventArgs &e) {
-                if(controls[0]->isMouseOver()) controls[0]->_keyReleased(e);
-                if(getHeightScale()>0.9) for(int i=1; i<controls.size(); i++) if(controls[i]->isMouseOver()) controls[i]->_keyReleased(e);
+                if(children[0]->isMouseOver()) children[0]->_keyReleased(e);
+                if(getInheritedScale().y>0.9) for(int i=1; i<children.size(); i++) if(children[i]->isMouseOver()) children[i]->_keyReleased(e);
             }
             
             //--------------------------------------------------------------

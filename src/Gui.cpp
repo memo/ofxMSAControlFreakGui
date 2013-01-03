@@ -150,7 +150,7 @@ namespace msa {
             //--------------------------------------------------------------
             Panel& Gui::getPage(string name) {
                 if(!isSetup) setup();
-                for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->parameter->getName()) == 0) return *pages[i];
+                for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->getName()) == 0) return *pages[i];
             }
             
             //--------------------------------------------------------------
@@ -229,24 +229,29 @@ namespace msa {
                 glDisable(GL_DEPTH_TEST);
 //                glDisableClientState(GL_COLOR_ARRAY);
                 
+                
+                Renderer::instance().clearControls();
+                
+
+                
                 Panel &panel = *pages[currentPageIndex];
                 
                 // create layout manager for the panel if one doesn't exist
                 if(panel.layoutManager == NULL) panel.layoutManager = LayoutManagerPtr(new LayoutManager);
                
                 // configure layout manager
-                LayoutManager &layoutManager = *panel.layoutManager;
-                layoutManager.maxRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
-                layoutManager.curPos.set(0, 0); // start in top left
-                layoutManager.rect.set(0, 0, 0, 0);
-
-                Renderer::instance().clearControls();
-
-                layoutManager.update(panel);
+                panel.layoutManager->maxRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
+                panel.layoutManager->curPos.set(0, 0); // start in top left
+                panel.layoutManager->rect.set(0, 0, 0, 0);
+                
+                // iterate all controls on panel, set position and add to render queue
+                panel.layoutManager->prepareForDraw(panel);
                 
                 // sort and draw
                 Renderer::instance().draw(config);
-                layoutManager.draw(config);
+                
+                // draw extras (scroll bar etc)
+                panel.layoutManager->draw(config);
                 
                 ofPopStyle();
             }

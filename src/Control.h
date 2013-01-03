@@ -1,41 +1,50 @@
 #pragma once
 
 #include "ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.h"
-//#include "ofxMSAControlFreakGui/src/Panel.h"
-//#include "ofxMSAControlFreakGui/src/Includes.h"
-//#include "ofxMSAControlFreakGui/src/Config.h"
-//#include "ofxMSAControlFreak/src/ControlFreak.h"
 
-#include "ofxXmlSettings.h"
+//#include "ofxXmlSettings.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class Panel;
             class Config;
+            class Container;
             
             class Control : public ofxMSAInteractiveObject {
             public:
+                
+                friend class Container;
+                
                 int         z;  // draw order (0 draw last, i.e. drawn on top)
                 bool		newColumn;
                 char		keyboardShortcut;
-                
+                ofVec2f     scale;
+
                 // if this is set (i.e. nonzero), override auto-layout and set position and size in relation to parent
                 ofRectangle localRect;
                 
-                Control(Panel *parent);
+                Control(Container *parent);
                 Control& setConfig(Config *config);
                 Config &getConfig();
 
                 Control& setNewColumn(bool b);
                 
-                Panel *getParent();     // parent panel
-                Panel *getRoot(bool bUpdate = false);       // root panel
+                Container *getParent();     // parent panel
+                Container *getRoot(bool bUpdate = false);       // root panel
+                
                 int getDepth();         // how deep in the heirarchy it is (how many levels deep)
-                bool getActive();       // whether the control is active or not
+                bool isActive();       // whether the control is active or not
                 bool getParentActive(); // whether any of the controls parents are active or not
                 float getAlpha();       // alpha of this control
+                
+                virtual string getName() { return "Control: no name"; }
+                virtual string getPath() { return "Control: no path"; }
+                
+                
+                ofVec2f getInheritedScale();// inherited scale
+                ofVec2f getParentScale();   // scale of parent
+
                 
                 // 0: normal, 1:over, 2:active
                 int getState();
@@ -79,15 +88,14 @@ namespace msa {
                 virtual void draw();
                 
               private:
-                Panel   *_pparent;
-                Panel   *_proot;
-                Config  *_pconfig;
-                float    _alpha;
+                Container *_pparent;
+                Container *_proot;
+                Config *_pconfig;
+                float _alpha;
+                bool _active;
                 
-
-//            private:
+                void setParent(Control *parent);
             };
-            
             
             typedef std::tr1::shared_ptr<Control> ControlPtr;
 

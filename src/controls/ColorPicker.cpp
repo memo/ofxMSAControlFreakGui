@@ -152,7 +152,7 @@
 //                ofRect(150, startY + 3, width - 150 -3, getConfig().layout.sliderTextHeight - 8);
 //                
 //                setTextColor();
-//                getConfig().drawString(parameter->getName(), 3, startY + 14);
+//                getConfig().drawString(getName(), 3, startY + 14);
 //                ofDisableAlphaBlending();
 //                glPopMatrix();
 //            }

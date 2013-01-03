@@ -17,7 +17,7 @@ namespace msa {
                     parameterOwner = true;
 //                    ParameterGroup *parentParam = parent ? &(parent->getParameter()) : NULL;
                     parameter = new T(NULL, s);
-//                    name = parameter->getPath();
+//                    name = getPath();
                 }
 
                 //--------------------------------------------------------------
@@ -25,7 +25,7 @@ namespace msa {
                     if(p) {
                         parameter = dynamic_cast<T*>(p);
                         if(!parameter) ofLogError() << "msa::ControlFreak::gui::Control - type-casting parameter " << p->getPath();
-                        //                    if(parameter) name = parameter->getPath();
+                        //                    if(parameter) name = getPath();
                     }
                     parameterOwner = false;
                 }
@@ -44,7 +44,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 void drawText(int x, int y, string s = "", ofColor *c = NULL) {
                     setColor(c ? c : getConfig().colors.text);
-                    getConfig().drawString(s.empty() ? parameter->getName() : s, x, y);
+                    getConfig().drawString(s.empty() ? getName() : s, x, y);
                 }
                 
                 //--------------------------------------------------------------
@@ -59,9 +59,20 @@ namespace msa {
                 //--------------------------------------------------------------
                 virtual void draw() {
                     setTooltip();
+//                    ofLogVerbose() << "draw " << getPath();
                     Control::draw();
                 }
                 
+                //--------------------------------------------------------------
+                virtual string getName() {
+                    return parameter->getName();
+                }
+                
+                //--------------------------------------------------------------
+                virtual string getPath() {
+                    return parameter->getPath();
+                }
+
             protected:
                 T *parameter;
                 bool parameterOwner;

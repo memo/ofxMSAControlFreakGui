@@ -36,13 +36,13 @@ namespace msa {
                     ofRect(0, 0, width, height);
                     
                     setTextColor();
-                    getConfig().drawString(parameter->getName() + ": " + parameter->getSelectedLabel(), getConfig().layout.textPos.x, getConfig().layout.textPos.y);
+                    getConfig().drawString(getName() + ": " + parameter->getSelectedLabel(), getConfig().layout.textPos.x, getConfig().layout.textPos.y);
                     
                     int ty = height/3;
                     int tl = ty*1.5;
                     ofTriangle(width - ty - tl, ty, width - ty, ty, width - ty - tl/2, height - ty);
                     
-                    if(getActive()) {
+                    if(isActive()) {
                         int numLabels = parameter->getNumLabels();
                         setBGColor();
                         ofRect(0, height, width, getConfig().layout.dropdownListTextHeight * (numLabels + 0.5));

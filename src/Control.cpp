@@ -7,14 +7,9 @@ namespace msa {
             
             
             Control::Control(Panel *parent) {
-                this->_pparent = parent;
-                getRoot(true);
+                setParent(parent);
                 
-//                if(getParent()) {
-//                    this->pconfig = &getParent()->getConfig();
-//                    width   = getConfig().layout.columnWidth;
-//                    height  = getConfig().layout.buttonHeight;
-//                }
+                scale.set(1, 1);
                 
                 z = 0;
                 _alpha = 1;
@@ -44,12 +39,12 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Panel *Control::getParent() {
+            Control *Control::getParent() {
                 return _pparent;
             }
             
             //--------------------------------------------------------------
-            Panel *Control::getRoot(bool bUpdate) {
+            Control *Control::getRoot(bool bUpdate) {
                 if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Panel*>(this) );
                 else return _proot;
 //                return getParent() ? getParent()->_proot : _proot;
@@ -66,14 +61,26 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            bool Control::getActive() {
-                return getRoot()->getActiveControl() && getRoot()->getActiveControl() == this;
+            bool Control::isActive() {
+                return _active;//getRoot()->getActiveControl() && getRoot()->getActiveControl() == this;// TODO
             }
             
             //--------------------------------------------------------------
             bool Control::getParentActive() {
-                return getParent() ? getActive() || getParent()->getActive() || getParent()->getParentActive() : getActive();
+                return getParent() ? isActive() || getParent()->isActive() || getParent()->getParentActive() : isActive();
             }
+            
+            
+            //--------------------------------------------------------------
+            ofVec2f Control::getInheritedScale() {
+                return scale * getParentScale();
+            }
+            
+            //--------------------------------------------------------------
+            ofVec2f Control::getParentScale() {
+                return getParent() ? getParent()->getInheritedScale() : scale;
+            }
+
             
             //--------------------------------------------------------------
             int Control::getState() {
@@ -156,7 +163,7 @@ namespace msa {
                 ofTranslate(x, y);
                 ofEnableAlphaBlending();
                 
-                float targetAlpha = getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;
+                float targetAlpha = 1.0;//getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;//TODO
                 float diff = (targetAlpha - _alpha);
                 _alpha += diff * getConfig().colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;
@@ -181,6 +188,20 @@ namespace msa {
                 ofPopMatrix();
                 ofPopStyle();
             }
+            
+            
+            //--------------------------------------------------------------
+            void Control::setParent(Control *parent) {
+                _pparent = parent;
+                getRoot(true);
+                
+                //                if(getParent()) {
+                //                    this->pconfig = &getParent()->getConfig();
+                //                    width   = getConfig().layout.columnWidth;
+                //                    height  = getConfig().layout.buttonHeight;
+                //                }
+            }
+
             
             
         }

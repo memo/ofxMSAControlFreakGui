@@ -18,7 +18,7 @@ namespace msa {
                 ofRectangle rect;
                 
                 LayoutManager();
-                void update(Panel &panel);
+                void prepareForDraw(Panel &panel);
                 void draw(Config &config);
                 
             protected:

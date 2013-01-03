@@ -36,10 +36,6 @@ namespace msa {
                 Panel(Panel *parent, Parameter *p);
                 ~Panel();
                 
-                void setActiveControl(Control *control);
-                void releaseActiveControl();
-                Control* getActiveControl();
-                
                 void update();
                 void mouseMoved(ofMouseEventArgs &e);
                 void mousePressed(ofMouseEventArgs &e);
@@ -47,26 +43,18 @@ namespace msa {
                 void mouseReleased(ofMouseEventArgs &e);
                 void keyPressed(ofKeyEventArgs &e);
                 void keyReleased(ofKeyEventArgs &e);
-//                vector<ControlPtr>&	getControls();
                 
             protected:
                 bool isOpen;
-                float heightScale;              // height scale of this panel
                 LayoutManagerPtr layoutManager;
-                vector<ControlPtr> controls;    // all controls
-                Control         *pactiveControl; // currently active control (only this control receives events)
                 BoolTitle       *ptitleButton;   // button which controls the title of the panel
 
                 void init();
-                float getParentHeightScale();   // height scale of parent
-                float getHeightScale();         // inherited height scale
                 
                 void showPanel(bool bOpen, bool bRecursive = false);
                 
                 void buttonPressed(int i);
                 
-                
-                Control			&addControl(Control *control);
                 
                 Panel           &addPanel(Parameter *p);
                 BoolButton		&addButton(Parameter *p);

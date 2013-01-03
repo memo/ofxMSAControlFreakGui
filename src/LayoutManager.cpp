@@ -14,19 +14,19 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void LayoutManager::update(Panel &panel) {
+            void LayoutManager::prepareForDraw(Panel &panel) {
 
                 // how open is this panel
                 float openSpeed = 0.1f;
-                if(panel.ptitleButton->getParameter().getValue() != panel.isOpen) panel.showPanel(panel.ptitleButton->getParameter().getValue(), panel.ptitleButton->bRecursive);
+//                if(panel.ptitleButton->getParameter().getValue() != panel.isOpen) panel.showPanel(panel.ptitleButton->getParameter().getValue(), panel.ptitleButton->bRecursive); // TODO
                 if(panel.isOpen) {
-                    //                    if(heightScale<0.95) heightScale += (1-heightScale) * openSpeed;
-                    if(panel.heightScale < 1) panel.heightScale += openSpeed;
-                    else panel.heightScale = 1.0f;
+                    //                    if(scale.y<0.95) scale.y += (1-scale.y) * openSpeed;
+                    if(panel.scale.y < 1) panel.scale.y += openSpeed;
+                    else panel.scale.y = 1.0f;
                 } else {
-                    //                    if(heightScale > 0.05) heightScale += (0-heightScale) * openSpeed;
-                    if(panel.heightScale > 0) panel.heightScale -= openSpeed;
-                    else panel.heightScale = 0.0f;
+                    //                    if(scale.y > 0.05) scale.y += (0-scale.y) * openSpeed;
+                    if(panel.scale.y > 0) panel.scale.y -= openSpeed;
+                    else panel.scale.y = 0.0f;
                 }
                 
                 // if we are drawing this Panel inside another Panel, use auto-layout parameters of that
@@ -40,18 +40,18 @@ namespace msa {
                 panel.width         = 0;
                 panel.height        = 0;
                 int panelDepth      = panel.getDepth();// * config.layout.indent;
-                int numControls     = panel.getHeightScale() ? panel.controls.size() : 1;
-                float heightMult    = panel.getHeightScale();//i ? getHeightScale() : getParentHeightScale();
+                int numControls     = panel.children.size();//panel.getInheritedScale().y ? panel.children.size() : 1;
+                ofVec2f scale       = panel.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
                 
                 for(int i=0; i<numControls; i++) {
-                    Control& control = *panel.controls[i];
+                    Control& control = *panel.children[i];
                     
                     control.setConfig(&config);
                     
                     int indent = i==0 ? panelDepth * config.layout.indent : (panelDepth+1) * config.layout.indent;
                     
                     // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-                    if(control.newColumn || (doWrap && curPos.y + (control.height + config.layout.padding.y) * heightMult > maxPos.y)) {
+                    if(control.newColumn || (doWrap && curPos.y + (control.height + config.layout.padding.y) * scale.y > maxPos.y)) {
                         curPos.x = rect.x + rect.width + config.layout.padding.x;
                         curPos.y = maxRect.y;
                     }
@@ -59,12 +59,17 @@ namespace msa {
                     control.setWidth(config.layout.columnWidth - indent);
                     control.setPosition(curPos.x + indent, curPos.y - scrollY);
                     Renderer::instance().addControl(&control);
+
+                    ofLogVerbose() << "layout " << curPos << " " << control.getPath() << " " << control.x << " " << control.y << " " << control.width  << " " << control.height;
+                    
+                    
                     rect.growToInclude((ofRectangle&)control);
                     
                     Panel *p = dynamic_cast<Panel*>(&control);
-                    if(p) update(*p);
+                    if(p) prepareForDraw(*p);
                     
-                    curPos.y += (control.height + config.layout.padding.y) * heightMult;
+                    curPos.y += (control.height + config.layout.padding.y) * scale.y;
+                    
                 }
                 
                 // add some padding at end of group
