@@ -21,7 +21,7 @@ namespace msa {
                 
                 titleButton = new BoolTitle(this, getName());
                 titleButton->doAutoLayout = false;
-                static_cast<ParameterBool*>(titleButton->getParameterPtr().get())->setValue(true);
+                titleButton->getParameterPtr()->setValue(true);
                 addControl(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
@@ -72,11 +72,12 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::showPanel(bool bOpen, bool bRecursive) {
+                printf("showpanel %i %i\n", bOpen, bRecursive);
                 isOpen = bOpen;
-                static_cast<ParameterBool*>(titleButton->getParameterPtr().get())->setValue(bOpen);
+                titleButton->getParameterPtr()->setValue(bOpen);
                 if(bRecursive) {
-                    for(int i=0; i<getNumControls(); i++) {
-                        Panel *p = dynamic_cast<Panel*>(getControl(i));
+                    for(int i=0; i<children->getNumControls(); i++) {
+                        Panel *p = dynamic_cast<Panel*>(children->getControl(i));
                         if(p) p->showPanel(bOpen, true);
                     }
                 }

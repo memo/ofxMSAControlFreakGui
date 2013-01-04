@@ -12,9 +12,9 @@ namespace msa {
             public:
 
                 //--------------------------------------------------------------
-                // TODO: fix constructor for int vs float
-                SliderT(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterFloat(s, NULL))) {
-                }
+//                // TODO: fix constructor for int vs float
+//                SliderT(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterFloat(s, NULL))) {
+//                }
                 
                 //--------------------------------------------------------------
                 SliderT(Container *parent, ParameterPtr p) : Control(parent, p) {
