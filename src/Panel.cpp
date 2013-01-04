@@ -72,7 +72,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::showPanel(bool bOpen, bool bRecursive) {
-                printf("showpanel %i %i\n", bOpen, bRecursive);
                 isOpen = bOpen;
                 titleButton->getParameterPtr()->setValue(bOpen);
                 if(bRecursive) {
