@@ -91,16 +91,16 @@ namespace msa {
 
             //--------------------------------------------------------------
             string Control::getName() {
-                return getParameter()->getName();
+                return getParameterPtr()->getName();
             }
             
             //--------------------------------------------------------------
             string Control::getPath() {
-                return getParameter()->getPath();
+                return getParameterPtr()->getPath();
             }
             
             //--------------------------------------------------------------
-            ParameterPtr Control::getParameter() {
+            ParameterPtr Control::getParameterPtr() {
                 return _parameter;
             }
 
@@ -161,9 +161,9 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::setTooltip(string s) {
                 // if s is empty, use string from parameter
-                if(s.empty()) s = getParameter()->getTooltip();
+                if(s.empty()) s = getParameterPtr()->getTooltip();
                 if(doTooltip() && !s.empty()) {
-                    Renderer::instance().setToolTip(getParameter()->getTooltip());
+                    Renderer::instance().setToolTip(getParameterPtr()->getTooltip());
                 }
             }
             

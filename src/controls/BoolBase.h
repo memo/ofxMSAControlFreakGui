@@ -22,7 +22,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void init() {
-                    paramT = dynamic_cast<ParameterBool*>(getParameter().get());
+                    paramT = dynamic_cast<ParameterBool*>(getParameterPtr().get());
                 }
                 
                 //--------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void toggle() {
-                    paramT->setValue(!paramT->getValue());
+                    paramT->toggle();
                 }
                 
                 //--------------------------------------------------------------
@@ -60,7 +60,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(paramT->getMode() == ParameterBool::kBang && paramT->getValue()) paramT->setValue(false);
+                    if(paramT->getMode() == ParameterBool::kBang && getParameterPtr()->value()) paramT->setValue(false);
                 }
                 
             protected:

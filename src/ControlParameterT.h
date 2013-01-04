@@ -15,7 +15,7 @@ namespace msa {
 //                //--------------------------------------------------------------
 //                Control(Container *parent, string s) : Control(parent) {
 //                    parameterOwner = true;
-////                    ParameterGroup *parentParam = parent ? &(parent->getParameter()) : NULL;
+////                    ParameterGroup *parentParam = parent ? &(parent->getParameterPtr()) : NULL;
 //                    parameter = new T(NULL, s);
 ////                    name = getPath();
 //                }
@@ -37,7 +37,7 @@ namespace msa {
 //                
 //
 //                //--------------------------------------------------------------
-//                T &getParameter() {
+//                T &getParameterPtr() {
 //                    return *parameter;
 //                }
 //                

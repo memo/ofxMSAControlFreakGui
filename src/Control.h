@@ -51,7 +51,7 @@ namespace msa {
                 string getName();
                 string getPath();
                 
-                ParameterPtr getParameter();
+                ParameterPtr getParameterPtr();
 //                Control& setKeyboardShortcut(char c);
                 
                 // overrider these

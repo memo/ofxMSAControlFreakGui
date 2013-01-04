@@ -177,7 +177,7 @@ namespace msa {
                 
                 int np = parameters->getNumParams();
                 for(int i=0; i<np; i++) {
-                    addParameter(parameters->getParameter(i));
+                    addParameter(parameters->getPtr(i));
                 }
             }
             

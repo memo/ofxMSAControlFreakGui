@@ -21,8 +21,8 @@ namespace msa {
                 if(panel) {
                     // how open is this panel
                     float openSpeed = 0.1f;
-                    ParameterBool &titleBool = static_cast<ParameterBool&>(*panel->titleButton->getParameter().get());
-                    if(titleBool.getValue() != panel->isOpen) panel->showPanel(titleBool.getValue(), false);//panel->titleButton->bRecursive); // TODO
+                    Parameter &titleBool = *panel->titleButton->getParameterPtr();
+                    if(titleBool.value() != panel->isOpen) panel->showPanel(titleBool.value(), false);
                     
                     if(panel->isOpen) {
                         //                    if(scale.y<0.95) scale.y += (1-scale.y) * openSpeed;
@@ -82,7 +82,7 @@ namespace msa {
                             control.setPosition(container.position + control.localRect.position);
                         }
                         
-//                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter()->getPath().c_str(), control.x, control.y, container.getParameter()->getPath().c_str(), container.x, container.y);
+//                        printf("setting position: %s %f %f %s %f %f\n", control.getParameterPtr()->getPath().c_str(), control.x, control.y, container.getParameterPtr()->getPath().c_str(), container.x, container.y);
 
                         Renderer::instance().addControl(&control);
                         rect.growToInclude((ofRectangle&)control);

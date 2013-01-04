@@ -19,10 +19,10 @@ namespace msa {
                 void onDraw() {
                                         
                     ofFill();
-                    setToggleColor(paramT->getValue());
+                    setToggleColor(getParameterPtr()->value());
                     ofRect(0, 0, height, height);
                     
-                    if(paramT->getValue()) {
+                    if(getParameterPtr()->value()) {
                         setTextColor();
                         ofSetLineWidth(2);
                         ofLine(0, 0, height, height);

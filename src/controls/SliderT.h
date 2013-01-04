@@ -12,34 +12,22 @@ namespace msa {
             public:
 
                 //--------------------------------------------------------------
-                SliderT(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterSingleValueT<T>(NULL, s))) {
-                    init();
+                // TODO: fix constructor for int vs float
+                SliderT(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterFloat(s, NULL))) {
                 }
                 
                 //--------------------------------------------------------------
                 SliderT(Container *parent, ParameterPtr p) : Control(parent, p) {
-                    init();
                 }
-
-                //--------------------------------------------------------------
-                void init() {
-                    paramT = dynamic_cast<ParameterSingleValueT<T>*>(getParameter().get());
-                }
-                
-                //--------------------------------------------------------------
-//                void setup() {
-//                    width   = getConfig().layout.columnWidth;
-//                    height  = getConfig().layout.buttonHeight;
-//                }
 
                 //--------------------------------------------------------------
                 void inc(T amount) {
-                    paramT->inc(amount);
+                    getParameterPtr()->inc(amount);
                 }
                 
                 //--------------------------------------------------------------
                 void dec(T amount) {
-                    paramT->dec(amount);
+                    getParameterPtr()->dec(amount);
                 }
                 
                 
@@ -47,7 +35,7 @@ namespace msa {
                 void updateSlider() {
                     if(!enabled) return;
                     if(isMousePressed()) {
-                        paramT->setMappedFrom(ofGetMouseX(), x, x + width);
+                        getParameterPtr()->setMappedFrom(ofGetMouseX(), x, x + width);
                     }
                 }
                 
@@ -92,7 +80,7 @@ namespace msa {
                     
                     Config &c = getConfig();
                     
-                    float barwidth = ofClamp(paramT->getMappedTo(0, width), 0, width);
+                    float barwidth = ofClamp(getParameterPtr()->getMappedTo(0, width), 0, width);
                     
                     setBGColor();
                     ofRect(0, 0, width, height);
@@ -103,12 +91,12 @@ namespace msa {
                     setSliderColor(true);
                     ofRect(0, 0, barwidth, c.layout.sliderHeight);
                     
-                    string s = paramT->getName() + ": " + ofToString(paramT->getValue());
+                    string s = getParameterPtr()->getName() + ": " + ofToString((int)getParameterPtr()->value());
                     drawText(c.layout.textPos.x, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
                     
                     
-                    if(paramT->getSnap()) {
-                        float xinc = ofMap(paramT->getIncrement(), paramT->getMin(), paramT->getMax(), 0, width);
+                    if(getParameterPtr()->getSnap()) {
+                        float xinc = ofMap(getParameterPtr()->getIncrement(), getParameterPtr()->getMin(), getParameterPtr()->getMax(), 0, width);
                         if(xinc >=2) {
                             setColor(c.colors.bg[0]);
                             ofSetLineWidth(1);
@@ -118,7 +106,7 @@ namespace msa {
                         }
                     }
                     
-                    if(paramT->getClamp()) {
+                    if(getParameterPtr()->getClamp()) {
                         setColor(ofColor(c.colors.text[1].r, c.colors.text[1].g, c.colors.text[1].b, 128));
                         int w = 2;
                         int h = c.layout.sliderHeight;
@@ -130,9 +118,6 @@ namespace msa {
 
                 }
                 
-                
-            protected:
-                ParameterSingleValueT<T> *paramT;
                 
             };
         }

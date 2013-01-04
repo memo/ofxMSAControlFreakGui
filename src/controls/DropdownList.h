@@ -12,7 +12,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 DropdownList(Container *parent, ParameterPtr p) : Control(parent, p) {
-                    paramT = dynamic_cast<ParameterNamedIndex*>(getParameter().get());
+                    paramT = dynamic_cast<ParameterNamedIndex*>(getParameterPtr().get());
                 }
 
                 //--------------------------------------------------------------
@@ -56,7 +56,7 @@ namespace msa {
                         for(int i=0; i < numLabels; i++) {
                             setTextColor();
                             float curY = height + i*getConfig().layout.dropdownListTextHeight;
-                            if(i == paramT->getValue()) {
+                            if(i == getParameterPtr()->value()) {
                                 ofRect(0, curY+3, width, getConfig().layout.dropdownListTextHeight);
                                 setBGColor();
                             }

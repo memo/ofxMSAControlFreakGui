@@ -19,7 +19,7 @@ namespace msa {
                 void onDraw() {
                     // draw bg
                     ofFill();
-                    setToggleColor(paramT->getValue());
+                    setToggleColor(getParameterPtr()->value());
                     ofRect(0, 0, width, height);
                     
 //                    drawText(3, 15);

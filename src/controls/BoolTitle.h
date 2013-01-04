@@ -21,7 +21,7 @@ namespace msa {
                 void onDraw() {
                     // draw bg
                     ofFill();
-                    setToggleColor(paramT->getValue());
+                    setToggleColor(getParameterPtr()->value());
                     ofRect(0, 0, width, height);
                     
 //                    drawText(40, 15);
@@ -32,8 +32,8 @@ namespace msa {
                     
                     if(doTooltip()) {
                         string s;
-                        string sverb = paramT->getValue() ? "Close": "Open";
-//                        if(paramT->getValue()) s = "Click to close panel [" + getName() + "]";
+                        string sverb = getParameterPtr()->value() ? "Close": "Open";
+//                        if(getParameterPtr()->value()) s = "Click to close panel [" + getName() + "]";
 //                        else s = "Click to open panel";
                         Renderer::instance().setToolTip(sverb + " " + "panel. Right-click to temporarily isolate");
                     }
