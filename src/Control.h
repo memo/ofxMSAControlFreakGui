@@ -11,8 +11,8 @@ namespace msa {
             class Config;
             class Container;
             
-            class Control;
-            typedef std::tr1::shared_ptr<Control> ControlPtr;
+//            class Control;
+//            typedef std::tr1::shared_ptr<Control> ControlPtr;
             
 
             class Control : public ofxMSAInteractiveObject {
@@ -30,7 +30,8 @@ namespace msa {
                 bool        doAutoLayout;
                 ofRectangle localRect;
                 
-                Control(Container *parent, ParameterPtr p);
+                Control(Container *parent, Parameter* p, bool bOwnsParameter = false);
+                ~Control();
                 
                 Control& setConfig(Config *config);
                 Config &getConfig();
@@ -51,7 +52,7 @@ namespace msa {
                 string getName();
                 string getPath();
                 
-                ParameterPtr getParameterPtr();
+                Parameter& getParameter();
 //                Control& setKeyboardShortcut(char c);
                 
                 // overrider these
@@ -105,17 +106,19 @@ namespace msa {
                 void update();
                 void draw();
                 
+                
             private:
+                float _alpha;
                 Container *_pparent;
                 Container *_proot;
                 Config *_pconfig;
-                float _alpha;
+                Parameter *_pparameter;
+                bool _bOwnsParameter;    // whether the control owns the parameter or not. TODO: this is a bit hackish?
 //                bool _active;
                 
-                ParameterPtr _parameter;
                 
                 void setParent(Container *parent);
-                void setParameter(ParameterPtr parameter);
+                void setParameter(Parameter *parameter, bool bOwner = false);
             };
             
             

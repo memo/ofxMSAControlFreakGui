@@ -29,30 +29,32 @@ namespace msa {
                 friend class Control;
                 
                 Container(Container *parent, string s);
-                Container(Container *parent, ParameterPtr p);
+                Container(Container *parent, Parameter* p);
+                ~Container();
                 
                 void clear();
                 int getNumControls() const;
                 Control* addControl(Control *control);
                 Control* getControl(int i) const;
-//                Control* operator[](int index);
+                Control* operator[](int index);
+//                Control* operator[](string index);
                 
                 
-                Panel           &addPanel(ParameterGroupPtr p);
-                BoolButton		&addButton(ParameterPtr p);
-                ColorPicker		&addColorPicker(ParameterPtr p);
-                DropdownList&   addDropdownList(ParameterPtr p);
-                Content			&addContent(ParameterPtr p, ofBaseDraws &content, float fixwidth = -1);
+                Panel           &addPanel(ParameterGroup* p);
+                BoolButton		&addButton(Parameter* p);
+                ColorPicker		&addColorPicker(Parameter* p);
+                DropdownList&   addDropdownList(Parameter* p);
+                Content			&addContent(Parameter* p, ofBaseDraws &content, float fixwidth = -1);
                 FPSCounter		&addFPSCounter();
-                QuadWarp		&addQuadWarper(ParameterPtr p);
-                Slider2d		&addSlider2d(ParameterPtr p);
-                SliderInt		&addSliderInt(ParameterPtr p);
-                SliderFloat		&addSliderFloat(ParameterPtr p);
-                BoolTitle		&addTitle(ParameterPtr p);
-                BoolToggle		&addToggle(ParameterPtr p);
+                QuadWarp		&addQuadWarper(Parameter* p);
+                Slider2d		&addSlider2d(Parameter* p);
+                SliderInt		&addSliderInt(Parameter* p);
+                SliderFloat		&addSliderFloat(Parameter* p);
+                BoolTitle		&addTitle(Parameter* p);
+                BoolToggle		&addToggle(Parameter* p);
                 
-                void addParameter(ParameterPtr p);
-                void addParameters(ParameterGroupPtr parameters);
+                void addParameter(Parameter* p);
+                void addParameters(ParameterGroup* parameters);
                 
                 
                 // events from ofxMSAInteractiveObject
@@ -66,7 +68,7 @@ namespace msa {
 
                 
             private:
-                vector<ControlPtr> _controls;
+                vector<Control*> _controls;
                 Control *_pactiveControl; // currently active control (only this control receives events)
                 
                 void setActiveControl(Control *control);

@@ -6,7 +6,7 @@ namespace msa {
         namespace gui {
             
             
-            Content::Content(Container *parent, ParameterPtr p, ofBaseDraws& content, float fixwidth) : Control(parent, p) {
+            Content::Content(Container *parent, Parameter* p, ofBaseDraws& content, float fixwidth) : Control(parent, p) {
                 this->content = &content;
                 this->fixwidth  = fixwidth;
                 setup();

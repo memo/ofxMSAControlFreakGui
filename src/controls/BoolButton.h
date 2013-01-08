@@ -13,13 +13,13 @@ namespace msa {
                 BoolButton(Container *parent, string s) : BoolBase(parent, s) {}
 
                 //--------------------------------------------------------------
-                BoolButton(Container *parent, ParameterPtr p) : BoolBase(parent, p) {}
+                BoolButton(Container *parent, Parameter* p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
                 void onDraw() {
                     // draw bg
                     ofFill();
-                    setToggleColor(getParameterPtr()->value());
+                    setToggleColor(getParameter().value());
                     ofRect(0, 0, width, height);
                     
 //                    drawText(3, 15);

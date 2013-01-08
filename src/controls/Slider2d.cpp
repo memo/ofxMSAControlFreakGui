@@ -20,7 +20,7 @@ namespace msa {
 //            }
 ////            
 ////            void Slider2d::readFromXml(ofxXmlSettings &XML) {
-////                value->set(XML.getValue(controlType + "_" + key + ":valueX", 0.0f), XML.getValue(controlType + "_" + key + ":valueY", 0.0f));
+////                value->set(XML.get(controlType + "_" + key + ":valueX", 0.0f), XML.get(controlType + "_" + key + ":valueY", 0.0f));
 ////            }
 ////            
 ////            
@@ -33,7 +33,7 @@ namespace msa {
 ////                XML.popTag();
 ////            }
 //            
-//            void Slider2d::setValue(float x, float y) {
+//            void Slider2d::set(float x, float y) {
 //                (*value).x = x;
 //                (*value).y = y;
 //            }

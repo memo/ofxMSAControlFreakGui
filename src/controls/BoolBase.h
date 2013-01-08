@@ -11,18 +11,18 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                BoolBase(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterBool(s, NULL))) {
+                BoolBase(Container *parent, string s) : Control(parent, new ParameterBool(s, NULL), true) {
                     init();
                 }
                 
                 //--------------------------------------------------------------
-                BoolBase(Container *parent, ParameterPtr p) : Control(parent, p) {
+                BoolBase(Container *parent, Parameter* p) : Control(parent, p) {
                     init();
                 }
                 
                 //--------------------------------------------------------------
                 void init() {
-                    paramT = dynamic_cast<ParameterBool*>(getParameterPtr().get());
+                    paramT = dynamic_cast<ParameterBool*>(&getParameter());
                 }
                 
                 //--------------------------------------------------------------
@@ -48,19 +48,19 @@ namespace msa {
                 //--------------------------------------------------------------
                 void onPress(int x, int y, int button) {
                     if(button == 0) {
-                        if(paramT->getMode() == ParameterBool::kBang || paramT->getMode() == ParameterBool::kPush) paramT->setValue(true);
+                        if(paramT->getMode() == ParameterBool::kBang || paramT->getMode() == ParameterBool::kPush) paramT->set(true);
                         else toggle();
                     }
                 }
                 
                 //--------------------------------------------------------------
                 void onRelease(int x, int y, int button) {
-                    if(paramT->getMode() == ParameterBool::kPush) paramT->setValue(false);
+                    if(paramT->getMode() == ParameterBool::kPush) paramT->set(false);
                 }
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(paramT->getMode() == ParameterBool::kBang && getParameterPtr()->value()) paramT->setValue(false);
+                    if(paramT->getMode() == ParameterBool::kBang && getParameter().value()) getParameter().set(false);
                 }
                 
             protected:

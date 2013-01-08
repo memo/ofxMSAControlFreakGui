@@ -24,6 +24,7 @@ namespace msa {
                 Config config;
                 
                 Gui();
+                ~Gui();
                 
                 void setup();
                 
@@ -51,13 +52,13 @@ namespace msa {
 //                Panel& addPage(string name = "");
                 
                 // create and add a page from the given parameter group
-                Panel& addPage(ParameterGroupPtr parameters);
+                Panel& addPage(ParameterGroup* parameters);
                 
                 // add a page
-                Panel& addPanel(PanelPtr page);
+                Panel& addPanel(Panel* page);
                 
                 // append given parameter group to current page
-//                Panel& addParameters(ParameterGroupPtr parameters);
+//                Panel& addParameters(ParameterGroup* parameters);
                 
 
                 //--------------------------------------------------------------
@@ -89,7 +90,7 @@ namespace msa {
                 bool    doDefaultKeys;
                 int     currentPageIndex;
                 bool    doDraw;
-                vector<PanelPtr> pages;
+                vector<Panel*> pages;
                 
                 void addListeners();
                 void removeListeners();

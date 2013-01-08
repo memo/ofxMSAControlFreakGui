@@ -13,7 +13,7 @@ namespace msa {
                 float			fixheight;
                 ofBaseDraws		*content;
                 
-                Content(Container *parent, ParameterPtr p, ofBaseDraws& content, float fixwidth=250.0);
+                Content(Container *parent, Parameter* p, ofBaseDraws& content, float fixwidth=250.0);
                 void setup();
                 void onDraw();
             };

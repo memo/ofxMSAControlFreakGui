@@ -23,8 +23,8 @@ namespace msa {
             class SliderInt;
             class SliderFloat;
 
-            class Panel;
-            typedef std::tr1::shared_ptr<Panel> PanelPtr;
+//            class Panel;
+//            typedef std::tr1::shared_ptr<Panel> PanelPtr;
 
             class Panel : public Container {
             public:
@@ -34,7 +34,7 @@ namespace msa {
                 friend class LayoutManager;
                 
                 Panel(Container *parent, string s);
-                Panel(Container *parent, ParameterGroupPtr p);
+                Panel(Container *parent, ParameterGroup* p);
                 ~Panel();
                 
                 void onUpdate();
@@ -42,7 +42,7 @@ namespace msa {
             protected:
                 bool isOpen;
                 ParameterGroup  *paramT;
-                LayoutManagerPtr layoutManager;
+                LayoutManager* layoutManager;
                 
                 BoolTitle       *titleButton;   // button which controls the title of the panel
                 BoolSimpleCircle *expandAllButton;

@@ -13,16 +13,16 @@ namespace msa {
                 BoolToggle(Container *parent, string s) : BoolBase(parent, s) {}
                 
                 //--------------------------------------------------------------
-                BoolToggle(Container *parent, ParameterPtr p) : BoolBase(parent, p) {}
+                BoolToggle(Container *parent, Parameter* p) : BoolBase(parent, p) {}
                
                 //--------------------------------------------------------------
                 void onDraw() {
                                         
                     ofFill();
-                    setToggleColor(getParameterPtr()->value());
+                    setToggleColor(getParameter().value());
                     ofRect(0, 0, height, height);
                     
-                    if(getParameterPtr()->value()) {
+                    if(getParameter().value()) {
                         setTextColor();
                         ofSetLineWidth(2);
                         ofLine(0, 0, height, height);

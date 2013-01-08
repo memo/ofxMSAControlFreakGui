@@ -11,8 +11,8 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                DropdownList(Container *parent, ParameterPtr p) : Control(parent, p) {
-                    paramT = dynamic_cast<ParameterNamedIndex*>(getParameterPtr().get());
+                DropdownList(Container *parent, Parameter* p) : Control(parent, p) {
+                    paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                 }
 
                 //--------------------------------------------------------------
@@ -26,7 +26,7 @@ namespace msa {
                     int a = this->y + height;
                     int b = this->y + height + getConfig().layout.dropdownListTextHeight * paramT->getNumLabels();
                     int v = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
-                    paramT->setValue(v);
+                    paramT->set(v);
                 }
                 
                 //--------------------------------------------------------------
@@ -56,7 +56,7 @@ namespace msa {
                         for(int i=0; i < numLabels; i++) {
                             setTextColor();
                             float curY = height + i*getConfig().layout.dropdownListTextHeight;
-                            if(i == getParameterPtr()->value()) {
+                            if(i == getParameter().value()) {
                                 ofRect(0, curY+3, width, getConfig().layout.dropdownListTextHeight);
                                 setBGColor();
                             }

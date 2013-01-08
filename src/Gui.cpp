@@ -21,6 +21,12 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
+            Gui::~Gui() {
+                for(int i=0; i<pages.size(); i++) delete pages[i];
+
+            }
+            
+            //--------------------------------------------------------------
             void Gui::setup() {
                 isSetup = true;
                 ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
@@ -154,18 +160,18 @@ namespace msa {
             
             //--------------------------------------------------------------
 //            Panel& Gui::addPage(string name) {
-//                PanelPtr panel(new Panel(NULL, name));
+//                Panel* panel(new Panel(NULL, name));
 //                return addPanel(panel);
 //            }
 
             //--------------------------------------------------------------
-            Panel& Gui::addPage(ParameterGroupPtr parameters) {
-                PanelPtr panel(new Panel(NULL, parameters));
+            Panel& Gui::addPage(ParameterGroup* parameters) {
+                Panel* panel(new Panel(NULL, parameters));
                 return addPanel(panel);
             }
 
             //--------------------------------------------------------------
-            Panel& Gui::addPanel(PanelPtr page) {
+            Panel& Gui::addPanel(Panel* page) {
                 if(!isSetup) setup();
                 
                 pages.push_back(page);
@@ -175,7 +181,7 @@ namespace msa {
             }
 
             //--------------------------------------------------------------
-//            Panel& Gui::addParameters(ParameterGroupPtr parameters) {
+//            Panel& Gui::addParameters(ParameterGroup* parameters) {
 //                if(!isSetup) setup();
 //                if(getNumPages() == 0) addPage(parameters);
 //                else getCurrentPage().addParameters(parameters);
@@ -228,7 +234,7 @@ namespace msa {
                 Panel &panel = *pages[currentPageIndex];
                 
                 // create layout manager for the panel if one doesn't exist
-                if(!panel.layoutManager) panel.layoutManager = LayoutManagerPtr(new LayoutManager);
+                if(!panel.layoutManager) panel.layoutManager = new LayoutManager;
                
                 // configure layout manager
                 panel.layoutManager->boundRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window

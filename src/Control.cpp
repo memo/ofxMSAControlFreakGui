@@ -7,9 +7,9 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Control::Control(Container *parent, ParameterPtr parameter) {
-                setParameter(parameter);
+            Control::Control(Container *parent, Parameter* parameter, bool bOwnsParameter) {
                 setParent(parent);
+                setParameter(parameter, bOwnsParameter);
                 
                 z = 0;
                 newColumn = false;
@@ -18,7 +18,6 @@ namespace msa {
                 scale.set(1, 1);
                 doAutoLayout = true;
                 localRect.set(0, 0, 0, 0);
-
                 
                 _alpha = 1;
                 
@@ -27,6 +26,12 @@ namespace msa {
                 // we don't want auto events (they will be controlled via the parent panels)
                 disableAllEvents();
             }
+            
+            //--------------------------------------------------------------
+            Control::~Control() {
+                if(_bOwnsParameter && _pparameter) delete _pparameter;
+            }
+
             
             //--------------------------------------------------------------
             Control &Control::setConfig(Config *config) {
@@ -91,17 +96,17 @@ namespace msa {
 
             //--------------------------------------------------------------
             string Control::getName() {
-                return getParameterPtr()->getName();
+                return getParameter().getName();
             }
             
             //--------------------------------------------------------------
             string Control::getPath() {
-                return getParameterPtr()->getPath();
+                return getParameter().getPath();
             }
             
             //--------------------------------------------------------------
-            ParameterPtr Control::getParameterPtr() {
-                return _parameter;
+            Parameter& Control::getParameter() {
+                return *_pparameter;
             }
 
             //--------------------------------------------------------------
@@ -161,9 +166,9 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::setTooltip(string s) {
                 // if s is empty, use string from parameter
-                if(s.empty()) s = getParameterPtr()->getTooltip();
+                if(s.empty()) s = getParameter().getTooltip();
                 if(doTooltip() && !s.empty()) {
-                    Renderer::instance().setToolTip(getParameterPtr()->getTooltip());
+                    Renderer::instance().setToolTip(getParameter().getTooltip());
                 }
             }
             
@@ -255,8 +260,9 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Control::setParameter(ParameterPtr parameter) {
-                _parameter = parameter;
+            void Control::setParameter(Parameter* parameter, bool bOwner) {
+                _pparameter = parameter;
+                _bOwnsParameter = bOwner;
             }
 
             

@@ -14,14 +14,14 @@ namespace msa {
                 BoolTitle(Container *parent, string s) : BoolBase(parent, s) { }
                 
                 //--------------------------------------------------------------
-                BoolTitle(Container *parent, ParameterPtr p) : BoolBase(parent, p) { }
+                BoolTitle(Container *parent, Parameter* p) : BoolBase(parent, p) { }
                 
                 
                 //--------------------------------------------------------------
                 void onDraw() {
                     // draw bg
                     ofFill();
-                    setToggleColor(getParameterPtr()->value());
+                    setToggleColor(getParameter().value());
                     ofRect(0, 0, width, height);
                     
 //                    drawText(40, 15);
@@ -32,8 +32,8 @@ namespace msa {
                     
                     if(doTooltip()) {
                         string s;
-                        string sverb = getParameterPtr()->value() ? "Close": "Open";
-//                        if(getParameterPtr()->value()) s = "Click to close panel [" + getName() + "]";
+                        string sverb = getParameter().value() ? "Close": "Open";
+//                        if(getParameter().value()) s = "Click to close panel [" + getName() + "]";
 //                        else s = "Click to open panel";
                         Renderer::instance().setToolTip(sverb + " " + "panel. Right-click to temporarily isolate");
                     }

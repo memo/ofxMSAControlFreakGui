@@ -12,22 +12,17 @@ namespace msa {
             public:
 
                 //--------------------------------------------------------------
-//                // TODO: fix constructor for int vs float
-//                SliderT(Container *parent, string s) : Control(parent, ParameterPtr(new ParameterFloat(s, NULL))) {
-//                }
-                
-                //--------------------------------------------------------------
-                SliderT(Container *parent, ParameterPtr p) : Control(parent, p) {
+                SliderT(Container *parent, Parameter* p) : Control(parent, p) {
                 }
 
                 //--------------------------------------------------------------
                 void inc(T amount) {
-                    getParameterPtr()->inc(amount);
+                    getParameter().inc(amount);
                 }
                 
                 //--------------------------------------------------------------
                 void dec(T amount) {
-                    getParameterPtr()->dec(amount);
+                    getParameter().dec(amount);
                 }
                 
                 
@@ -35,7 +30,7 @@ namespace msa {
                 void updateSlider() {
                     if(!enabled) return;
                     if(isMousePressed()) {
-                        getParameterPtr()->setMappedFrom(ofGetMouseX(), x, x + width);
+                        getParameter().setMappedFrom(ofGetMouseX(), x, x + width);
                     }
                 }
                 
@@ -80,7 +75,7 @@ namespace msa {
                     
                     Config &c = getConfig();
                     
-                    float barwidth = ofClamp(getParameterPtr()->getMappedTo(0, width), 0, width);
+                    float barwidth = ofClamp(getParameter().getMappedTo(0, width), 0, width);
                     
                     setBGColor();
                     ofRect(0, 0, width, height);
@@ -91,12 +86,12 @@ namespace msa {
                     setSliderColor(true);
                     ofRect(0, 0, barwidth, c.layout.sliderHeight);
                     
-                    string s = getParameterPtr()->getName() + ": " + ofToString((int)getParameterPtr()->value());
+                    string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
                     drawText(c.layout.textPos.x, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
                     
                     
-                    if(getParameterPtr()->getSnap()) {
-                        float xinc = ofMap(getParameterPtr()->getIncrement(), getParameterPtr()->getMin(), getParameterPtr()->getMax(), 0, width);
+                    if(getParameter().getSnap()) {
+                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
                         if(xinc >=2) {
                             setColor(c.colors.bg[0]);
                             ofSetLineWidth(1);
@@ -106,7 +101,7 @@ namespace msa {
                         }
                     }
                     
-                    if(getParameterPtr()->getClamp()) {
+                    if(getParameter().getClamp()) {
                         setColor(ofColor(c.colors.text[1].r, c.colors.text[1].g, c.colors.text[1].b, 128));
                         int w = 2;
                         int h = c.layout.sliderHeight;

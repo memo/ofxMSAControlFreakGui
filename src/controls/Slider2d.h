@@ -17,7 +17,7 @@ namespace msa {
 //                void setup();
 ////                void readFromXml(ofxXmlSettings &XML);
 ////                void writeToXml(ofxXmlSettings &XML);
-//                void setValue(float x, float y);
+//                void set(float x, float y);
 //                void setMin(float x, float y);
 //                void setMax(float x, float y);
 //                void onPress(int x, int y, int button);

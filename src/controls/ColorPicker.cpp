@@ -13,7 +13,7 @@
 //    namespace ControlFreak {
 //        namespace gui {
 //            
-//            ColorPicker::ColorPicker(Container *parent, ParameterPtr p) : Control(parent, p) {
+//            ColorPicker::ColorPicker(Container *parent, Parameter* p) : Control(parent, p) {
 ////                this->value = &color;
 ////                this->min	= 0;
 ////                this->max	= max;
@@ -23,14 +23,14 @@
 //            void ColorPicker::setup() {
 //                setSize(getConfig().layout.columnWidth - getConfig().layout.padding.x, getConfig().layout.sliderHeight * 8 + getConfig().layout.sliderTextHeight);
 //                for(int i=0; i<4; i++) {
-//                    pct[i] = ofMap(getValue(i), 0, max, 0.0, width);
+//                    pct[i] = ofMap(get(i), 0, max, 0.0, width);
 //                    barwidth[i] = pct[i];
 //                }
 //            }
 //            
 ////            void ColorPicker::readFromXml(ofxXmlSettings &XML) {
 ////                for(int i=0; i<4; i++) {
-////                    setValue(XML.getValue(controlType + "_" + key + ":values_" + ofToString(i), 0.0f), i);
+////                    set(XML.get(controlType + "_" + key + ":values_" + ofToString(i), 0.0f), i);
 ////                }
 ////            }
 ////            
@@ -39,18 +39,18 @@
 ////                XML.pushTag(controlType + "_" + key);
 ////                XML.addValue("name", name);
 ////                for(int i=0; i<4; i++) {
-////                    XML.addValue("values_" + ofToString(i), getValue(i));
+////                    XML.addValue("values_" + ofToString(i), get(i));
 ////                }
 ////                XML.popTag();
 ////            }
 //            
 //            
-//            float ColorPicker::getValue(int i) {
+//            float ColorPicker::get(int i) {
 //                return value->v[i];
 //            }
 //            
 //            
-//            void ColorPicker::setValue(float f, int i) {
+//            void ColorPicker::set(float f, int i) {
 //                if(f < min) f = min;
 //                else if(f > max) f = max;
 //                value->v[i] = f;
@@ -68,7 +68,7 @@
 //                }
 //                else {
 //                    pct[i] = getMouseX() - x;
-//                    setValue(ofMap(pct[i], 0.0, (float)width, 0, max), i);
+//                    set(ofMap(pct[i], 0.0, (float)width, 0, max), i);
 //                }
 //            }
 //            
@@ -110,7 +110,7 @@
 //                int startY = 0;
 //                for(int i=0; i<4; i++) {
 //                    
-//                    barwidth[i] = ofMap(getValue(i), 0, max, 0.0, (float)width);
+//                    barwidth[i] = ofMap(get(i), 0, max, 0.0, (float)width);
 //                    if(barwidth[i] > width)	barwidth[i] = width;
 //                    else if(barwidth[i] < 0) barwidth[i] = 0;
 //                    
@@ -121,10 +121,10 @@
 //                    
 //                    
 //                    switch(i) {
-//                        case 0:glColor3f(getValue(i), 0, 0); break;
-//                        case 1:glColor3f(0, getValue(i), 0); break;
-//                        case 2:glColor3f(0, 0, getValue(i)); break;
-//                        case 3:glColor3f(getValue(i), getValue(i), getValue(i)); break;
+//                        case 0:glColor3f(get(i), 0, 0); break;
+//                        case 1:glColor3f(0, get(i), 0); break;
+//                        case 2:glColor3f(0, 0, get(i)); break;
+//                        case 3:glColor3f(get(i), get(i), get(i)); break;
 //                    }
 //                    
 //                    ofRect(0, startY, barwidth[i], getConfig().layout.sliderHeight * 1.8);
@@ -137,7 +137,7 @@
 //                        glColor3f(0.5, 0.5, 0.5);
 //                    }
 //                    
-//                    getConfig().drawString(ofToString(getValue(i), 4), 3, startY + 14);
+//                    getConfig().drawString(ofToString(get(i), 4), 3, startY + 14);
 //                    
 //                    startY += getConfig().layout.sliderHeight * 2;
 //                }
@@ -147,7 +147,7 @@
 //                setBGColor();
 //                ofRect(0, startY, width, getConfig().layout.sliderTextHeight);
 //                
-//                glColor3f(getValue(0), getValue(1), getValue(2));
+//                glColor3f(get(0), get(1), get(2));
 //                //	ofRect(0, startY+getConfig().layout.sliderTextHeight, width, getConfig().layout.sliderTextHeight * 1.5);
 //                ofRect(150, startY + 3, width - 150 -3, getConfig().layout.sliderTextHeight - 8);
 //                

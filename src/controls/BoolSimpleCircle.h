@@ -13,7 +13,7 @@ namespace msa {
                 BoolSimpleCircle(Container *parent, string s) : BoolBase(parent, s) {}
                 
                 //--------------------------------------------------------------
-                BoolSimpleCircle(Container *parent, ParameterPtr p) : BoolBase(parent, p) {}
+                BoolSimpleCircle(Container *parent, Parameter* p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
                 void onDraw() {

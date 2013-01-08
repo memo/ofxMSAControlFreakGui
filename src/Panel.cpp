@@ -13,7 +13,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Panel::Panel(Container *parent, ParameterGroupPtr p) : Container(parent, p) {
+            Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
                 init();
                 
                 doAutoLayout = true;
@@ -21,31 +21,31 @@ namespace msa {
                 
                 titleButton = new BoolTitle(this, getName());
                 titleButton->doAutoLayout = false;
-                titleButton->getParameterPtr()->setValue(true);
+                titleButton->getParameter().set(true);
                 addControl(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
                 collapseAllButton->doAutoLayout = false;
                 collapseAllButton->setMode(ParameterBool::kBang);
-                collapseAllButton->getParameterPtr()->setTooltip("Collapse all panels under '" + getPath() + "'");
+                collapseAllButton->getParameter().setTooltip("Collapse all panels under '" + getPath() + "'");
                 addControl(collapseAllButton);
                 
                 expandAllButton = new BoolSimpleCircle(this, "+");
                 expandAllButton->doAutoLayout = false;
                 expandAllButton->setMode(ParameterBool::kBang);
-                expandAllButton->getParameterPtr()->setTooltip("Expand all panels under '" + getPath() + "'");
+                expandAllButton->getParameter().setTooltip("Expand all panels under '" + getPath() + "'");
                 addControl(expandAllButton);
                 
                 saveButton = new BoolSimpleCircle(this, "s");
                 saveButton->doAutoLayout = false;
                 saveButton->setMode(ParameterBool::kBang);
-                saveButton->getParameterPtr()->setTooltip("Save preset for '" + getPath() + "'");
+                saveButton->getParameter().setTooltip("Save preset for '" + getPath() + "'");
                 addControl(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
                 loadButton->doAutoLayout = false;
                 loadButton->setMode(ParameterBool::kBang);
-                loadButton->getParameterPtr()->setTooltip("Load preset for '" + getPath() + "'");
+                loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
                 addControl(loadButton);
                 
                 children = new Container(this, getName() + "_children");
@@ -58,22 +58,23 @@ namespace msa {
             
             //--------------------------------------------------------------
             Panel::~Panel() {
-                // delete all controls NOT NEEDED, using smart pointers
+                if(layoutManager) delete layoutManager;
             }
             
             //--------------------------------------------------------------
             void Panel::init() {
                 disableAllEvents();
+                layoutManager = NULL;
                 width = 0;
                 height = 0;
                 isOpen = false;
-                paramT = dynamic_cast<ParameterGroup*>(getParameterPtr().get());
+                paramT = dynamic_cast<ParameterGroup*>(&getParameter());
             }
             
             //--------------------------------------------------------------
             void Panel::showPanel(bool bOpen, bool bRecursive) {
                 isOpen = bOpen;
-                titleButton->getParameterPtr()->setValue(bOpen);
+                titleButton->getParameter().set(bOpen);
                 if(bRecursive) {
                     for(int i=0; i<children->getNumControls(); i++) {
                         Panel *p = dynamic_cast<Panel*>(children->getControl(i));
@@ -94,16 +95,16 @@ namespace msa {
                 loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
                 
-                if(collapseAllButton->getParameterPtr()->value()) showPanel(false, true);
-                if(expandAllButton->getParameterPtr()->value()) showPanel(true, true);
-                if(loadButton->getParameterPtr()->value()) {
+                if(collapseAllButton->getParameter().value()) showPanel(false, true);
+                if(expandAllButton->getParameter().value()) showPanel(true, true);
+                if(loadButton->getParameter().value()) {
                     ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
                     if(f.bSuccess) {
                         paramT->loadXmlValues(f.filePath);
                     }
                 }
                 
-                if(saveButton->getParameterPtr()->value()) {
+                if(saveButton->getParameter().value()) {
                     ofFileDialogResult f = ofSystemSaveDialog(getPath() + "-defaults.xml", "Save preset");
                     if(f.bSuccess) {
                         paramT->saveXmlValues(f.getPath());

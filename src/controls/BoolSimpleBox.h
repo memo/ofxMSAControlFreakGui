@@ -13,7 +13,7 @@ namespace msa {
                 BoolSimpleBox(Container *parent, string s) : BoolBase(parent, s) {}
                 
                 //--------------------------------------------------------------
-                BoolSimpleBox(Container *parent, ParameterPtr p) : BoolBase(parent, p) {}
+                BoolSimpleBox(Container *parent, Parameter* p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
                 void onDraw() {
