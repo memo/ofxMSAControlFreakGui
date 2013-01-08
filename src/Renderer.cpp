@@ -46,7 +46,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Renderer::draw(Config &config) {
                 this->config = &config;
-                sort(controls.begin(), controls.end(), PointerCompare());
+//                sort(controls.begin(), controls.end(), PointerCompare());
                 
                 ofPushStyle();
                 for(int i=0; i<controls.size(); i++) {

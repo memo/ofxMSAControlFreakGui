@@ -1,6 +1,8 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreakGui/src/Container.h"
+#include "ofxMSAControlFreakGui/src/controls/BoolSimpleBox.h"
+
 #include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
@@ -8,13 +10,18 @@ namespace msa {
         namespace gui {
             
             template <typename T>
-            class SliderT : public Control {
+            class SliderT : public Container {
             public:
-
+                
                 //--------------------------------------------------------------
-                SliderT(Container *parent, Parameter* p) : Control(parent, p) {
+                SliderT(Container *parent, Parameter* p) : Container(parent, p) {
+                    button = new BoolSimpleCircle(this, "...");
+                    button->doAutoLayout = false;
+                    button->setMode(ParameterBool::kBang);
+                    button->getParameter().setTooltip("More options");
+                    addControl(button);
                 }
-
+                
                 //--------------------------------------------------------------
                 void inc(T amount) {
                     getParameter().inc(amount);
@@ -68,7 +75,7 @@ namespace msa {
                 void onKeyDown() {
                     dec(10);
                 }
-
+                
                 //--------------------------------------------------------------
                 void onDraw() {
                     ofFill();
@@ -110,9 +117,24 @@ namespace msa {
                     }
                     
                     drawBorder();
-
+                    
+                    
+                    // extra buttons
+                    {
+                        int p = 3;
+                        int s = height * 0.5;
+                        int y = (height - s)-p;
+                        button->localRect.set(width - (s + p), y, s, s);
+//                        button->set(button->localRect);
+//                        button->onDraw();
+                    }
+                    
+                    
                 }
                 
+                
+            protected:
+                BoolSimpleCircle* button;
                 
             };
         }
