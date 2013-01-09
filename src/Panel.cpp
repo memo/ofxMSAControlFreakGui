@@ -29,13 +29,7 @@ namespace msa {
                 collapseAllButton->doAutoLayout = false;
                 collapseAllButton->setZ(2);
                 collapseAllButton->setMode(ParameterBool::kBang);
-//                collapseAllButton->getParameter().setTooltip("Collapse all panels under '" + getPath() + "'");
                 addControl(collapseAllButton);
-//                expandAllButton = new BoolSimpleCircle(this, "+");
-//                expandAllButton->doAutoLayout = false;
-//                expandAllButton->setMode(ParameterBool::kBang);
-//                expandAllButton->getParameter().setTooltip("Expand all panels under '" + getPath() + "'");
-//                addControl(expandAllButton);
                 
                 saveButton = new BoolSimpleCircle(this, "s");
                 saveButton->doAutoLayout = false;
@@ -95,19 +89,19 @@ namespace msa {
                 
                 
                 collapseAllButton->localRect.set(p, y, s, s);
-//                expandAllButton->localRect.set(p + s + p, y, s, s);
                 loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
                 
                 if(isOpen) {
+                    titleButton->getParameter().setTooltip("Collapse panel");
                     collapseAllButton->getParameter().setName("-");
-                    collapseAllButton->getParameter().setTooltip("Collapse all panels under '" + getPath() + "'");
+                    collapseAllButton->getParameter().setTooltip("Collapse all panels");
                 } else {
+                    titleButton->getParameter().setTooltip("Expand panel");
                     collapseAllButton->getParameter().setName("+");
-                    collapseAllButton->getParameter().setTooltip("Expand all panels under '" + getPath() + "'");
+                    collapseAllButton->getParameter().setTooltip("Expand all panel");
                 }
                 if(collapseAllButton->getParameter().value()) showPanel(!isOpen, true);
-//                if(expandAllButton->getParameter().value()) showPanel(true, true);
                 if(loadButton->getParameter().value()) {
                     ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
                     if(f.bSuccess) {

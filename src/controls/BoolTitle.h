@@ -30,14 +30,6 @@ namespace msa {
                     ofSetLineWidth(2);
                     drawBorder(getConfig().colors.text);
                     
-                    if(doTooltip()) {
-                        string s;
-                        string sverb = getParameter().value() ? "Close": "Open";
-//                        if(getParameter().value()) s = "Click to close panel [" + getName() + "]";
-//                        else s = "Click to open panel";
-                        Renderer::instance().setToolTip(sverb + " " + "panel. Right-click to temporarily isolate");
-                    }
-                    
                     BoolBase::onDraw();
                 }
             };
