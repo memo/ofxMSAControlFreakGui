@@ -89,7 +89,7 @@ namespace msa {
                     ofRect(0, 0, barwidth, c.layout.sliderHeight);
                     
                     string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
-                    drawText(c.layout.textPos.x, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
+                    drawText(c.layout.textPos.x + 10, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
                     
                     
                     if(getParameter().getSnap()) {

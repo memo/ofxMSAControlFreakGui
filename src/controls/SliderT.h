@@ -20,6 +20,20 @@ namespace msa {
                     slider->doAutoLayout = false;
                     addControl(slider);
                     
+                    decButton = new BoolSimpleBox(this, "<");
+                    decButton->doAutoLayout = false;
+                    decButton->setZ(1);
+                    decButton->setMode(ParameterBool::kBang);
+                    decButton->getParameter().setTooltip("dec");
+                    addControl(decButton);
+
+                    incButton = new BoolSimpleBox(this, ">");
+                    incButton->doAutoLayout = false;
+                    incButton->setZ(1);
+                    incButton->setMode(ParameterBool::kBang);
+                    incButton->getParameter().setTooltip("inc");
+                    addControl(incButton);
+
                     clampButton = new BoolSimpleBox(this, "c");
                     clampButton->doAutoLayout = false;
                     clampButton->setZ(1);
@@ -36,7 +50,7 @@ namespace msa {
                     snapButton->getParameter().trackVariable(&p->getSnap());
                     addControl(snapButton);
 
-                    moreButton = new BoolSimpleBox(this, ">");
+                    moreButton = new BoolSimpleBox(this, "...");
                     moreButton->doAutoLayout = false;
                     moreButton->setZ(1);
                     moreButton->setMode(ParameterBool::kBang);
@@ -107,10 +121,14 @@ namespace msa {
                     int w = height / 2;
                     int y = height - h - p;
                     
-                    snapButton->localRect.set(width - (w + p)*3, y, w, h);
-                    clampButton->localRect.set(width - (w + p)*2, y, w, h);
-                    moreButton->localRect.set(width - (w + p), y, w, h);
+                    decButton->localRect.set(0, y, w, h);
+                    snapButton->localRect.set(width - (w + p)*4, y, w, h);
+                    clampButton->localRect.set(width - (w + p)*3, y, w, h);
+                    moreButton->localRect.set(width - (w + p)*2, y, w, h);
+                    incButton->localRect.set(width - (w + p), y, w, h);
                     
+                    if(decButton->getParameter().value()) slider->dec(1);
+                    if(incButton->getParameter().value()) slider->inc(1);
                     if(snapButton->getParameter().hasChanged()) slider->getParameter().update();
                     if(clampButton->getParameter().hasChanged()) slider->getParameter().update();
                     if(moreButton->getParameter().value()) {
@@ -123,6 +141,8 @@ namespace msa {
                 BoolBase *moreButton;
                 BoolBase *snapButton;
                 BoolBase *clampButton;
+                BoolBase *incButton;
+                BoolBase *decButton;
                 SliderRawT<T> *slider;
                 
             };
