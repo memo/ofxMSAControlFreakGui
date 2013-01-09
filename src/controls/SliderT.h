@@ -25,6 +25,7 @@ namespace msa {
                     clampButton->setZ(1);
                     clampButton->setMode(ParameterBool::kToggle);
                     clampButton->getParameter().setTooltip("Clamp");
+                    clampButton->getParameter().trackVariable(&p->getClamp());
                     addControl(clampButton);
 
                     snapButton = new BoolSimpleBox(this, "s");
@@ -32,13 +33,14 @@ namespace msa {
                     snapButton->setZ(1);
                     snapButton->setMode(ParameterBool::kToggle);
                     snapButton->getParameter().setTooltip("Snap");
+                    snapButton->getParameter().trackVariable(&p->getSnap());
                     addControl(snapButton);
 
                     moreButton = new BoolSimpleBox(this, ">");
                     moreButton->doAutoLayout = false;
                     moreButton->setZ(1);
                     moreButton->setMode(ParameterBool::kBang);
-                    moreButton->getParameter().setTooltip("More...");
+                    moreButton->getParameter().setTooltip("More... (coming soon)");
                     addControl(moreButton);
                 }
                 
@@ -109,10 +111,8 @@ namespace msa {
                     clampButton->localRect.set(width - (w + p)*2, y, w, h);
                     moreButton->localRect.set(width - (w + p), y, w, h);
                     
-                    if(snapButton) {
-                        
-                    }
-                    
+                    if(snapButton->getParameter().hasChanged()) slider->getParameter().update();
+                    if(clampButton->getParameter().hasChanged()) slider->getParameter().update();
                     if(moreButton->getParameter().value()) {
 //                            ofSystemAlertDialog("Hello");
                     }
