@@ -101,11 +101,16 @@ namespace msa {
                 
                 
                 collapseAllButton->localRect.set(p, y, s, s);
-                if(wrapButton) wrapButton->localRect.set(titleButton->width - (s + p) * 3, y, s, s);
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
+                if(wrapButton) {
+                    wrapButton->localRect.set(titleButton->width - (s + p) * 3, y, s, s);
+                    if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
+                }
                 
-                if(titleButton->getParameter()) {
+
+
+                if(titleButton->getParameter().value()) {
                     titleButton->getParameter().setTooltip("Collapse panel");
                     collapseAllButton->getParameter().setName("-");
                     collapseAllButton->getParameter().setTooltip("Collapse all panels");
