@@ -21,10 +21,10 @@ namespace msa {
                 if(panel) {
                     // how open is this panel
                     float openSpeed = 0.1f;
-                    Parameter &titleBool = panel->titleButton->getParameter();
-                    if(titleBool.value() != panel->isOpen) panel->showPanel(titleBool.value(), false);
+//                    Parameter &titleBool = panel->titleButton->getParameter();
+//                    if(titleBool.value() != panel->isOpen) panel->showPanel(titleBool.value(), false);
                     
-                    if(panel->isOpen) {
+                    if(panel->titleButton->getParameter().value()) {
                         //                    if(scale.y<0.95) scale.y += (1-scale.y) * openSpeed;
                         if(panel->children->scale.y < 1) panel->children->scale.y += openSpeed;
                         else panel->children->scale.y = 1.0f;

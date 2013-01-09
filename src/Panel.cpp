@@ -78,14 +78,12 @@ namespace msa {
                 layoutManager = NULL;
                 width = 0;
                 height = 0;
-                isOpen = false;
                 paramT = dynamic_cast<ParameterGroup*>(&getParameter());
                 setZ(getInheritedZ()+100);
             }
             
             //--------------------------------------------------------------
             void Panel::showPanel(bool bOpen, bool bRecursive) {
-                isOpen = bOpen;
                 titleButton->getParameter().set(bOpen);
                 if(bRecursive) {
                     for(int i=0; i<children->getNumControls(); i++) {
@@ -107,7 +105,7 @@ namespace msa {
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
                 
-                if(isOpen) {
+                if(titleButton->getParameter()) {
                     titleButton->getParameter().setTooltip("Collapse panel");
                     collapseAllButton->getParameter().setName("-");
                     collapseAllButton->getParameter().setTooltip("Collapse all panels");
@@ -117,7 +115,7 @@ namespace msa {
                     collapseAllButton->getParameter().setTooltip("Expand all panel");
                 }
                 
-                if(collapseAllButton->getParameter().value()) showPanel(!isOpen, true);
+                if(collapseAllButton->getParameter().value()) showPanel(!titleButton->getParameter(), true);
                 
                 if(loadButton->getParameter().value()) {
                     ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));

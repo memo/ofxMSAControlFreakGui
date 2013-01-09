@@ -40,7 +40,6 @@ namespace msa {
                 void onUpdate();
                 
             protected:
-                bool isOpen;
                 ParameterGroup  *paramT;
                 LayoutManager* layoutManager;
                 
