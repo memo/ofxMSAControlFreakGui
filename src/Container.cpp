@@ -55,7 +55,7 @@ namespace msa {
 
             //--------------------------------------------------------------
             void Container::setActiveControl(Control* control) {
-                ofLogNotice() << "msa::ControlFreak::Gui::Container::setActiveControl: " << (control ? control->getParameter().getPath() : "NULL");
+                ofLogVerbose() << "msa::ControlFreak::Gui::Container::setActiveControl: " << (control ? control->getParameter().getPath() : "NULL");
                 // if old control exists, put it at the back
                 if(_pactiveControl) _pactiveControl->popZ();
                 
