@@ -45,7 +45,7 @@ namespace msa {
                 LayoutManager* layoutManager;
                 
                 BoolTitle       *titleButton;   // button which controls the title of the panel
-                BoolSimpleCircle *expandAllButton;
+//                BoolSimpleCircle *expandAllButton;
                 BoolSimpleCircle *collapseAllButton;
                 BoolSimpleCircle *loadButton;
                 BoolSimpleCircle *saveButton;

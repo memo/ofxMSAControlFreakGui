@@ -11,7 +11,7 @@ namespace msa {
                 setParent(parent);
                 setParameter(parameter, bOwnsParameter);
                 
-                z = 0;
+                setZ(0);
                 newColumn = false;
                 keyboardShortcut = 0;
 //                setKeyboardShortcut(0);
@@ -48,7 +48,7 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Container* Control::getParent() {
+            Container* Control::getParent() const {
                 return _pparent;
             }
             
@@ -93,6 +93,29 @@ namespace msa {
             ofVec2f Control::getParentScale() {
                 return getParent() ? getParent()->getInheritedScale() : ofVec2f(1, 1);
             }
+            
+            
+            //--------------------------------------------------------------
+            void Control::setZ(int z) {
+                _z.push(z);
+            }
+            
+            //--------------------------------------------------------------
+            int Control::getZ() const {
+                return _z.top();
+            }
+            
+            //--------------------------------------------------------------
+            int Control::popZ() {
+                _z.pop();
+                return getZ();
+            }
+
+            //--------------------------------------------------------------
+            int Control::getInheritedZ() const {
+                return getParent() ? getZ() + getParent()->getInheritedZ() * 100 : getZ();
+            }
+
 
             //--------------------------------------------------------------
             string Control::getName() {

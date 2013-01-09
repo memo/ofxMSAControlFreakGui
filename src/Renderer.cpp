@@ -39,14 +39,16 @@ namespace msa {
             //--------------------------------------------------------------
             struct PointerCompare {
                 bool operator()(const Control* l, const Control* r) {
-                    return l->z > r->z;
+                    return l->getInheritedZ() < r->getInheritedZ();
                 }
             };
             
             //--------------------------------------------------------------
             void Renderer::draw(Config &config) {
                 this->config = &config;
-//                sort(controls.begin(), controls.end(), PointerCompare());
+
+                // TODO: fix sorting, if z-order is same, undefined behaviour
+                sort(controls.begin(), controls.end(), PointerCompare());
                 
                 ofPushStyle();
                 for(int i=0; i<controls.size(); i++) {

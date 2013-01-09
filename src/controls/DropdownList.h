@@ -45,6 +45,7 @@ namespace msa {
                     if(isActive()) {
                         int numLabels = paramT->getNumLabels();
                         setBGColor();
+                        ofFill();
                         ofRect(0, height, width, getConfig().layout.dropdownListTextHeight * (numLabels + 0.5));
                         
                         ofNoFill();

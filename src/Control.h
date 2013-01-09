@@ -21,7 +21,6 @@ namespace msa {
                 friend class Container;
                 friend class Renderer;
                 
-                int         z;  // draw order (0 draw last, i.e. drawn on top)
                 bool		newColumn;
                 char		keyboardShortcut;
                 ofVec2f     scale;
@@ -38,7 +37,7 @@ namespace msa {
                 
                 Control& setNewColumn(bool b);
                 
-                Container *getParent();     // parent panel
+                Container *getParent() const;     // parent panel
                 Container *getRoot(bool bUpdate = false);       // root panel
                 
                 int getDepth();         // how deep in the heirarchy it is (how many levels deep)
@@ -47,6 +46,11 @@ namespace msa {
                 ofVec2f getScale();
                 ofVec2f getInheritedScale();// inherited scale
                 ofVec2f getParentScale();   // inherited scale of parent
+
+                void setZ(int z);    // draw order (+ve is more forward)
+                int getZ() const;          // get z depth;
+                int popZ();          // restore z to previous value
+                int getInheritedZ() const;
                 
                 
                 string getName();
@@ -83,7 +87,6 @@ namespace msa {
 
             protected:
                 
-                
                 // 0: normal, 1:over, 2:active
                 int getState();
                 
@@ -108,6 +111,7 @@ namespace msa {
                 
                 
             private:
+                stack<int>_z;
                 float _alpha;
                 Container *_pparent;
                 Container *_proot;
