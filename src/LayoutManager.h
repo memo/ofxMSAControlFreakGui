@@ -16,24 +16,20 @@ namespace msa {
             // for auto-layout
             class LayoutManager {
             public:
-                
-//                friend class Panel;
-                
                 int scrollY;
                 bool doWrap;
                 ofRectangle boundRect;
-                ofVec2f     curPos;
-                ofRectangle rect;
+                ofVec2f     curHead;
+                ofRectangle curRect;
                 
                 LayoutManager();
-                void prepareForDraw(Container &container);
-                void update();
+                void update(Container &root);
                 
             protected:
                 int _scrollY;   // actual one, scrollY lerps to this
                 ofVec2f getMaxPos();
                 ofVec2f clampPoint(ofVec2f p);
-                
+                void prepareForDraw(Container &container);
             };
             
             

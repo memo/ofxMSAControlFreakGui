@@ -2,6 +2,8 @@
 
 #include "ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.h"
 
+#include "ofxMSAControlFreakGui/src/LayoutSettings.h"
+
 #include "ofxMSAControlFreak/src/ControlFreak.h"
 
 namespace msa {
@@ -21,24 +23,18 @@ namespace msa {
                 friend class Container;
                 friend class Renderer;
 
-                bool        visible;
-                bool		newColumn;
-                bool        doIsolateOnActive;   // fade other controls if this is active
-                char		keyboardShortcut;
-                ofVec2f     scale;
+                bool    visible;
+                bool    doIsolateOnActive;   // fade other controls if this is active
+                char	keyboardShortcut;
+                ofVec2f scale;
 
-                // if this is true, do autoLayout, otherwise use localRect (in relation to parent)
-                bool        doAutoLayout;
-                bool        doIncludeInContainerRect;
-                ofRectangle localRect;
+                LayoutSettings layout;
                 
                 Control(Container *parent, Parameter* p, bool bOwnsParameter = false);
                 ~Control();
                 
                 Control& setConfig(Config *config);
                 Config &getConfig();
-                
-                Control& setNewColumn(bool b);
                 
                 Container *getParent() const;     // parent panel
                 Container *getRoot(bool bUpdate = false);       // root panel

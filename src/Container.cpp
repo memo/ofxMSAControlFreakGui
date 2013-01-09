@@ -63,7 +63,7 @@ namespace msa {
                 
                 // put new active control at the front
                 if(_pactiveControl) {
-                    _pactiveControl->setZ(100000);
+                    _pactiveControl->setZ(1e100);
                 }
             }
             

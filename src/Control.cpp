@@ -13,14 +13,11 @@ namespace msa {
                 
                 setZ(0);
                 visible = true;
-                newColumn = false;
                 doIsolateOnActive = true;
                 keyboardShortcut = 0;
 //                setKeyboardShortcut(0);
                 scale.set(1, 1);
-                doAutoLayout = true;
-                doIncludeInContainerRect = true;
-                localRect.set(0, 0, 0, 0);
+                layout.set(0, 0, 0, 0);
                 
                 _alpha = 1;
                 
@@ -42,13 +39,6 @@ namespace msa {
                 setup();
                 return *this;
             }
-            
-            //--------------------------------------------------------------
-            Control &Control::setNewColumn(bool b) {
-                newColumn = b;
-                return *this;
-            }
-            
             
             //--------------------------------------------------------------
             Container* Control::getParent() const {
@@ -116,7 +106,7 @@ namespace msa {
 
             //--------------------------------------------------------------
             int Control::getInheritedZ() const {
-                return getParent() ? getZ() + getParent()->getInheritedZ() * 100 : getZ();
+                return getParent() ? getZ() + getParent()->getInheritedZ() * 1000 : getZ();
             }
 
 

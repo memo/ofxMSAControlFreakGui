@@ -16,30 +16,34 @@ namespace msa {
             Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
                 init();
                 
-                doAutoLayout = true;
-                localRect.set(0, 0, 1, 0); // TODO: hack?
+//                layout.doAutoLayout = true;
+//                layout.set(0, 0, 1, 0); // TODO: hack?
                 
                 titleButton = new BoolTitle(this, getName());
-                titleButton->doAutoLayout = false;
+                titleButton->layout.doAffectFlow = false;
+                titleButton->layout.positionMode = 1;
                 titleButton->setZ(1);
                 titleButton->getParameter().set(true);
                 addControl(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
-                collapseAllButton->doAutoLayout = false;
+                collapseAllButton->layout.doAffectFlow = false;
+                collapseAllButton->layout.positionMode = 1;
                 collapseAllButton->setZ(2);
                 collapseAllButton->setMode(ParameterBool::kBang);
                 addControl(collapseAllButton);
                 
                 saveButton = new BoolSimpleCircle(this, "s");
-                saveButton->doAutoLayout = false;
+                saveButton->layout.doAffectFlow = false;
+                saveButton->layout.positionMode = 1;
                 saveButton->setZ(2);
                 saveButton->setMode(ParameterBool::kBang);
                 saveButton->getParameter().setTooltip("Save preset for '" + getPath() + "'");
                 addControl(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
-                loadButton->doAutoLayout = false;
+                loadButton->layout.doAffectFlow = false;
+                loadButton->layout.positionMode = 1;
                 loadButton->setZ(2);
                 loadButton->setMode(ParameterBool::kBang);
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
@@ -48,29 +52,30 @@ namespace msa {
                 // add wrap button only if we are the root
                 if(getParent() == NULL) {
                     wrapButton = new BoolSimpleCircle(this, "w");
-                    wrapButton->doAutoLayout = false;
+                    wrapButton->layout.doAffectFlow = false;
+                    wrapButton->layout.positionMode = 1;
                     wrapButton->setZ(2);
                     wrapButton->setMode(ParameterBool::kToggle);
                     wrapButton->getParameter().setTooltip("Wrap");
                     addControl(wrapButton);
                     
                     scrollbar = new ScrollBar(this);
-                    scrollbar->doAutoLayout = false;
+                    scrollbar->layout.doAffectFlow = false;
+                    scrollbar->layout.positionMode = 2;
                     scrollbar->setZ(-1);
                     scrollbar->doIsolateOnActive = false;
-                    scrollbar->doIncludeInContainerRect = false;
+                    scrollbar->layout.doIncludeInContainerRect = false;
                     scrollbar->getParameter().setTooltip("Scroll " + getPath());
                     addControl(scrollbar);
                 } else {
                     wrapButton = NULL;
                     scrollbar = NULL;
                 }
-                
-                
+
                 
                 children = new Container(this, getName() + "_children");
-                children->doAutoLayout = true;
-                children->localRect.set(0, 0, 1, 3);
+                children->layout.doAffectFlow = true;
+                children->layout.set(0, 0, 1, 3);
                 addControl(children);
                 
                 children->addParameters(p);
@@ -88,7 +93,6 @@ namespace msa {
                 width = 0;
                 height = 0;
                 paramT = dynamic_cast<ParameterGroup*>(&getParameter());
-                setZ(getInheritedZ()+100);
             }
             
             //--------------------------------------------------------------
@@ -109,12 +113,12 @@ namespace msa {
                 int p = 3;
                 
                 
-                collapseAllButton->localRect.set(p, y, s, s);
-                saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
-                loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
+                collapseAllButton->layout.set(p, y, s, s);
+                saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
+                loadButton->layout.set(titleButton->width - (s + p), y, s, s);
 
                 if(wrapButton) {
-                    wrapButton->localRect.set(titleButton->width - (s + p) * 3, y, s, s);
+                    wrapButton->layout.set(titleButton->width - (s + p) * 3, y, s, s);
                     if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
                 }
                 
@@ -122,10 +126,10 @@ namespace msa {
                     if(layoutManager) {// && !layoutManager->doWrap) {
                         // TODO: custom scrollbar layout
                         scrollbar->visible = true;
-                        scrollbar->localRect.set(0, 0, getConfig().layout.padding.x, ofGetHeight());
-                        float sbheight = scrollbar->localRect.height;
-                        scrollbar->barThickness = sbheight / layoutManager->rect.height;
-                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->rect.height - sbheight/2);
+                        scrollbar->layout.set(0, 0, getConfig().layout.padding.x, ofGetHeight());
+                        float sbheight = scrollbar->layout.height;
+                        scrollbar->barThickness = sbheight / layoutManager->curRect.height;
+                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->curRect.height - sbheight/2);
                     } else {
                         scrollbar->visible = false;
                     }

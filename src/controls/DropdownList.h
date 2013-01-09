@@ -17,8 +17,8 @@ namespace msa {
 
                 //--------------------------------------------------------------
 //                void setup() {
-//                    localRect.width   = getConfig().layout.columnWidth;
-//                    localRect.height  = getConfig().layout.buttonHeight;
+//                    layout.width   = getConfig().layout.columnWidth;
+//                    layout.height  = getConfig().layout.buttonHeight;
 //                }
 
                 //--------------------------------------------------------------

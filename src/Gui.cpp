@@ -237,13 +237,10 @@ namespace msa {
                 if(!panel.layoutManager) panel.layoutManager = new LayoutManager;
                
                 // configure layout manager
-                panel.layoutManager->boundRect.set(config.layout.padding.x, config.layout.buttonHeight + config.layout.padding.y, 0, 0);  // use full width and height of window
-                panel.layoutManager->curPos.set(0, 0); // start in top left
-                panel.layoutManager->rect.set(0, 0, 0, 0);
+                panel.layoutManager->boundRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
                 
                 // iterate all controls on panel, set position and add to render queue
-                panel.layoutManager->prepareForDraw(panel);
-                panel.layoutManager->update();
+                panel.layoutManager->update(panel);
                 
                 // sort and draw
                 Renderer::instance().draw(config);
