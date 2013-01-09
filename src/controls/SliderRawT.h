@@ -111,8 +111,6 @@ namespace msa {
                     }
                     
                     drawBorder();
-                    
-                    
                 }
                 
                 

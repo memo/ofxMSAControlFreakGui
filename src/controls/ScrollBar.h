@@ -39,7 +39,8 @@ namespace msa {
                 void updateSlider() {
                     if(!enabled) return;
                     if(isMousePressed()) {
-                        getParameter().setMappedFrom(ofGetMouseY(), y, y + height);
+                        float v = ofNormalize(ofGetMouseY(), y, y + height);
+                        getParameter() = v - barThickness/2;
                     }
                     if(getParameter().value() > 1 - barThickness) getParameter() = 1 - barThickness;
                 }

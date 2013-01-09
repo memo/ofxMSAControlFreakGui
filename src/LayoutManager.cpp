@@ -77,11 +77,11 @@ namespace msa {
                                 ofVec2f controlOffset(control.layout.position + control.layout.paddingPre);
                                 ofVec2f controlPos(newHead + controlOffset);
                                 float postHeight = control.height + control.layout.paddingPost.y + config.layout.padding.y;
-//                                if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
-//                                    newHead.x = curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
-//                                    newHead.y = boundRect.y;
-//                                    controlPos = newHead + controlOffset;
-//                                }
+                                if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
+                                    newHead.x = curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
+                                    newHead.y = boundRect.y;
+                                    controlPos = newHead + controlOffset;
+                                }
                                 control.setPosition(controlPos);
                                 control.x += indent;
                                 control.y -= _scrollY;

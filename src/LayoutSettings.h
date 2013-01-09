@@ -19,8 +19,7 @@ namespace msa {
                     positionMode = 0;
                     doAffectFlow = true;
                     doIncludeInContainerRect = true;
-                    newColumn = true;
-                    
+                    newColumn = false;
                 }
             };
 
