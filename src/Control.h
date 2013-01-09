@@ -20,13 +20,16 @@ namespace msa {
                 
                 friend class Container;
                 friend class Renderer;
-                
+
+                bool        visible;
                 bool		newColumn;
+                bool        doIsolateOnActive;   // fade other controls if this is active
                 char		keyboardShortcut;
                 ofVec2f     scale;
 
                 // if this is true, do autoLayout, otherwise use localRect (in relation to parent)
                 bool        doAutoLayout;
+                bool        doIncludeInContainerRect;
                 ofRectangle localRect;
                 
                 Control(Container *parent, Parameter* p, bool bOwnsParameter = false);

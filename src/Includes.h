@@ -12,6 +12,7 @@
 #include "ofxMSAControlFreakGui/src/Controls/Content.h"
 #include "ofxMSAControlFreakGui/src/Controls/FPSCounter.h"
 #include "ofxMSAControlFreakGui/src/Controls/QuadWarp.h"
+#include "ofxMSAControlFreakGui/src/Controls/ScrollBar.h"
 #include "ofxMSAControlFreakGui/src/Controls/Slider2d.h"
 #include "ofxMSAControlFreakGui/src/Controls/SliderT.h"
 

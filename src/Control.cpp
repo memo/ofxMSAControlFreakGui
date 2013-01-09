@@ -12,11 +12,14 @@ namespace msa {
                 setParameter(parameter, bOwnsParameter);
                 
                 setZ(0);
+                visible = true;
                 newColumn = false;
+                doIsolateOnActive = true;
                 keyboardShortcut = 0;
 //                setKeyboardShortcut(0);
                 scale.set(1, 1);
                 doAutoLayout = true;
+                doIncludeInContainerRect = true;
                 localRect.set(0, 0, 0, 0);
                 
                 _alpha = 1;
@@ -245,6 +248,8 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Control::draw() {
+                if(!visible) return;
+                
                 setTooltip();
                 
                 // make sure all controls land on perfect pixels
@@ -256,7 +261,14 @@ namespace msa {
                 ofTranslate(x, y);
                 ofEnableAlphaBlending();
                 
-                float targetAlpha = getStateChangeMillis() > getConfig().colors.fade.delayMillis && getRoot()->getActiveControl() && !getParentActive() ? getConfig().colors.fade.alpha : 1.0f;
+                
+                // calculate targetalpha;
+                
+                bool bTimeToChange = getStateChangeMillis() > getConfig().colors.fade.delayMillis;
+                bool bAControlIsActive = getRoot()->getActiveControl() && getRoot()->getActiveControl()->doIsolateOnActive;
+                bool bThisIsActive = getParentActive();
+                
+                float targetAlpha = bTimeToChange && bAControlIsActive && !bThisIsActive ? getConfig().colors.fade.alpha : 1.0f;
                 float diff = (targetAlpha - _alpha);
                 _alpha += diff * getConfig().colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;

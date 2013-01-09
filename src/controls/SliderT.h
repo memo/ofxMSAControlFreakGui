@@ -50,7 +50,7 @@ namespace msa {
                     snapButton->getParameter().trackVariable(&p->getSnap());
                     addControl(snapButton);
 
-                    moreButton = new BoolSimpleBox(this, "...");
+                    moreButton = new BoolSimpleBox(this, ".");
                     moreButton->doAutoLayout = false;
                     moreButton->setZ(1);
                     moreButton->setMode(ParameterBool::kBang);

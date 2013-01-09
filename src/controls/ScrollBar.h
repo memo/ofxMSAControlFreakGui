@@ -8,21 +8,29 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            template <typename T>
-            class SliderRawT : public Control {
+            class ScrollBar : public Control {
             public:
                 
+                float barThickness;
+                
                 //--------------------------------------------------------------
-                SliderRawT(Container *parent, Parameter* p) : Control(parent, p) {
+                ScrollBar(Container *parent) : Control(parent, new ParameterFloat("ScrollBar", NULL), true) {
+                    getParameter().setClamp(true);
+                    barThickness = 0.2; // default value
                 }
                 
                 //--------------------------------------------------------------
-                void inc(T amount) {
+                ScrollBar(Container *parent, Parameter* p) : Control(parent, p) {
+                    barThickness = 0.2; // default value
+                }
+                
+                //--------------------------------------------------------------
+                void inc(float amount) {
                     getParameter().inc(amount);
                 }
                 
                 //--------------------------------------------------------------
-                void dec(T amount) {
+                void dec(float amount) {
                     getParameter().dec(amount);
                 }
                 
@@ -31,8 +39,9 @@ namespace msa {
                 void updateSlider() {
                     if(!enabled) return;
                     if(isMousePressed()) {
-                        getParameter().setMappedFrom(ofGetMouseX(), x, x + width);
+                        getParameter().setMappedFrom(ofGetMouseY(), y, y + height);
                     }
+                    if(getParameter().value() > 1 - barThickness) getParameter() = 1 - barThickness;
                 }
                 
                 //--------------------------------------------------------------
@@ -72,46 +81,27 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDraw() {
+                    
                     ofFill();
                     
                     Config &c = getConfig();
                     
-                    float barwidth = ofClamp(getParameter().getMappedTo(0, width), 0, width);
                     
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
                     setSliderColor(false);
-                    ofRect(0, 0, width, c.layout.sliderHeight);
+                    ofRect(0, 0, width, height);
                     
                     setSliderColor(true);
-                    ofRect(0, 0, barwidth, c.layout.sliderHeight);
+                    int dbary = getParameter().value() * height;
+                    int dbart = barThickness * height;
+                    ofRect(0, dbary, width, dbart);
                     
-                    string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
-                    drawText(c.layout.textPos.x + 10, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
-                    
-                    
-                    if(getParameter().getSnap()) {
-                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
-                        if(xinc >=2) {
-                            setColor(c.colors.bg[0]);
-                            ofSetLineWidth(1);
-                            for(float f=0; f<=width; f+=xinc) {
-                                ofLine(f, 0, f, c.layout.sliderHeight);
-                            }
-                        }
-                    }
-                    
-                    if(getParameter().getClamp()) {
-                        setColor(ofColor(c.colors.text[1].r, c.colors.text[1].g, c.colors.text[1].b, 128));
-                        int w = 2;
-                        int h = c.layout.sliderHeight;
-                        ofRect(0, 0, w, h);
-                        ofRect(width-w-1, 0, w, h);
-                    }
+//                    string s = getParameter().getName() + ": " + ofToString((float)getParameter().value());
+//                    drawText(c.layout.textPos.x + 10, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
                     
                     drawBorder();
-                    
                     
                 }
                 

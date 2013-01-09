@@ -53,8 +53,17 @@ namespace msa {
                     wrapButton->setMode(ParameterBool::kToggle);
                     wrapButton->getParameter().setTooltip("Wrap");
                     addControl(wrapButton);
+                    
+                    scrollbar = new ScrollBar(this);
+                    scrollbar->doAutoLayout = false;
+                    scrollbar->setZ(-1);
+                    scrollbar->doIsolateOnActive = false;
+                    scrollbar->doIncludeInContainerRect = false;
+                    scrollbar->getParameter().setTooltip("Scroll " + getPath());
+                    addControl(scrollbar);
                 } else {
                     wrapButton = NULL;
+                    scrollbar = NULL;
                 }
                 
                 
@@ -103,9 +112,23 @@ namespace msa {
                 collapseAllButton->localRect.set(p, y, s, s);
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
+
                 if(wrapButton) {
                     wrapButton->localRect.set(titleButton->width - (s + p) * 3, y, s, s);
                     if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
+                }
+                
+                if(scrollbar) {
+                    if(layoutManager) {// && !layoutManager->doWrap) {
+                        // TODO: custom scrollbar layout
+                        scrollbar->visible = true;
+                        scrollbar->localRect.set(0, 0, getConfig().layout.padding.x, ofGetHeight());
+                        float sbheight = scrollbar->localRect.height;
+                        scrollbar->barThickness = sbheight / layoutManager->rect.height;
+                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->rect.height - sbheight/2);
+                    } else {
+                        scrollbar->visible = false;
+                    }
                 }
                 
 

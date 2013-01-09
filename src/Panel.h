@@ -19,6 +19,7 @@ namespace msa {
             class Content;
             class FPSCounter;
             class QuadWarp;
+            class ScrollBar;
             class Slider2d;
             class SliderInt;
             class SliderFloat;
@@ -48,7 +49,8 @@ namespace msa {
                 BoolBase *loadButton;
                 BoolBase *saveButton;
                 BoolBase *wrapButton;
-                Container       *children;
+                ScrollBar *scrollbar;
+                Container *children;
                 
                 void init();
                 

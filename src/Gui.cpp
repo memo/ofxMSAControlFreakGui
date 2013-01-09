@@ -240,14 +240,13 @@ namespace msa {
                 panel.layoutManager->boundRect.set(config.layout.padding.x, config.layout.buttonHeight + config.layout.padding.y, 0, 0);  // use full width and height of window
                 panel.layoutManager->curPos.set(0, 0); // start in top left
                 panel.layoutManager->rect.set(0, 0, 0, 0);
+                
                 // iterate all controls on panel, set position and add to render queue
                 panel.layoutManager->prepareForDraw(panel);
+                panel.layoutManager->update();
                 
                 // sort and draw
                 Renderer::instance().draw(config);
-                
-                // draw extras (scroll bar etc)
-                panel.layoutManager->draw(config);
                 
                 ofPopStyle();
             }
