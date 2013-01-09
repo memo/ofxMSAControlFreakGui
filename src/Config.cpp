@@ -17,7 +17,7 @@ namespace msa {
                 layout.indent               = 5;
 //                layout.slider2DSize         = ofVec2f(buttonHeight * 4, buttonHeight * 4);
                 
-                layout.columnWidth			= 200 + layout.padding.x;
+                layout.columnWidth			= 250;
                 
 
                 // Colors
@@ -54,7 +54,7 @@ namespace msa {
                 colors.border[1]	= ofColor(90);
                 colors.border[2]	= ofColor(150);
                 
-                tooltip.offset      = ofVec2f(0, -10);
+                tooltip.offset      = ofVec2f(10, -10);
                 tooltip.padding     = ofRectangle(6, 4, 13, 7);
                 tooltip.bgColor     = ofColor(255, 255, 160);
                 tooltip.borderColor = ofColor(0);

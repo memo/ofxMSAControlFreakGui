@@ -45,6 +45,20 @@ namespace msa {
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
                 addControl(loadButton);
                 
+                // add wrap button only if we are the root
+                if(getParent() == NULL) {
+                    wrapButton = new BoolSimpleCircle(this, "w");
+                    wrapButton->doAutoLayout = false;
+                    wrapButton->setZ(2);
+                    wrapButton->setMode(ParameterBool::kToggle);
+                    wrapButton->getParameter().setTooltip("Wrap");
+                    addControl(wrapButton);
+                } else {
+                    wrapButton = NULL;
+                }
+                
+                
+                
                 children = new Container(this, getName() + "_children");
                 children->doAutoLayout = true;
                 children->localRect.set(0, 0, 1, 3);
@@ -89,8 +103,9 @@ namespace msa {
                 
                 
                 collapseAllButton->localRect.set(p, y, s, s);
-                loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
+                if(wrapButton) wrapButton->localRect.set(titleButton->width - (s + p) * 3, y, s, s);
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
+                loadButton->localRect.set(titleButton->width - (s + p), y, s, s);
                 
                 if(isOpen) {
                     titleButton->getParameter().setTooltip("Collapse panel");
@@ -101,7 +116,9 @@ namespace msa {
                     collapseAllButton->getParameter().setName("+");
                     collapseAllButton->getParameter().setTooltip("Expand all panel");
                 }
+                
                 if(collapseAllButton->getParameter().value()) showPanel(!isOpen, true);
+                
                 if(loadButton->getParameter().value()) {
                     ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
                     if(f.bSuccess) {

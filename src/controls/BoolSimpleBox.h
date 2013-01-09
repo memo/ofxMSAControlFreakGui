@@ -17,10 +17,18 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDraw() {
-                    if(isMouseOver()) setColor(ofColor(255, 100));
+                    if(isMousePressed() || getParameter().value()) setColor(ofColor(255, 100));
                     else setColor(ofColor(0, 100));
+                    ofPushMatrix();
+                    ofScale(width, height);
                     ofFill();
-                    ofRect(0, 0, width, height);
+                    ofRect(0, 0, 1, 1);
+                    if(isMouseOver()) {
+                        ofNoFill();
+                        setColor(ofColor(255));
+                        ofRect(0, 0, 1, 1);
+                    }
+                    ofPopMatrix();
 
                     drawTextCentered();
                     drawBorder();

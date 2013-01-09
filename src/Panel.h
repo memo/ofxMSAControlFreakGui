@@ -9,11 +9,11 @@ namespace msa {
         namespace gui {
             
             class Gui;
-            class BoolButton;
-            class BoolTitle;
-            class BoolSimpleBox;
-            class BoolSimpleCircle;
-            class BoolToggle;
+            class BoolBase;
+//            class BoolTitle;
+//            class BoolSimpleBox;
+//            class BoolSimpleCircle;
+//            class BoolToggle;
             class ColorPicker;
             class DropdownList;
             class Content;
@@ -44,10 +44,11 @@ namespace msa {
                 ParameterGroup  *paramT;
                 LayoutManager* layoutManager;
                 
-                BoolTitle       *titleButton;   // button which controls the title of the panel
-                BoolSimpleCircle *collapseAllButton;
-                BoolSimpleCircle *loadButton;
-                BoolSimpleCircle *saveButton;
+                BoolBase *titleButton;   // button which controls the title of the panel
+                BoolBase *collapseAllButton;
+                BoolBase *loadButton;
+                BoolBase *saveButton;
+                BoolBase *wrapButton;
                 Container       *children;
                 
                 void init();
