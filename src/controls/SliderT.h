@@ -15,7 +15,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 SliderT(Container *parent, Parameter* p) : Container(parent, p) {
-                    button = new BoolSimpleCircle(this, "...");
+                    button = new BoolSimpleCircle(this, ">");
                     button->doAutoLayout = false;
                     button->setMode(ParameterBool::kBang);
                     button->getParameter().setTooltip("More options");
@@ -43,6 +43,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onPress(int x, int y, int button) {
+                    printf("on");
                     updateSlider();
                 }
                 
@@ -125,6 +126,9 @@ namespace msa {
                         int s = height * 0.5;
                         int y = (height - s)-p;
                         button->localRect.set(width - (s + p), y, s, s);
+                        if(button->getParameter().value()) {
+                            ofSystemAlertDialog("Hello");
+                        }
 //                        button->set(button->localRect);
 //                        button->onDraw();
                     }

@@ -31,7 +31,6 @@ namespace msa {
                 collapseAllButton->setMode(ParameterBool::kBang);
 //                collapseAllButton->getParameter().setTooltip("Collapse all panels under '" + getPath() + "'");
                 addControl(collapseAllButton);
-                
 //                expandAllButton = new BoolSimpleCircle(this, "+");
 //                expandAllButton->doAutoLayout = false;
 //                expandAllButton->setMode(ParameterBool::kBang);
@@ -101,10 +100,10 @@ namespace msa {
                 saveButton->localRect.set(titleButton->width - (s + p) * 2, y, s, s);
                 
                 if(isOpen) {
-                    collapseAllButton->getParameter().setName("^");
+                    collapseAllButton->getParameter().setName("-");
                     collapseAllButton->getParameter().setTooltip("Collapse all panels under '" + getPath() + "'");
                 } else {
-                    collapseAllButton->getParameter().setName("v");
+                    collapseAllButton->getParameter().setName("+");
                     collapseAllButton->getParameter().setTooltip("Expand all panels under '" + getPath() + "'");
                 }
                 if(collapseAllButton->getParameter().value()) showPanel(!isOpen, true);
