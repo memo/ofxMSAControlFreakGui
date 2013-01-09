@@ -33,7 +33,7 @@ namespace msa {
                 friend class Gui;
                 friend class LayoutManager;
                 
-                Panel(Container *parent, string s);
+//                Panel(Container *parent, string s);
                 Panel(Container *parent, ParameterGroup* p);
                 ~Panel();
                 

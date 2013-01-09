@@ -246,6 +246,10 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::draw() {
                 setTooltip();
+                
+                // make sure all controls land on perfect pixels
+                ofRectangle::set(floor(x), floor(y), floor(width), floor(height));
+                
 
                 ofPushStyle();
                 ofPushMatrix();

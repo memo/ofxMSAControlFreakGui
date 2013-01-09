@@ -15,7 +15,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void LayoutManager::prepareForDraw(Container &container) {
-//                printf("\n");
+                //                printf("\n");
                 
                 Panel *panel = dynamic_cast<Panel*>(&container);
                 if(panel) {
@@ -44,14 +44,14 @@ namespace msa {
                 
                 if(container.doAutoLayout) {
                     curPos              = clampPoint(curPos);
-//                    container.position  = curPos; // TODO, check this
+                    //                    container.position  = curPos; // TODO, check this
                 } else {
-//                    curPos = container.position;
+                    //                    curPos = container.position;
                 }
-
+                
                 int panelDepth          = container.getDepth();// * config.layout.indent;
                 ofVec2f containerScale  = container.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
-                
+                // TODO: parent isn't being processed, thats why root doesn't have it.
                 if(containerScale.y > 0) {
                     for(int i=0; i<container.getNumControls(); i++) {
                         Control& control = *container.getControl(i);
@@ -82,8 +82,8 @@ namespace msa {
                             control.setPosition(container.position + control.localRect.position);
                         }
                         
-//                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter().getPath().c_str(), control.x, control.y, container.getParameter().getPath().c_str(), container.x, container.y);
-
+                        //                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter().getPath().c_str(), control.x, control.y, container.getParameter().getPath().c_str(), container.x, container.y);
+                        
                         Renderer::instance().addControl(&control);
                         rect.growToInclude((ofRectangle&)control);
                         
@@ -99,21 +99,24 @@ namespace msa {
             
             //--------------------------------------------------------------
             void LayoutManager::draw(Config &config) {
-                return;
+                //                return;
                 
                 ofPushStyle();
                 
-                ofSetLineWidth(1);
-                
-                ofFill();
-                ofSetColor(config.colors.slider.full[0]);
-                int by = ofMap(scrollY, rect.y, rect.y + rect.height, 2, ofGetHeight()-4);
-                int bh = ofMap(ofGetHeight(), 0, rect.height, 2, ofGetHeight()-4);
-                ofRect(2, by, config.layout.padding.x-4, bh);
-                
-                ofNoFill();
-                ofSetColor(config.colors.border[0]);
-                ofRect(2, 2, config.layout.padding.x-4, ofGetHeight()-4);
+                if(!doWrap) {
+                    
+                    ofSetLineWidth(1);
+                    
+                    ofFill();
+                    ofSetColor(config.colors.slider.full[0]);
+                    int by = ofMap(scrollY, rect.y, rect.y + rect.height, 2, ofGetHeight()-4);
+                    int bh = ofMap(ofGetHeight(), 0, rect.height, 2, ofGetHeight()-4);
+                    ofRect(2, by, config.layout.padding.x-4, bh);
+                    
+                    ofNoFill();
+                    ofSetColor(config.colors.border[0]);
+                    ofRect(2, 2, config.layout.padding.x-4, ofGetHeight()-4);
+                }
                 
                 ofPopStyle();
             }

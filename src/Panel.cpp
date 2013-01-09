@@ -7,10 +7,10 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            //--------------------------------------------------------------
-            Panel::Panel(Container *parent, string s) : Container(parent, s) {
-                init();
-            }
+//            //--------------------------------------------------------------
+//            Panel::Panel(Container *parent, string s) : Container(parent, s) {
+//                init();
+//            }
             
             //--------------------------------------------------------------
             Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
