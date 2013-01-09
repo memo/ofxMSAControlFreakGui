@@ -213,7 +213,7 @@ namespace msa {
                 if(!isSetup) setup();
                 if(!pages.size()) return;
 
-                pages[currentPageIndex]->_update(e);
+                pages[currentPageIndex]->update();
             }
             
             //--------------------------------------------------------------
@@ -257,28 +257,28 @@ namespace msa {
             void Gui::mouseMoved(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
 //                headerPage->_mouseMoved(e);
-                pages[currentPageIndex]->_mouseMoved(e);
+                pages[currentPageIndex]->mouseMoved(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mousePressed(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
 //                headerPage->_mousePressed(e);
-                pages[currentPageIndex]->_mousePressed(e);
+                pages[currentPageIndex]->mousePressed(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseDragged(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
 //                headerPage->_mouseDragged(e);
-                pages[currentPageIndex]->_mouseDragged(e);
+                pages[currentPageIndex]->mouseDragged(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseReleased(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
 //                headerPage->_mouseReleased(e);
-                pages[currentPageIndex]->_mouseReleased(e);
+                pages[currentPageIndex]->mouseReleased(e);
                 //	if(doAutoSave) doSave = true;
                 //                if(doAutoSave) saveXml();
             }
@@ -302,7 +302,7 @@ namespace msa {
                 
                 if(doDraw) {
 //                    headerPage->_keyPressed(e);
-                    pages[currentPageIndex]->_keyPressed(e);
+                    pages[currentPageIndex]->keyPressed(e);
                 }
                 
             }
@@ -311,7 +311,7 @@ namespace msa {
             void Gui::keyReleased(ofKeyEventArgs& e) {
                 if(!pages.size()) return;
 //                headerPage->_keyReleased(e);
-                pages[currentPageIndex]->_keyReleased(e);
+                pages[currentPageIndex]->keyReleased(e);
             }
             
             

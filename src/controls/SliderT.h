@@ -15,11 +15,11 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 SliderT(Container *parent, Parameter* p) : Container(parent, p) {
-                    button = new BoolSimpleCircle(this, ">");
-                    button->doAutoLayout = false;
-                    button->setMode(ParameterBool::kBang);
-                    button->getParameter().setTooltip("More options");
-                    addControl(button);
+                    moreButton = new BoolSimpleBox(this, ">");
+                    moreButton->doAutoLayout = false;
+                    moreButton->setMode(ParameterBool::kBang);
+                    moreButton->getParameter().setTooltip("Customize...");
+                    addControl(moreButton);
                 }
                 
                 //--------------------------------------------------------------
@@ -43,7 +43,6 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onPress(int x, int y, int button) {
-                    printf("on");
                     updateSlider();
                 }
                 
@@ -122,15 +121,10 @@ namespace msa {
                     
                     // extra buttons
                     {
-                        int p = 3;
-                        int s = height * 0.5;
-                        int y = (height - s)-p;
-                        button->localRect.set(width - (s + p), y, s, s);
-                        if(button->getParameter().value()) {
-                            ofSystemAlertDialog("Hello");
+                        moreButton->localRect.set(width, 0, height/2, height);
+                        if(moreButton->getParameter().value()) {
+//                            ofSystemAlertDialog("Hello");
                         }
-//                        button->set(button->localRect);
-//                        button->onDraw();
                     }
                     
                     
@@ -138,7 +132,7 @@ namespace msa {
                 
                 
             protected:
-                BoolSimpleCircle* button;
+                BoolBase* moreButton;
                 
             };
         }
