@@ -17,8 +17,9 @@ namespace msa {
                 //--------------------------------------------------------------
                 SliderT(Container *parent, Parameter* p) : Container(parent, p) {
                     setZ(-1);
-                    width = 1;
-                    height = 1;
+//                    layout.positionMode = 1;
+//                    layout.width = 1;
+//                    layout.height = 1;
                     
                     slider = new SliderRawT<T>(parent, p);
                     slider->layout.positionMode = 1;
@@ -67,15 +68,15 @@ namespace msa {
 //                    slider->layout.set(0, 0, width, height);
                     
                     int p = 3;
-                    int h = height / 2;
-                    int w = height / 2;
-                    int y = height - h - p;
+                    int h = slider->height / 2;
+                    int w = slider->height / 2;
+                    int y = slider->height - h - p;
                     
                     decButton->layout.set(0, y, w, h);
-                    snapButton->layout.set(width - (w + p)*4, y, w, h);
-                    clampButton->layout.set(width - (w + p)*3, y, w, h);
-                    moreButton->layout.set(width - (w + p)*2, y, w, h);
-                    incButton->layout.set(width - (w + p), y, w, h);
+                    snapButton->layout.set(slider->width - (w + p)*4, y, w, h);
+                    clampButton->layout.set(slider->width - (w + p)*3, y, w, h);
+                    moreButton->layout.set(slider->width - (w + p)*2, y, w, h);
+                    incButton->layout.set(slider->width - (w + p), y, w, h);
                     
                     if(decButton->getParameter().value()) slider->dec(1);
                     if(incButton->getParameter().value()) slider->inc(1);

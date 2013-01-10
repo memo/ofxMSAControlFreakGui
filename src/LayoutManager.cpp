@@ -62,28 +62,27 @@ namespace msa {
                         // calculate scale
                         ofVec2f curScale = containerScale * control.scale;
                         
-                        int indent = panelDepth * config.layout.indent * curScale.x;
+                        int indent = panelDepth * config.layout.indent;
                         
                         // update dimensions
-                        control.width = (control.layout.width ? control.layout.width : config.layout.columnWidth) * curScale.x;
+                        control.width = (control.layout.width ? control.layout.width : config.layout.columnWidth - indent) * curScale.x;
                         control.height = (control.layout.height ? control.layout.height : config.layout.buttonHeight) * curScale.y;
-                        control.width -= indent;
                         
                         // TODO: think about scales
                         switch(control.layout.positionMode) {
                             case 0: // relative (normal)
                             {
                                 ofVec2f newHead(curHead);
-                                ofVec2f controlOffset(control.layout.position + control.layout.paddingPre);
+                                ofVec2f controlOffset((control.layout.position + control.layout.paddingPre) * curScale);
                                 ofVec2f controlPos(newHead + controlOffset);
-                                float postHeight = control.height + control.layout.paddingPost.y + config.layout.padding.y;
+                                float postHeight = (control.height + control.layout.paddingPost.y + config.layout.padding.y) * curScale.y;
                                 if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
                                     newHead.x = curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
                                     newHead.y = boundRect.y;
                                     controlPos = newHead + controlOffset;
                                 }
                                 control.setPosition(controlPos);
-                                control.x += indent;
+                                control.x += indent * curScale.x;
                                 control.y -= _scrollY;
                                 
                                 if(control.layout.doAffectFlow) {

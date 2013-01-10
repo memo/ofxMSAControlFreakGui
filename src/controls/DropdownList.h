@@ -40,6 +40,7 @@ namespace msa {
                     
                     int ty = height/3;
                     int tl = ty*1.5;
+                    ofFill();
                     ofTriangle(width - ty - tl, ty, width - ty, ty, width - ty - tl/2, height - ty);
                     
                     if(isActive()) {
