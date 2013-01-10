@@ -21,14 +21,86 @@ namespace msa {
                 curHead.set(boundRect.position); // start in top left
                 curRect.set(0, 0, 0, 0);
                 
-                prepareForDraw(root);
+                prepareContainer(root);
                 _scrollY += (scrollY - _scrollY) * 0.1;
             }
             
             //--------------------------------------------------------------
-            void LayoutManager::prepareForDraw(Container &container) {
+            void LayoutManager::prepareControl(Control &control, Config &config, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos) {
+                
+                control.setConfig(&config);
+                
+                // calculate scale
+                ofVec2f curScale = containerScale * control.scale;
+                
+                int indent = panelDepth * config.layout.indent;
+                
+                // update dimensions
+                control.width = (control.layout.width ? control.layout.width : config.layout.columnWidth - indent) * curScale.x;
+                control.height = (control.layout.height ? control.layout.height : config.layout.buttonHeight) * curScale.y;
+                
+                // TODO: think about scales
+                switch(control.layout.positionMode) {
+                    case 0: // relative (normal)
+                    {
+                        ofVec2f newHead(curHead);
+                        ofVec2f controlOffset((control.layout.position + control.layout.paddingPre) * curScale);
+                        ofVec2f controlPos(newHead + controlOffset);
+                        float postHeight = (control.height + control.layout.paddingPost.y + config.layout.padding.y) * curScale.y;
+                        if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
+                            newHead.x = curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
+                            newHead.y = boundRect.y;
+                            controlPos = newHead + controlOffset;
+                        }
+                        control.setPosition(controlPos);
+                        control.x += indent * curScale.x;
+                        control.y -= _scrollY;
+                        
+                        if(control.layout.doAffectFlow) {
+                            curHead = newHead;
+                            curHead.y += postHeight;
+                        }
+                        
+                    }
+                        break;
+                        
+                    case 1: // absolute (relative to container)
+                        control.setPosition(control.getParent() ? (control.getParent()->position + control.layout.position) : control.layout.position);
+                        break;
+                        
+                    case 2: // fixed (relative to screen)
+                        control.setPosition(control.layout.position);
+                        break;
+                        
+                }
+                
+                //                        if(control.layout.positionMode) {
+                // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
+                //                            if(control.newColumn || (doWrap && curHead.y + control.height > maxPos.y)) {
+                //                                curHead.x = curRect.x + curRect.width + config.layout.padding.x;
+                //                                curHead.y = boundRect.y;
+                //                            }
+                
+                //                            curHead += control.layout.position * curScale;
+                
+                //                            control.setPosition(curHead.x + indent, curHead.y - _scrollY);
+                //                            curHead.y += control.height + config.layout.padding.y * curScale.y;
+                //                        } else {
+                //                            control.setPosition(container.position + control.layout.position);
+                //                        }
+                
+                //                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter().getPath().c_str(), control.x, control.y, container.getParameter().getPath().c_str(), container.x, container.y);
+                
+                Renderer::instance().addControl(&control);
+                if(control.layout.doIncludeInContainerRect) {
+                    curRect.growToInclude((ofRectangle&)control);
+                }
+            }
+            
+            //--------------------------------------------------------------
+            void LayoutManager::prepareContainer(Container &container) {
 
-                Config &config      = container.getConfig();
+                Config &config      = container.getRoot()->getConfig();
                 ofVec2f maxPos      = getMaxPos();
                 
                 Panel *panel = dynamic_cast<Panel*>(&container);
@@ -52,80 +124,15 @@ namespace msa {
                 
                 // TODO: parent isn't being processed, thats why root doesn't have it.
                 if(containerScale.y > 0) {
+                    prepareControl(container, config, containerScale, panelDepth, maxPos);
                     for(int i=0; i<container.getNumControls(); i++) {
                         Control& control = *container.getControl(i);
                         
+                        
                         Container *c = dynamic_cast<Container*>(&control);
-                        
-                        control.setConfig(&config);
-                        
-                        // calculate scale
-                        ofVec2f curScale = containerScale * control.scale;
-                        
-                        int indent = panelDepth * config.layout.indent;
-                        
-                        // update dimensions
-                        control.width = (control.layout.width ? control.layout.width : config.layout.columnWidth - indent) * curScale.x;
-                        control.height = (control.layout.height ? control.layout.height : config.layout.buttonHeight) * curScale.y;
-                        
-                        // TODO: think about scales
-                        switch(control.layout.positionMode) {
-                            case 0: // relative (normal)
-                            {
-                                ofVec2f newHead(curHead);
-                                ofVec2f controlOffset((control.layout.position + control.layout.paddingPre) * curScale);
-                                ofVec2f controlPos(newHead + controlOffset);
-                                float postHeight = (control.height + control.layout.paddingPost.y + config.layout.padding.y) * curScale.y;
-                                if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
-                                    newHead.x = curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
-                                    newHead.y = boundRect.y;
-                                    controlPos = newHead + controlOffset;
-                                }
-                                control.setPosition(controlPos);
-                                control.x += indent * curScale.x;
-                                control.y -= _scrollY;
-                                
-                                if(control.layout.doAffectFlow) {
-                                    curHead = newHead;
-                                    curHead.y += postHeight;
-                                }
-                                
-                            }
-                                break;
-                                
-                            case 1: // absolute (relative to container)
-                                control.setPosition(container.position + control.layout.position);
-                                break;
-                                
-                            case 2: // fixed (relative to screen)
-                                control.setPosition(control.layout.position);
-                                break;
-                                
-                        }
-                        
-//                        if(control.layout.positionMode) {
-                            // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-//                            if(control.newColumn || (doWrap && curHead.y + control.height > maxPos.y)) {
-//                                curHead.x = curRect.x + curRect.width + config.layout.padding.x;
-//                                curHead.y = boundRect.y;
-//                            }
-                            
-//                            curHead += control.layout.position * curScale;
-                        
-//                            control.setPosition(curHead.x + indent, curHead.y - _scrollY);
-//                            curHead.y += control.height + config.layout.padding.y * curScale.y;
-//                        } else {
-//                            control.setPosition(container.position + control.layout.position);
-//                        }
-                        
-                        //                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter().getPath().c_str(), control.x, control.y, container.getParameter().getPath().c_str(), container.x, container.y);
-                        
-                        Renderer::instance().addControl(&control);
-                        if(control.layout.doIncludeInContainerRect) {
-                            curRect.growToInclude((ofRectangle&)control);
-                        }
-                        
-                        if(c) prepareForDraw(*c);
+                        if(c) prepareContainer(*c);
+                        else prepareControl(control, config, containerScale, panelDepth, maxPos);
+
                     }
                     
                 }

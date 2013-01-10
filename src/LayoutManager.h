@@ -29,7 +29,8 @@ namespace msa {
                 int _scrollY;   // actual one, scrollY lerps to this
                 ofVec2f getMaxPos();
                 ofVec2f clampPoint(ofVec2f p);
-                void prepareForDraw(Container &container);
+                void prepareControl(Control &control, Config &config, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos);
+                void prepareContainer(Container &container);
             };
             
             

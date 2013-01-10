@@ -69,8 +69,8 @@ namespace msa {
 
                 
                 children = new Container(this, getName() + "_children");
-                children->layout.doAffectFlow = true;
-                children->layout.set(0, 0, 1, 3);
+                children->layout.doAffectFlow = false;
+//                children->layout.set(0, 0, 1, 3);
                 addControl(children);
                 
                 children->addParameters(p);
@@ -108,8 +108,8 @@ namespace msa {
                 int p = 3;
                 
 //                layout.setPosition(0, titleButton->height);
-                layout.paddingPre.y = titleButton->height;
-                layout.paddingPost.y = titleButton->height/2;
+//                layout.paddingPre.y = titleButton->height;
+//                layout.paddingPost.y = titleButton->height/2;
 
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
