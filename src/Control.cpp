@@ -15,7 +15,7 @@ namespace msa {
                 visible = true;
                 doIsolateOnActive = true;
                 keyboardShortcut = 0;
-//                setKeyboardShortcut(0);
+                //                setKeyboardShortcut(0);
                 scale.set(1, 1);
                 layout.set(0, 0, 0, 0);
                 
@@ -31,7 +31,7 @@ namespace msa {
             Control::~Control() {
                 if(_bOwnsParameter && _pparameter) delete _pparameter;
             }
-
+            
             
             //--------------------------------------------------------------
             Control &Control::setConfig(Config *config) {
@@ -49,14 +49,14 @@ namespace msa {
             Container* Control::getRoot(bool bUpdate) {
                 if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Container*>(this) );
                 else return _proot;
-//                return getParent() ? getParent()->_proot : _proot;
+                //                return getParent() ? getParent()->_proot : _proot;
             }
             
             //--------------------------------------------------------------
             Config &Control::getConfig() {
                 return *_pconfig;
             }
-//
+            //
             //--------------------------------------------------------------
             int Control::getDepth() {
                 return getParent() ? getParent()->getDepth() + 1 : 0;
@@ -103,13 +103,13 @@ namespace msa {
                 _z.pop();
                 return getZ();
             }
-
+            
             //--------------------------------------------------------------
             int Control::getInheritedZ() const {
                 return getParent() ? getZ() + getParent()->getInheritedZ() * 1000 : getZ();
             }
-
-
+            
+            
             //--------------------------------------------------------------
             string Control::getName() {
                 return getParameter().getName();
@@ -124,7 +124,7 @@ namespace msa {
             Parameter& Control::getParameter() {
                 return *_pparameter;
             }
-
+            
             //--------------------------------------------------------------
             int Control::getState() {
                 if(isMousePressed()) return 2;
@@ -188,7 +188,7 @@ namespace msa {
                 }
             }
             
-
+            
             //--------------------------------------------------------------
             void Control::drawText(int x, int y, string s, ofColor *c) {
                 s = s.empty() ? getName() : s;
@@ -209,19 +209,19 @@ namespace msa {
                 s = s.empty() ? getName() : s;
                 return getConfig().font.getStringBoundingBox(s, x, y);
             }
-
+            
             
             //--------------------------------------------------------------
-//            Control &Control::setKeyboardShortcut(char c) {
-//                keyboardShortcut = c;
-//                if(c) {
-//                    //	printf("ofxMSAControlFreakGui/src/Control::setKeyboardShortcut %s %c\n", name.c_str(), c);
-//                    //                    name = origName + " (" + c + ")";
-//                } else {
-//                    //                    name = origName;
-//                }
-//                return *this;
-//            }
+            //            Control &Control::setKeyboardShortcut(char c) {
+            //                keyboardShortcut = c;
+            //                if(c) {
+            //                    //	printf("ofxMSAControlFreakGui/src/Control::setKeyboardShortcut %s %c\n", name.c_str(), c);
+            //                    //                    name = origName + " (" + c + ")";
+            //                } else {
+            //                    //                    name = origName;
+            //                }
+            //                return *this;
+            //            }
             
             //--------------------------------------------------------------
             void Control::drawBorder(ofColor *c) {
@@ -230,7 +230,7 @@ namespace msa {
                 glLineWidth(1.0);
                 ofRect(0, 0, width, height);
             }
-
+            
             //--------------------------------------------------------------
             void Control::update() {
                 onUpdate();
@@ -239,21 +239,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::draw() {
                 if(!visible) return;
-                
-                setTooltip();
-                
-                // make sure all controls land on perfect pixels
-                ofRectangle::set(floor(x), floor(y), floor(width), floor(height));
-                
 
-                ofPushStyle();
-                ofPushMatrix();
-                ofTranslate(x, y);
-                ofEnableAlphaBlending();
-                
-                
-                // calculate targetalpha;
-                
                 bool bTimeToChange = getStateChangeMillis() > getConfig().colors.fade.delayMillis;
                 bool bAControlIsActive = getRoot()->getActiveControl() && getRoot()->getActiveControl()->doIsolateOnActive;
                 bool bThisIsActive = getParentActive();
@@ -263,22 +249,30 @@ namespace msa {
                 _alpha += diff * getConfig().colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;
                 
-                ofPushMatrix();
-                ofPushStyle();
-                onDraw();
-                ofPopStyle();
-                ofPopMatrix();
+                if(_alpha < 0.001) return;
                 
-//                if(isMouseOver()) {
-//                    ofFill();
-//                    setColor(ofColor(255, 128));
-//                    int ts = height * 0.5;
-//                    ofTriangle(width, height, width, height - ts, width - ts, height);
-//                    if(getMouseX() > x + width - ts && getMouseY() > y + height - ts) Renderer::instance().setToolTip("Open config menu");
-//                }
-
-                ofPopMatrix();
-                ofPopStyle();
+                
+                setTooltip();
+                
+                // make sure all controls land on perfect pixels
+                ofRectangle::set(floor(x), floor(y), floor(width), floor(height));
+                
+                
+                ofPushStyle(); {
+                    ofPushMatrix(); {
+                        ofTranslate(x, y);
+                        ofEnableAlphaBlending();
+                        
+                        ofPushMatrix(); {
+                            ofPushStyle(); {
+                                onDraw();
+                                //                drawBorder();
+                                //                drawTextCentered(getParameter().getName() + " " + ofToString(getInheritedZ()));
+                            } ofPopStyle();
+                        } ofPopMatrix();
+                        
+                    } ofPopMatrix();
+                } ofPopStyle();
             }
             
             
@@ -293,7 +287,7 @@ namespace msa {
                 _pparameter = parameter;
                 _bOwnsParameter = bOwner;
             }
-
+            
             
             
         }

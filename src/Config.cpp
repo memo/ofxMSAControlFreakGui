@@ -23,7 +23,7 @@ namespace msa {
                 // Colors
                 colors.fade.alpha       = 0.0;
                 colors.fade.speed       = 0.2;
-                colors.fade.delayMillis = 250;
+                colors.fade.delayMillis = 950;
                 
                 // 0: normal, 1:over, 2:active
                 colors.bg[0]        = ofColor(0);

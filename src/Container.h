@@ -21,12 +21,14 @@ namespace msa {
             class Slider2d;
             class SliderInt;
             class SliderFloat;
+            class Renderer;
 
             
             class Container : public Control {
             public:
                 
                 friend class Control;
+                friend class Renderer;
                 
                 Container(Container *parent, string s);
                 Container(Container *parent, Parameter* p);
@@ -67,14 +69,14 @@ namespace msa {
                 void keyReleased(ofKeyEventArgs &e);
 
                 
+                Control* getActiveControl();
+                
             private:
                 vector<Control*> _controls;
                 Control *_pactiveControl; // currently active control (only this control receives events)
-                
+
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
-                Control* getActiveControl();
-                
             };
             
         }

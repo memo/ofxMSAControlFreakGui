@@ -33,7 +33,9 @@ namespace msa {
                 void setToolTip(string s, int x = -1, int y = -1);
                 
             protected:
-                Config *config;
+                static Renderer *renderer;
+                
+                Config *_pconfig;
                 vector<Control *> controls;
                 
                 struct {
@@ -42,11 +44,18 @@ namespace msa {
                     int y;
                 } tooltip;
                 
-                void drawToolTip();
-                
                 Renderer();
                 
-                static Renderer *renderer;
+                void drawToolTip();
+//                
+//                void update();
+//                void mouseMoved(ofMouseEventArgs &e);
+//                void mousePressed(ofMouseEventArgs &e);
+//                void mouseDragged(ofMouseEventArgs &e);
+//                void mouseReleased(ofMouseEventArgs &e);
+//                void keyPressed(ofKeyEventArgs &e);
+//                void keyReleased(ofKeyEventArgs &e);
+
             };
             
         }

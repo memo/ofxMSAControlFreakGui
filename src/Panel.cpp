@@ -20,21 +20,18 @@ namespace msa {
 //                layout.set(0, 0, 1, 0); // TODO: hack?
                 
                 titleButton = new BoolTitle(this, getName());
-                titleButton->layout.doAffectFlow = false;
                 titleButton->layout.positionMode = 1;
                 titleButton->setZ(1);
                 titleButton->getParameter().set(true);
                 addControl(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
-                collapseAllButton->layout.doAffectFlow = false;
                 collapseAllButton->layout.positionMode = 1;
                 collapseAllButton->setZ(2);
                 collapseAllButton->setMode(ParameterBool::kBang);
                 addControl(collapseAllButton);
                 
                 saveButton = new BoolSimpleCircle(this, "s");
-                saveButton->layout.doAffectFlow = false;
                 saveButton->layout.positionMode = 1;
                 saveButton->setZ(2);
                 saveButton->setMode(ParameterBool::kBang);
@@ -42,7 +39,6 @@ namespace msa {
                 addControl(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
-                loadButton->layout.doAffectFlow = false;
                 loadButton->layout.positionMode = 1;
                 loadButton->setZ(2);
                 loadButton->setMode(ParameterBool::kBang);
@@ -52,7 +48,6 @@ namespace msa {
                 // add wrap button only if we are the root
                 if(getParent() == NULL) {
                     wrapButton = new BoolSimpleCircle(this, "w");
-                    wrapButton->layout.doAffectFlow = false;
                     wrapButton->layout.positionMode = 1;
                     wrapButton->setZ(2);
                     wrapButton->setMode(ParameterBool::kToggle);
@@ -60,7 +55,6 @@ namespace msa {
                     addControl(wrapButton);
                     
                     scrollbar = new ScrollBar(this);
-                    scrollbar->layout.doAffectFlow = false;
                     scrollbar->layout.positionMode = 2;
                     scrollbar->setZ(-1);
                     scrollbar->doIsolateOnActive = false;

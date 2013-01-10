@@ -16,6 +16,10 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 SliderT(Container *parent, Parameter* p) : Container(parent, p) {
+                    setZ(-1);
+                    width = 1;
+                    height = 1;
+                    
                     slider = new SliderRawT<T>(parent, p);
                     slider->layout.positionMode = 1;
                     addControl(slider);
@@ -58,11 +62,10 @@ namespace msa {
                     addControl(moreButton);
                 }
                 
-               
                 //--------------------------------------------------------------
-                void onDraw() {
-                    slider->layout.set(0, 0, width, height);
-
+                void onUpdate() {
+//                    slider->layout.set(0, 0, width, height);
+                    
                     int p = 3;
                     int h = height / 2;
                     int w = height / 2;
@@ -79,10 +82,10 @@ namespace msa {
                     if(snapButton->getParameter().hasChanged()) slider->getParameter().update();
                     if(clampButton->getParameter().hasChanged()) slider->getParameter().update();
                     if(moreButton->getParameter().value()) {
-//                            ofSystemAlertDialog("Hello");
+                        //                            ofSystemAlertDialog("Hello");
                     }
                 }
-                
+
                 
             protected:
                 BoolBase *moreButton;
