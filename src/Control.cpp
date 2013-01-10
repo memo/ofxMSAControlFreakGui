@@ -20,6 +20,7 @@ namespace msa {
                 layout.set(0, 0, 0, 0);
                 
                 _alpha = 1;
+                _pconfig = NULL;
                 
                 setup();
                 

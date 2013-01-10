@@ -15,9 +15,10 @@ namespace msa {
             //--------------------------------------------------------------
             Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
                 init();
-                
+
 //                layout.doAutoLayout = true;
-//                layout.set(0, 0, 1, 0); // TODO: hack?
+//                layout.width = 1;
+//                layout.height = 1;
                 
                 titleButton = new BoolTitle(this, getName());
                 titleButton->layout.positionMode = 1;
@@ -106,7 +107,10 @@ namespace msa {
                 int y = (titleButton->height - s)/2;
                 int p = 3;
                 
-                
+//                layout.setPosition(0, titleButton->height);
+                layout.paddingPre.y = titleButton->height;
+                layout.paddingPost.y = titleButton->height/2;
+
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->layout.set(titleButton->width - (s + p), y, s, s);

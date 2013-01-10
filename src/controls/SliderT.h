@@ -23,6 +23,7 @@ namespace msa {
                     
                     slider = new SliderRawT<T>(parent, p);
                     slider->layout.positionMode = 1;
+                    slider->setZ(0);
                     addControl(slider);
                     
                     decButton = new BoolSimpleBox(this, "<");

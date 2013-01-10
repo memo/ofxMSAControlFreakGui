@@ -109,12 +109,12 @@ namespace msa {
                 void draw();
                 
                 
+                Config *_pconfig;
             private:
                 stack<int>_z;
                 float _alpha;
                 Container *_pparent;
                 Container *_proot;
-                Config *_pconfig;
                 Parameter *_pparameter;
                 bool _bOwnsParameter;    // whether the control owns the parameter or not. TODO: this is a bit hackish?
 //                bool _active;
