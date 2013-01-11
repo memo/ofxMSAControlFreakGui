@@ -19,14 +19,18 @@ namespace msa {
                 int scrollY;
                 bool doWrap;
                 ofRectangle boundRect;
-                ofVec2f     curHead;
-                ofRectangle curRect;
-                
+
                 LayoutManager();
                 void update(Container &root);
                 
+                ofRectangle getCurRect() { return _curRect; }
+                
             protected:
                 int _scrollY;   // actual one, scrollY lerps to this
+//                int panelDepth;
+                ofVec2f     _curHead;
+                ofRectangle _curRect;
+                
                 ofVec2f getMaxPos();
                 ofVec2f clampPoint(ofVec2f p);
                 void prepareControl(Control &control, Config &config, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos);

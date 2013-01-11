@@ -124,10 +124,10 @@ namespace msa {
                     if(layoutManager) {// && !layoutManager->doWrap) {
                         // TODO: custom scrollbar layout
                         scrollbar->visible = true;
-                        scrollbar->layout.set(0, 0, getConfig().layout.padding.x, ofGetHeight());
+                        scrollbar->layout.set(0, 0, getConfig().layout.scrollbarWidth, ofGetHeight());
                         float sbheight = scrollbar->layout.height;
-                        scrollbar->barThickness = sbheight / layoutManager->curRect.height;
-                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->curRect.height - sbheight/2);
+                        scrollbar->barThickness = sbheight / layoutManager->getCurRect().height;
+                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->getCurRect().height - sbheight * 0.9);
                     } else {
                         scrollbar->visible = false;
                     }

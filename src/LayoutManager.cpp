@@ -18,8 +18,9 @@ namespace msa {
             
             //--------------------------------------------------------------
             void LayoutManager::update(Container &root) {
-                curHead.set(boundRect.position); // start in top left
-                curRect.set(0, 0, 0, 0);
+                _curHead.set(boundRect.position); // start in top left
+                _curRect.set(0, 0, 0, 0);
+//                panelDepth = 0;
                 
                 prepareContainer(root);
                 _scrollY += (scrollY - _scrollY) * 0.1;
@@ -43,12 +44,12 @@ namespace msa {
                 switch(control.layout.positionMode) {
                     case 0: // relative (normal)
                     {
-                        ofVec2f newHead(curHead);
+                        ofVec2f newHead(_curHead);
                         ofVec2f controlOffset((control.layout.position + control.layout.paddingPre) * curScale);
                         ofVec2f controlPos(newHead + controlOffset);
                         float postHeight = (control.height + control.layout.paddingPost.y + config.layout.padding.y) * curScale.y;
                         if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
-                            newHead.x = curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
+                            newHead.x = _curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
                             newHead.y = boundRect.y;
                             controlPos = newHead + controlOffset;
                         }
@@ -57,8 +58,8 @@ namespace msa {
                         control.y -= _scrollY;
                         
                         if(control.layout.doAffectFlow) {
-                            curHead = newHead;
-                            curHead.y += postHeight;
+                            _curHead = newHead;
+                            _curHead.y += postHeight;
                         }
                         
                     }
@@ -76,15 +77,15 @@ namespace msa {
                 
                 //                        if(control.layout.positionMode) {
                 // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-                //                            if(control.newColumn || (doWrap && curHead.y + control.height > maxPos.y)) {
-                //                                curHead.x = curRect.x + curRect.width + config.layout.padding.x;
-                //                                curHead.y = boundRect.y;
+                //                            if(control.newColumn || (doWrap && _curHead.y + control.height > maxPos.y)) {
+                //                                _curHead.x = _curRect.x + _curRect.width + config.layout.padding.x;
+                //                                _curHead.y = boundRect.y;
                 //                            }
                 
-                //                            curHead += control.layout.position * curScale;
+                //                            _curHead += control.layout.position * curScale;
                 
-                //                            control.setPosition(curHead.x + indent, curHead.y - _scrollY);
-                //                            curHead.y += control.height + config.layout.padding.y * curScale.y;
+                //                            control.setPosition(_curHead.x + indent, _curHead.y - _scrollY);
+                //                            _curHead.y += control.height + config.layout.padding.y * curScale.y;
                 //                        } else {
                 //                            control.setPosition(container.position + control.layout.position);
                 //                        }
@@ -93,15 +94,20 @@ namespace msa {
                 
                 Renderer::instance().addControl(&control);
                 if(control.layout.doIncludeInContainerRect) {
-                    curRect.growToInclude((ofRectangle&)control);
+                    _curRect.growToInclude((ofRectangle&)control);
                 }
             }
             
             //--------------------------------------------------------------
             void LayoutManager::prepareContainer(Container &container) {
-
                 Config &config      = container.getRoot()->getConfig();
                 ofVec2f maxPos      = getMaxPos();
+                
+//                // TODO: hack?
+//                // see if this is a panel children container, if so indent
+//                if(container.getParameter().getName().find("_children") != string::npos) {
+//                    panelDepth++;
+//                }
                 
                 Panel *panel = dynamic_cast<Panel*>(&container);
                 
