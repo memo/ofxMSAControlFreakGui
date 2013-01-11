@@ -242,6 +242,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Control::update() {
+                if(_bOwnsParameter) getParameter().update();
                 onUpdate();
             }
             
