@@ -12,12 +12,18 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 List(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL), true) {
-                    paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
+                    init();
                 }
                 
                 //--------------------------------------------------------------
                 List(Container *parent, Parameter* p) : Control(parent, p) {
+                    init();
+                }
+                
+                //--------------------------------------------------------------
+                void init() {
                     paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
+                    mouseOverIndex = -1;
                 }
                 
                 //--------------------------------------------------------------
@@ -36,6 +42,12 @@ namespace msa {
                     int a = this->y;
                     int b = this->y + getConfig().layout.dropdownListTextHeight * paramT->getNumLabels();
                     mouseOverIndex = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+                }
+                
+                //--------------------------------------------------------------
+                void onRollOut() {
+                    mouseOverIndex = -1;
+                    
                 }
                 
                 //--------------------------------------------------------------
