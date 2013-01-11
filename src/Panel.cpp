@@ -126,7 +126,7 @@ namespace msa {
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->layout.set(titleButton->width - (s + p), y, s, s);
-                presetDropdown->layout.set(0, loadButton->layout.getTop(), titleButton->width*1.5, titleButton->height);
+                presetDropdown->layout.set(0, loadButton->layout.getBottom(), titleButton->width*1.5, titleButton->height);
 
                 
                 // check buttons and stuff
@@ -174,7 +174,7 @@ namespace msa {
                         presetManager.openLoad();
                     }
                     presetDropdown->layout.x = loadButton->layout.getRight();
-//                    if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getPresetName());
+                    if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getPresetName());
                 }
                 
                 // save preset
@@ -184,7 +184,7 @@ namespace msa {
                     }
                     presetDropdown->layout.x = saveButton->layout.getRight();
                     if(presetDropdown->getParameter().hasChanged()) {
-//                        paramT->saveXmlSchema(presetManager.getPresetName());
+                        paramT->saveXmlSchema(presetManager.getPresetName());
                         presetManager.close();
                     }
                 }

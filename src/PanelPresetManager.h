@@ -43,8 +43,8 @@ namespace msa {
                     bSaveOpen = true;
                     bLoadOpen = false;
                     presetsNamedIndex->clearLabels();
-                    presetsNamedIndex->addLabel("*** new ***");
                     readDir();
+                    presetsNamedIndex->addLabel("*** NEW ***");
                 }
 
                 //--------------------------------------------------------------
@@ -71,7 +71,11 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 string getPresetName() {
-                    return "presets/" + presetsNamedIndex->getSelectedLabel();
+                    string s;
+                    if(bLoadOpen || (bSaveOpen && presetsNamedIndex->value() < presetsNamedIndex->getNumLabels()-2))
+                        s = presetsNamedIndex->getSelectedLabel();
+                    else s = ofSystemTextBoxDialog("enter preset name");
+                    return "presets/" + s;
                 }
                 
             };
