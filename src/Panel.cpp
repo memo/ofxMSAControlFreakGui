@@ -35,8 +35,9 @@ namespace msa {
                 saveButton = new BoolSimpleCircle(this, "s");
                 saveButton->layout.positionMode = 1;
                 saveButton->setZ(2);
-                saveButton->setMode(ParameterBool::kBang);
+                saveButton->setMode(ParameterBool::kToggle);
                 saveButton->getParameter().setTooltip("Save preset for '" + getPath() + "'");
+                saveButton->getParameter().trackVariable(&presetManager.bSaveOpen);
                 addControl(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
@@ -44,6 +45,7 @@ namespace msa {
                 loadButton->setZ(2);
                 loadButton->setMode(ParameterBool::kToggle);
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
+                loadButton->getParameter().trackVariable(&presetManager.bLoadOpen);
                 addControl(loadButton);
                 
                 presetDropdown = new List(this, "presets");
@@ -124,7 +126,7 @@ namespace msa {
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->layout.set(titleButton->width - (s + p), y, s, s);
-                presetDropdown->layout.set(loadButton->layout.getRight(), loadButton->layout.getTop(), titleButton->width*1.5, titleButton->height);
+                presetDropdown->layout.set(0, loadButton->layout.getTop(), titleButton->width*1.5, titleButton->height);
 
                 
                 // check buttons and stuff
@@ -160,10 +162,34 @@ namespace msa {
                 
                 if(collapseAllButton->getParameter().value()) showPanel(!titleButton->getParameter(), true);
                 
-                presetDropdown->visible = presetDropdown->enabled = loadButton->getParameter().value();
-                if(loadButton->getParameter().hasChanged() && loadButton->getParameter().value()) presetManager.fill();
-                if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getCurrentPreset());
+                
+                // Preset save load
+                presetDropdown->visible = presetDropdown->enabled = presetManager.isOpen();
+
                 // TODO: on mousemove, hilight the controls which would be affected
+                
+                // load preset
+                if(loadButton->getParameter().value()) {
+                    if(loadButton->getParameter().hasChanged()) {
+                        presetManager.openLoad();
+                    }
+                    presetDropdown->layout.x = loadButton->layout.getRight();
+//                    if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getPresetName());
+                }
+                
+                // save preset
+                if(saveButton->getParameter().value()) {
+                    if(saveButton->getParameter().hasChanged()) {
+                        presetManager.openSave();
+                    }
+                    presetDropdown->layout.x = saveButton->layout.getRight();
+                    if(presetDropdown->getParameter().hasChanged()) {
+//                        paramT->saveXmlSchema(presetManager.getPresetName());
+                        presetManager.close();
+                    }
+                }
+
+                
 
 //                if(loadButton->getParameter().value()) {
 //                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
@@ -172,18 +198,17 @@ namespace msa {
 //                    }
 //                }
                 
-                if(saveButton->getParameter().value()) {
-                    ofFileDialogResult f = ofSystemSaveDialog(getPath(), "Save preset");
-                    if(f.bSuccess) {
-                        paramT->saveXmlValues(f.getPath());
-                        //                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));
-                        //                            paramT->saveXml(false, path + "/" + getPath() + "-" + f.fileName + ".xml");
-                        //                            ofDirectory dir(path + "/" + getPath());
-                        //                            if(!dir.exists()) dir.create(true);
-                        //                            paramT->saveXml(false, dir.getAbsolutePath() + "/" + f.fileName + ".xml");
-                    }
-                    
-                }
+//                if(saveButton->getParameter().value()) {
+//                    ofFileDialogResult f = ofSystemSaveDialog(getPath(), "Save preset");
+//                    if(f.bSuccess) {
+//                        paramT->saveXmlValues(f.getPath());
+//                        //                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));
+//                        //                            paramT->saveXml(false, path + "/" + getPath() + "-" + f.fileName + ".xml");
+//                        //                            ofDirectory dir(path + "/" + getPath());
+//                        //                            if(!dir.exists()) dir.create(true);
+//                        //                            paramT->saveXml(false, dir.getAbsolutePath() + "/" + f.fileName + ".xml");
+//                    }
+//                }
             }
             
             

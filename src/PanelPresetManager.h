@@ -9,11 +9,14 @@ namespace msa {
             class PanelPresetManager {
             private:
                 friend class Panel;
+                
+                bool bLoadOpen;
+                bool bSaveOpen;
 
                 ParameterNamedIndex *presetsNamedIndex;
                 
                 //--------------------------------------------------------------
-                PanelPresetManager() {}
+                PanelPresetManager() { presetsNamedIndex = NULL; bLoadOpen = false; bSaveOpen = false; }
                 
                 //--------------------------------------------------------------
                 void setup(Parameter &parameter) {
@@ -21,8 +24,40 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void fill() {
+                bool isOpen() {
+                    return bLoadOpen || bSaveOpen;
+                }
+                
+                //--------------------------------------------------------------
+                void openLoad() {
+                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::openLoad";
+                    bLoadOpen = true;
+                    bSaveOpen = false;
                     presetsNamedIndex->clearLabels();
+                    readDir();
+                }
+                
+                //--------------------------------------------------------------
+                void openSave() {
+                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::openSave";
+                    bSaveOpen = true;
+                    bLoadOpen = false;
+                    presetsNamedIndex->clearLabels();
+                    presetsNamedIndex->addLabel("*** new ***");
+                    readDir();
+                }
+
+                //--------------------------------------------------------------
+                void close() {
+                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::close";
+                    bSaveOpen = false;
+                    bLoadOpen = false;
+                }
+
+                //--------------------------------------------------------------
+                void readDir() {
+                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::readDir";
+                    
                     ofDirectory dir;
                     dir.listDir("presets");
 //                    printf("size = %i\n", dir.size());
@@ -35,7 +70,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                string getCurrentPreset() {
+                string getPresetName() {
                     return "presets/" + presetsNamedIndex->getSelectedLabel();
                 }
                 
