@@ -237,7 +237,7 @@ namespace msa {
                 if(!panel.layoutManager) panel.layoutManager = new LayoutManager;
                
                 // configure layout manager
-                panel.layoutManager->boundRect.set(config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
+                panel.layoutManager->boundRect.set(config.layout.scrollbarWidth + config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
                 
                 // iterate all controls on panel, set position and add to render queue
                 panel.layoutManager->update(panel);
