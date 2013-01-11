@@ -16,6 +16,7 @@ namespace msa {
                 
                 struct {
                     int	columnWidth;
+                    int scrollbarWidth;
                     
                     int	buttonHeight;
                     int	sliderHeight;

@@ -8,16 +8,17 @@ namespace msa {
             
             
             Config::Config() {
-                layout.buttonHeight			= 23;
-                layout.sliderHeight         = 7;
+                layout.columnWidth			= 250;
+                layout.scrollbarWidth       = 20;
+                
+                layout.buttonHeight			= 27;
+                layout.sliderHeight         = 8;
                 layout.dropdownListTextHeight	= 15;
                 
                 layout.textPos              = ofVec2f(5, 16);
-                layout.padding              = ofVec2f(10, 5);
+                layout.padding              = ofVec2f(3, 0);
                 layout.indent               = 5;
 //                layout.slider2DSize         = ofVec2f(buttonHeight * 4, buttonHeight * 4);
-                
-                layout.columnWidth			= 250;
                 
 
                 // Colors
@@ -27,7 +28,7 @@ namespace msa {
                 
                 // 0: normal, 1:over, 2:active
                 colors.bg[0]        = ofColor(0);
-                colors.bg[1]		= ofColor(30);
+                colors.bg[1]		= ofColor(50);
                 colors.bg[2]		= ofColor(30);
                 
                 colors.text[0]		= ofColor(140);
@@ -51,8 +52,8 @@ namespace msa {
                 colors.toggle.empty[2]	= ofColor(60);
                 
                 colors.border[0]	= ofColor(60);
-                colors.border[1]	= ofColor(90);
-                colors.border[2]	= ofColor(150);
+                colors.border[1]	= ofColor(150);
+                colors.border[2]	= ofColor(250);
                 
                 tooltip.offset      = ofVec2f(10, -10);
                 tooltip.padding     = ofRectangle(6, 4, 13, 7);
