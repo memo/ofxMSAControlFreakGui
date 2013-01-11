@@ -39,7 +39,7 @@ namespace msa {
                 Container *getParent() const;     // parent panel
                 Container *getRoot(bool bUpdate = false);       // root panel
                 
-                int getDepth();         // how deep in the heirarchy it is (how many levels deep)
+                int getDepth(bool bUpdate = false);         // how deep in the heirarchy it is (how many levels deep)
                 bool isActive();       // whether the control is active or not
                 bool getParentActive(); // whether any of the controls parents are active or not
                 ofVec2f getScale();
@@ -113,6 +113,7 @@ namespace msa {
             private:
                 stack<int>_z;
                 float _alpha;
+                int _depth;
                 Container *_pparent;
                 Container *_proot;
                 Parameter *_pparameter;

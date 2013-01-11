@@ -20,6 +20,7 @@ namespace msa {
                 layout.set(0, 0, 0, 0);
                 
                 _alpha = 1;
+                _depth = 0;
                 _pconfig = NULL;
                 
                 setup();
@@ -48,8 +49,8 @@ namespace msa {
             
             //--------------------------------------------------------------
             Container* Control::getRoot(bool bUpdate) {
-                if(bUpdate) return _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Container*>(this) );
-                else return _proot;
+                if(bUpdate) _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Container*>(this) );
+                return _proot;
                 //                return getParent() ? getParent()->_proot : _proot;
             }
             
@@ -59,8 +60,15 @@ namespace msa {
             }
             //
             //--------------------------------------------------------------
-            int Control::getDepth() {
-                return getParent() ? getParent()->getDepth() + 1 : 0;
+            int Control::getDepth(bool bUpdate) {
+                if(bUpdate) {
+                    if(getParent()) {
+                        // TODO: hack?
+                        // see if this is a panel children container, if so indent
+                        _depth = getParent()->getDepth(true) + (getParent()->getParameter().getName().find("_children") != string::npos ? 0 : 1);
+                    } else _depth = 0;
+                }
+                return _depth;
             }
             
             //--------------------------------------------------------------
@@ -240,7 +248,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::draw() {
                 if(!visible) return;
-
+                
                 bool bTimeToChange = getStateChangeMillis() > getConfig().colors.fade.delayMillis;
                 bool bAControlIsActive = getRoot()->getActiveControl() && getRoot()->getActiveControl()->doIsolateOnActive;
                 bool bThisIsActive = getParentActive();
@@ -260,16 +268,15 @@ namespace msa {
                 
                 
                 ofPushStyle(); {
+                    ofSetRectMode(OF_RECTMODE_CORNER);
+                    ofEnableAlphaBlending();
                     ofPushMatrix(); {
                         ofTranslate(x, y);
-                        ofEnableAlphaBlending();
                         
                         ofPushMatrix(); {
-                            ofPushStyle(); {
-                                onDraw();
-                                //                drawBorder();
-                                //                drawTextCentered(getParameter().getName() + " " + ofToString(getInheritedZ()));
-                            } ofPopStyle();
+                            onDraw();
+                            //                drawBorder();
+                            //                drawTextCentered(getParameter().getName() + " " + ofToString(getInheritedZ()));
                         } ofPopMatrix();
                         
                     } ofPopMatrix();
@@ -281,6 +288,7 @@ namespace msa {
             void Control::setParent(Container *parent) {
                 _pparent = parent;
                 getRoot(true);
+                getDepth(true);
             }
             
             //--------------------------------------------------------------
