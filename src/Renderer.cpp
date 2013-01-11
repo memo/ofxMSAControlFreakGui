@@ -82,6 +82,7 @@ namespace msa {
                 int y = tooltip.y + _pconfig->tooltip.offset.y;
                 
                 ofPushStyle();
+                ofSetRectMode(OF_RECTMODE_CORNER);
                 ofRectangle r = _pconfig->font.getStringBoundingBox(tooltip.s, x, y);
                 r.x -= _pconfig->tooltip.padding.x;
                 r.y -= _pconfig->tooltip.padding.y;
