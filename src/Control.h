@@ -97,7 +97,7 @@ namespace msa {
                 ofColor setToggleColor(bool b);
                 ofColor setBorderColor();
                 
-                bool doTooltip(int millis = -1);
+                bool doTooltip(int millis = 500);
                 void setTooltip(string s="");
                 
                 void drawBorder(ofColor *c = NULL);
