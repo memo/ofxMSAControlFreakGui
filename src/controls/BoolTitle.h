@@ -14,7 +14,7 @@ namespace msa {
                 BoolTitle(Container *parent, string s) : BoolBase(parent, s) { }
                 
                 //--------------------------------------------------------------
-                BoolTitle(Container *parent, Parameter* p) : BoolBase(parent, p) { }
+                BoolTitle(Container *parent, ParameterBool* p) : BoolBase(parent, p) { }
                 
                 
                 //--------------------------------------------------------------

@@ -44,18 +44,18 @@ namespace msa {
                 
                 
                 Panel           &addPanel(ParameterGroup* p);
-                BoolButton		&addButton(Parameter* p);
+                BoolButton		&addButton(ParameterBool* p);
                 ColorPicker		&addColorPicker(Parameter* p);
-                DropdownList&   addDropdownList(Parameter* p);
-                List&           addList(Parameter* p);
+                DropdownList&   addDropdownList(ParameterNamedIndex* p);
+                List&           addList(ParameterNamedIndex* p);
                 Content			&addContent(Parameter* p, ofBaseDraws &content, float fixwidth = -1);
                 FPSCounter		&addFPSCounter();
                 QuadWarp		&addQuadWarper(Parameter* p);
                 Slider2d		&addSlider2d(Parameter* p);
-                SliderInt		&addSliderInt(Parameter* p);
-                SliderFloat		&addSliderFloat(Parameter* p);
-                BoolTitle		&addTitle(Parameter* p);
-                BoolToggle		&addToggle(Parameter* p);
+                SliderInt		&addSliderInt(ParameterInt* p);
+                SliderFloat		&addSliderFloat(ParameterFloat* p);
+//                BoolTitle		&addTitle(Parameter* p);
+                BoolToggle		&addToggle(ParameterBool* p);
                 
                 void addParameter(Parameter* p);
                 void addParameters(ParameterGroup* parameters);

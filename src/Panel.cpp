@@ -163,6 +163,7 @@ namespace msa {
                 presetDropdown->visible = presetDropdown->enabled = loadButton->getParameter().value();
                 if(loadButton->getParameter().hasChanged() && loadButton->getParameter().value()) presetManager.fill();
                 if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getCurrentPreset());
+                // TODO: on mousemove, hilight the controls which would be affected
 
 //                if(loadButton->getParameter().value()) {
 //                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));

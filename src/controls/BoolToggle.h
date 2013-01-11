@@ -13,7 +13,7 @@ namespace msa {
                 BoolToggle(Container *parent, string s) : BoolBase(parent, s) {}
                 
                 //--------------------------------------------------------------
-                BoolToggle(Container *parent, Parameter* p) : BoolBase(parent, p) {}
+                BoolToggle(Container *parent, ParameterBool* p) : BoolBase(parent, p) {}
                
                 //--------------------------------------------------------------
                 void onDraw() {

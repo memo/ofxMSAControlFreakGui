@@ -12,17 +12,12 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 BoolBase(Container *parent, string s) : Control(parent, new ParameterBool(s, NULL), true) {
-                    init();
-                }
-                
-                //--------------------------------------------------------------
-                BoolBase(Container *parent, Parameter* p) : Control(parent, p) {
-                    init();
-                }
-                
-                //--------------------------------------------------------------
-                void init() {
                     paramT = dynamic_cast<ParameterBool*>(&getParameter());
+                }
+                
+                //--------------------------------------------------------------
+                BoolBase(Container *parent, ParameterBool* p) : Control(parent, p) {
+                    paramT = p;
                 }
                 
                 //--------------------------------------------------------------

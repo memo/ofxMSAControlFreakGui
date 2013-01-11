@@ -12,17 +12,18 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 List(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL), true) {
+                    paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                     init();
                 }
                 
                 //--------------------------------------------------------------
-                List(Container *parent, Parameter* p) : Control(parent, p) {
+                List(Container *parent, ParameterNamedIndex* p) : Control(parent, p) {
+                    paramT = p;
                     init();
                 }
                 
                 //--------------------------------------------------------------
                 void init() {
-                    paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                     mouseOverIndex = -1;
                 }
                 

@@ -13,7 +13,7 @@ namespace msa {
                 BoolButton(Container *parent, string s) : BoolBase(parent, s) {}
 
                 //--------------------------------------------------------------
-                BoolButton(Container *parent, Parameter* p) : BoolBase(parent, p) {}
+                BoolButton(Container *parent, ParameterBool* p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
                 void onDraw() {
