@@ -15,6 +15,7 @@ namespace msa {
             class BoolToggle;
             class ColorPicker;
             class DropdownList;
+            class List;
             class Content;
             class FPSCounter;
             class QuadWarp;
@@ -46,6 +47,7 @@ namespace msa {
                 BoolButton		&addButton(Parameter* p);
                 ColorPicker		&addColorPicker(Parameter* p);
                 DropdownList&   addDropdownList(Parameter* p);
+                List&           addList(Parameter* p);
                 Content			&addContent(Parameter* p, ofBaseDraws &content, float fixwidth = -1);
                 FPSCounter		&addFPSCounter();
                 QuadWarp		&addQuadWarper(Parameter* p);

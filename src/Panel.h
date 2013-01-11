@@ -2,10 +2,10 @@
 
 #include "ofxMSAControlFreakGui/src/Container.h"
 #include "ofxMSAControlFreakGui/src/LayoutManager.h"
+#include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
 
 namespace msa {
     namespace ControlFreak {
-        
         namespace gui {
             
             class Gui;
@@ -33,6 +33,7 @@ namespace msa {
                 friend class BoolTitle;
                 friend class Gui;
                 friend class LayoutManager;
+                friend class PanelPresetManager;
                 
 //                Panel(Container *parent, string s);
                 Panel(Container *parent, ParameterGroup* p);
@@ -50,7 +51,10 @@ namespace msa {
                 BoolBase *saveButton;
                 BoolBase *wrapButton;
                 ScrollBar *scrollbar;
+                List *presetDropdown;
                 Container *children;
+                
+                PanelPresetManager presetManager;
                 
                 void init();
                 

@@ -9,7 +9,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             LayoutManager::LayoutManager() {
-                doWrap = true;  // TODO: finish wrapping and scrolling
+                doWrap = false;  // TODO: finish wrapping and scrolling
                 scrollY = 0;
                 _scrollY = 0;
             }

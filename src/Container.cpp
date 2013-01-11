@@ -107,6 +107,11 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
+            List& Container::addList(Parameter* p) {
+                return (List&)*addControl(new List(this, p));
+            }
+            
+            //--------------------------------------------------------------
             Content& Container::addContent(Parameter* p, ofBaseDraws &content, float fixwidth) {
                 if(fixwidth == -1) fixwidth = getConfig().layout.columnWidth;
                 return (Content&)*addControl(new Content(this, p, content, fixwidth));
@@ -161,13 +166,21 @@ namespace msa {
                     case Type::kFloat: addSliderFloat(p); break;
                     case Type::kInt: addSliderInt(p); break;
                     case Type::kBool: {
-                        ParameterBool &pb = *(ParameterBool*)p;
-                        if(pb.getMode() == ParameterBool::kToggle) addToggle(p);
-                        else addButton(p);
+                        ParameterBool *pb = dynamic_cast<ParameterBool*>(p);
+                        if(pb) {
+                            if(pb->getMode() == ParameterBool::kToggle) addToggle(p);
+                            else addButton(p);
+                        }
                     }
                         break;
                         
-                    case Type::kNamedIndex: addDropdownList(p);
+                    case Type::kNamedIndex: {
+                        ParameterNamedIndex *pb = dynamic_cast<ParameterNamedIndex*>(p);
+                        if(pb) {
+                            if(pb->getMode() == ParameterNamedIndex::kDropdown) addDropdownList(p);
+                            else addList(p);
+                        }
+                    }
                         
                     case Type::kGroup:
                         break;

@@ -42,9 +42,17 @@ namespace msa {
                 loadButton = new BoolSimpleCircle(this, "l");
                 loadButton->layout.positionMode = 1;
                 loadButton->setZ(2);
-                loadButton->setMode(ParameterBool::kBang);
+                loadButton->setMode(ParameterBool::kToggle);
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
                 addControl(loadButton);
+                
+                presetDropdown = new List(this, "presets");
+                presetDropdown->layout.positionMode = 1;
+                presetDropdown->layout.doIncludeInContainerRect = false;
+                presetDropdown->setZ(1e100);
+                presetDropdown->setMode(ParameterNamedIndex::kList);
+                addControl(presetDropdown);
+                presetManager.setup(presetDropdown->getParameter());
                 
                 // add wrap button only if we are the root
                 if(getParent() == NULL) {
@@ -103,6 +111,8 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::onUpdate() {
+
+                // set positions and layout
                 int s = titleButton->height * 0.7;
                 int y = (titleButton->height - s)/2;
                 int p = 3;
@@ -114,7 +124,10 @@ namespace msa {
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->layout.set(titleButton->width - (s + p), y, s, s);
+                presetDropdown->layout.set(loadButton->layout.getRight(), loadButton->layout.getTop(), titleButton->width*1.5, titleButton->height);
 
+                
+                // check buttons and stuff
                 if(wrapButton) {
                     wrapButton->layout.set(titleButton->width - (s + p) * 3, y, s, s);
                     if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
@@ -147,15 +160,19 @@ namespace msa {
                 
                 if(collapseAllButton->getParameter().value()) showPanel(!titleButton->getParameter(), true);
                 
-                if(loadButton->getParameter().value()) {
-                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
-                    if(f.bSuccess) {
-                        paramT->loadXmlValues(f.filePath);
-                    }
-                }
+                presetDropdown->visible = presetDropdown->enabled = loadButton->getParameter().value();
+                if(loadButton->getParameter().hasChanged() && loadButton->getParameter().value()) presetManager.fill();
+                if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getCurrentPreset());
+
+//                if(loadButton->getParameter().value()) {
+//                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
+//                    if(f.bSuccess) {
+//                        paramT->loadXmlValues(f.filePath);
+//                    }
+//                }
                 
                 if(saveButton->getParameter().value()) {
-                    ofFileDialogResult f = ofSystemSaveDialog(getPath() + "-defaults.xml", "Save preset");
+                    ofFileDialogResult f = ofSystemSaveDialog(getPath(), "Save preset");
                     if(f.bSuccess) {
                         paramT->saveXmlValues(f.getPath());
                         //                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));

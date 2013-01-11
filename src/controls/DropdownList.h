@@ -21,11 +21,10 @@ namespace msa {
                 }
 
                 //--------------------------------------------------------------
-//                void setup() {
-//                    layout.width   = getConfig().layout.columnWidth;
-//                    layout.height  = getConfig().layout.buttonHeight;
-//                }
-
+                void setMode(ParameterNamedIndex::Mode mode) {
+                    paramT->setMode(mode);
+                }
+                
                 //--------------------------------------------------------------
                 void onDragOutside(int x, int y, int button) {
                     int a = this->y + height;

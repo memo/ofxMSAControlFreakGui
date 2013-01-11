@@ -13,7 +13,6 @@
 
 namespace msa {
     namespace ControlFreak {
-
         namespace gui {
             
             class BoolButton;

@@ -10,6 +10,7 @@
 #include "ofxMSAControlFreakGui/src/Controls/BoolToggle.h"
 #include "ofxMSAControlFreakGui/src/Controls/ColorPicker.h"
 #include "ofxMSAControlFreakGui/src/Controls/DropdownList.h"
+#include "ofxMSAControlFreakGui/src/Controls/List.h"
 #include "ofxMSAControlFreakGui/src/Controls/Content.h"
 #include "ofxMSAControlFreakGui/src/Controls/FPSCounter.h"
 #include "ofxMSAControlFreakGui/src/Controls/QuadWarp.h"
