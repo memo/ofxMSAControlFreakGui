@@ -11,6 +11,11 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
+                DropdownList(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL), true) {
+                    paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
+                }
+                
+                //--------------------------------------------------------------
                 DropdownList(Container *parent, Parameter* p) : Control(parent, p) {
                     paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                 }
