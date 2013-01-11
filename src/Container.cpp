@@ -196,7 +196,7 @@ namespace msa {
                 else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         getControl(i)->_mouseMoved(e);
-                        if(getControl(i)->isMouseOver()) return;    // don't propogate event if this control processed it
+//                        if(getControl(i)->isMouseOver()) return;    // don't propogate event if this control processed it
                     }
                 }
             }
@@ -230,7 +230,7 @@ namespace msa {
                 else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         getControl(i)->_mouseDragged(e);
-                        if(getControl(i)->isMouseOver()) return;    // don't propogate event if this control processed it
+//                        if(getControl(i)->isMouseOver()) return;    // don't propogate event if this control processed it
                     }
                 }
             }
