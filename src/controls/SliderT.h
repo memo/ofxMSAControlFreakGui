@@ -24,21 +24,21 @@ namespace msa {
                     slider = new SliderRawT<T>(parent, p);
                     slider->layout.positionMode = 1;
                     slider->setZ(0);
-                    addControl(slider);
+                    add(slider);
                     
                     decButton = new BoolSimpleBox(this, "<");
                     decButton->layout.positionMode = 1;
                     decButton->setZ(1);
                     decButton->setMode(ParameterBool::kBang);
                     decButton->getParameter().setTooltip("dec");
-                    addControl(decButton);
+                    add(decButton);
 
                     incButton = new BoolSimpleBox(this, ">");
                     incButton->layout.positionMode = 1;
                     incButton->setZ(1);
                     incButton->setMode(ParameterBool::kBang);
                     incButton->getParameter().setTooltip("inc");
-                    addControl(incButton);
+                    add(incButton);
 
                     clampButton = new BoolSimpleBox(this, "c");
                     clampButton->layout.positionMode = 1;
@@ -46,7 +46,7 @@ namespace msa {
                     clampButton->setMode(ParameterBool::kToggle);
                     clampButton->getParameter().setTooltip("Clamp");
                     clampButton->getParameter().trackVariable(&p->getClamp());
-                    addControl(clampButton);
+                    add(clampButton);
 
                     snapButton = new BoolSimpleBox(this, "s");
                     snapButton->layout.positionMode = 1;
@@ -54,14 +54,14 @@ namespace msa {
                     snapButton->setMode(ParameterBool::kToggle);
                     snapButton->getParameter().setTooltip("Snap");
                     snapButton->getParameter().trackVariable(&p->getSnap());
-                    addControl(snapButton);
+                    add(snapButton);
 
                     moreButton = new BoolSimpleBox(this, ".");
                     moreButton->layout.positionMode = 1;
                     moreButton->setZ(1);
                     moreButton->setMode(ParameterBool::kBang);
                     moreButton->getParameter().setTooltip("More... (coming soon)");
-                    addControl(moreButton);
+                    add(moreButton);
                 }
                 
                 //--------------------------------------------------------------

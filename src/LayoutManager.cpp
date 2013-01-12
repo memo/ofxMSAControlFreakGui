@@ -92,7 +92,7 @@ namespace msa {
                 
                 //                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter().getPath().c_str(), control.x, control.y, container.getParameter().getPath().c_str(), container.x, container.y);
                 
-                Renderer::instance().addControl(&control);
+                Renderer::instance().add(&control);
                 if(control.layout.doIncludeInContainerRect) {
                     _curRect.growToInclude((ofRectangle&)control);
                 }
@@ -131,8 +131,8 @@ namespace msa {
                 // TODO: parent isn't being processed, thats why root doesn't have it.
                 if(containerScale.y > 0) {
                     prepareControl(container, config, containerScale, panelDepth, maxPos);
-                    for(int i=0; i<container.getNumControls(); i++) {
-                        Control& control = *container.getControl(i);
+                    for(int i=0; i<container.size(); i++) {
+                        Control& control = container.get(i);
                         
                         
                         Container *c = dynamic_cast<Container*>(&control);

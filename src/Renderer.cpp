@@ -27,8 +27,8 @@ namespace msa {
 
             
             //--------------------------------------------------------------
-            void Renderer::addControl(Control *c) {
-//                ofLogVerbose() << "Renderer::addControl: " << c->getPath() << " " << c->x << " " << c->y << " " << c->width  << " " << c->height;
+            void Renderer::add(Control *c) {
+//                ofLogVerbose() << "Renderer::add: " << c->getPath() << " " << c->x << " " << c->y << " " << c->width  << " " << c->height;
                 controls.push_back(c);
             }
             

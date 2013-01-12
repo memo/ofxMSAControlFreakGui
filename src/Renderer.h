@@ -26,7 +26,7 @@ namespace msa {
                 
                 static Renderer &instance();
                 
-                void addControl(Control *c);
+                void add(Control *c);
                 void clearControls();
                 void draw(Config &config);
                 

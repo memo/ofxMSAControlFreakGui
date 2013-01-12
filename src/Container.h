@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAOrderedPointerMap/src/ofxMSAOrderedPointerMap.h"
+
 
 namespace msa {
     namespace ControlFreak {
@@ -36,13 +38,8 @@ namespace msa {
                 ~Container();
                 
                 void clear();
-                int getNumControls() const;
-                Control* addControl(Control *control);
-                Control* getControl(int i) const;
-                Control* operator[](int index);
-//                Control* operator[](string index);
-                
-                
+
+                // adding
                 Panel           &addPanel(ParameterGroup* p);
                 BoolButton		&addButton(ParameterBool* p);
                 ColorPicker		&addColorPicker(Parameter* p);
@@ -54,12 +51,22 @@ namespace msa {
                 Slider2d		&addSlider2d(Parameter* p);
                 SliderInt		&addSliderInt(ParameterInt* p);
                 SliderFloat		&addSliderFloat(ParameterFloat* p);
-//                BoolTitle		&addTitle(Parameter* p);
                 BoolToggle		&addToggle(ParameterBool* p);
-                
-                void addParameter(Parameter* p);
+
+                void add(Parameter* p);
                 void addParameters(ParameterGroup* parameters);
                 
+                Control& add(Control *control);
+
+                
+                // accessing
+                int size() const;
+
+                Control& get(int index) const;
+                Control& get(string name) const;
+                Control& operator[](int index) const;
+                Control& operator[](string name) const;
+ 
                 
                 // events from ofxMSAInteractiveObject
                 void update();
@@ -74,7 +81,7 @@ namespace msa {
                 Control* getActiveControl();
                 
             private:
-                vector<Control*> _controls;
+                OrderedPointerMap<Control> _controls;
                 Control *_pactiveControl; // currently active control (only this control receives events)
 
                 void setActiveControl(Control *control);

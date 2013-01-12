@@ -25,36 +25,44 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Container::clear() {
-                for(int i=0; i<_controls.size(); i++) delete _controls[i];
                 _controls.clear();
             }
             
             
             //--------------------------------------------------------------
-            int Container::getNumControls() const {
+            int Container::size() const {
                 return _controls.size();
             }
             
             //--------------------------------------------------------------
-            Control* Container::getControl(int i) const {
+            Control& Container::get(int i) const {
                 return _controls[i];
             }
             
+            //--------------------------------------------------------------
+            Control& Container::get(string name) const {
+                return _controls[name];
+            }
             
             //--------------------------------------------------------------
-            Control* Container::addControl(Control *control) {
-                _controls.push_back(control);
+            Control& Container::operator[](int index) const {
+                return get(index);
+            }
+            
+            //--------------------------------------------------------------
+            Control& Container::operator[](string name) const {
+                return get(name);
+            }
+            
+            //--------------------------------------------------------------
+            Control& Container::add(Control *control) {
+                _controls.push_back(control->getParameter().getName(), control);
                 control->setParent(this);
-                return control;
+                return *control;
             }
             
             //--------------------------------------------------------------
-            Control* Container::operator[](int index) {
-                return getControl(index);
-            }
-            
-            //--------------------------------------------------------------
-            void Container::setActiveControl(Control* control) {
+            void Container::setActiveControl(Control *control) {
                 ofLogVerbose() << "msa::ControlFreak::Gui::Container::setActiveControl: " << (control ? control->getParameter().getPath() : "NULL");
                 // if old control exists, put it at the back
                 if(_pactiveControl) _pactiveControl->popZ();
@@ -88,75 +96,75 @@ namespace msa {
             
             //--------------------------------------------------------------
             Panel& Container::addPanel(ParameterGroup* p) {
-                return (Panel&)*addControl(new Panel(this, p));
+                return (Panel&)add(new Panel(this, p));
             }
             
             //--------------------------------------------------------------
             BoolButton& Container::addButton(ParameterBool* p) {
-                return (BoolButton&)*addControl(new BoolButton(this, p));
+                return (BoolButton&)add(new BoolButton(this, p));
             }
             
             //--------------------------------------------------------------
             ColorPicker& Container::addColorPicker(Parameter* p) {
-                //                return (ColorPicker&)*addControl(new ColorPicker(this, p));
+                //                return (ColorPicker&)add(new ColorPicker(this, p));
             }
             
             //--------------------------------------------------------------
             DropdownList& Container::addDropdownList(ParameterNamedIndex* p) {
-                return (DropdownList&)*addControl(new DropdownList(this, p));
+                return (DropdownList&)add(new DropdownList(this, p));
             }
             
             //--------------------------------------------------------------
             List& Container::addList(ParameterNamedIndex* p) {
-                return (List&)*addControl(new List(this, p));
+                return (List&)add(new List(this, p));
             }
             
             //--------------------------------------------------------------
             Content& Container::addContent(Parameter* p, ofBaseDraws &content, float fixwidth) {
                 if(fixwidth == -1) fixwidth = getConfig().layout.columnWidth;
-                return (Content&)*addControl(new Content(this, p, content, fixwidth));
+                return (Content&)add(new Content(this, p, content, fixwidth));
             }
             
             //--------------------------------------------------------------
             FPSCounter& Container::addFPSCounter() {
-                return (FPSCounter&)*addControl(new FPSCounter(this));
+                return (FPSCounter&)add(new FPSCounter(this));
             }
             
             //--------------------------------------------------------------
             QuadWarp& Container::addQuadWarper(Parameter* p) {
-                //                return (QuadWarp&)*addControl(new QuadWarp(this, p));
+                //                return (QuadWarp&)add(new QuadWarp(this, p));
             }
             
             //--------------------------------------------------------------
             SliderInt& Container::addSliderInt(ParameterInt* p) {
-                return (SliderInt&)*addControl(new SliderT<int>(this, p));
+                return (SliderInt&)add(new SliderT<int>(this, p));
             }
             
             //--------------------------------------------------------------
             SliderFloat& Container::addSliderFloat(ParameterFloat* p) {
-                return (SliderFloat&)*addControl(new SliderT<float>(this, p));
+                return (SliderFloat&)add(new SliderT<float>(this, p));
             }
             
             //--------------------------------------------------------------
             Slider2d& Container::addSlider2d(Parameter* p) {
-                //                return (Slider2d&)*addControl(new Slider2d(this, p));
+                //                return (Slider2d&)add(new Slider2d(this, p));
             }
             
             //--------------------------------------------------------------
             //            BoolTitle& Container::addTitle(Parameter* p) {
-            //                return (BoolTitle&)*addControl(new BoolTitle(this, p));
+            //                return (BoolTitle&)add(new BoolTitle(this, p));
             //            }
             
             //--------------------------------------------------------------
             BoolToggle& Container::addToggle(ParameterBool* p) {
-                return (BoolToggle&)*addControl(new BoolToggle(this,p));
+                return (BoolToggle&)add(new BoolToggle(this,p));
             }
             
             
             
             //--------------------------------------------------------------
-            void Container::addParameter(Parameter* p) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameter: " << getPath() << ": " << p->getPath();
+            void Container::add(Parameter* p) {
+                ofLogVerbose() << "msa::ControlFreak::gui::Container::add: " << getPath() << ": " << p->getPath();
                 // if parameter already exists, remove it first
                 
                 if(typeid(*p) == typeid(ParameterGroup)) {
@@ -189,16 +197,16 @@ namespace msa {
                 }
                 
                 
-                ofLogWarning() << "msa::ControlFreak::gui::Container::addParameter: unknown type adding parameter " << p->getPath() << " " << p->getTypeName();
+                ofLogWarning() << "msa::ControlFreak::gui::Container::add: unknown type adding parameter " << p->getPath() << " " << p->getTypeName();
             }
             
             //--------------------------------------------------------------
             void Container::addParameters(ParameterGroup* parameters) {
                 ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameters: " << getPath() << ": " << parameters->getPath();
                 
-                int np = parameters->getNumParams();
+                int np = parameters->size();
                 for(int i=0; i<np; i++) {
-                    addParameter(parameters->getPtr(i));
+                    add(&parameters->get(i));
                 }
             }
             
@@ -208,9 +216,9 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mouseMoved(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                        getControl(i)->_mouseMoved(e);
-                        //                        if(getControl(i)->isMouseOver()) return;    // don't propogate event if this control processed it
+                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                        get(i)._mouseMoved(e);
+                        //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                     }
                 }
             }
@@ -218,7 +226,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Container::update() {
                 Control::update();
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) getControl(i)->update();
+                if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) get(i).update();
             }
             
             
@@ -227,10 +235,10 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mousePressed(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                        getControl(i)->_mousePressed(e);
-                        if(getControl(i)->isMouseOver()) {
-                            getRoot()->setActiveControl(getControl(i));
+                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                        get(i)._mousePressed(e);
+                        if(get(i).isMouseOver()) {
+                            getRoot()->setActiveControl(&get(i));
                             return;    // don't propogate event if this control processed it
                         }
                     }
@@ -242,9 +250,9 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mouseDragged(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                        getControl(i)->_mouseDragged(e);
-                        //                        if(getControl(i)->isMouseOver()) return;    // don't propogate event if this control processed it
+                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                        get(i)._mouseDragged(e);
+                        //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                     }
                 }
             }
@@ -254,7 +262,7 @@ namespace msa {
                 if(_pactiveControl)
                     _pactiveControl->_mouseReleased(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) getControl(i)->_mouseReleased(e);
+                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) get(i)._mouseReleased(e);
                 }
                 
                 if(getRoot()) getRoot()->releaseActiveControl();
@@ -268,22 +276,22 @@ namespace msa {
                 bool keyRight	= e.key == OF_KEY_RIGHT;
                 bool keyEnter	= e.key == OF_KEY_RETURN;
                 
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                    Control *c = getControl(i);
-                    if(c->isMouseOver()) {
-                        if(keyUp)		c->onKeyUp();
-                        if(keyDown)		c->onKeyDown();
-                        if(keyLeft)		c->onKeyLeft();
-                        if(keyRight)	c->onKeyRight();
-                        if(keyEnter)	c->onKeyEnter();
-                        c->_keyPressed(e);
+                if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                    Control &c = get(i);
+                    if(c.isMouseOver()) {
+                        if(keyUp)		c.onKeyUp();
+                        if(keyDown)		c.onKeyDown();
+                        if(keyLeft)		c.onKeyLeft();
+                        if(keyRight)	c.onKeyRight();
+                        if(keyEnter)	c.onKeyEnter();
+                        c._keyPressed(e);
                     }
                 }
             }
             
             //--------------------------------------------------------------
             void Container::keyReleased(ofKeyEventArgs &e) {
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) if(getControl(i)->isMouseOver()) getControl(i)->_keyReleased(e);
+                if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) if(get(i).isMouseOver()) get(i)._keyReleased(e);
             }
             
             

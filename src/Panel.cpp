@@ -24,13 +24,13 @@ namespace msa {
                 titleButton->layout.positionMode = 1;
                 titleButton->setZ(1);
                 titleButton->getParameter().set(true);
-                addControl(titleButton);
+                add(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
                 collapseAllButton->layout.positionMode = 1;
                 collapseAllButton->setZ(2);
                 collapseAllButton->setMode(ParameterBool::kBang);
-                addControl(collapseAllButton);
+                add(collapseAllButton);
                 
                 saveButton = new BoolSimpleCircle(this, "s");
                 saveButton->layout.positionMode = 1;
@@ -38,7 +38,7 @@ namespace msa {
                 saveButton->setMode(ParameterBool::kToggle);
                 saveButton->getParameter().setTooltip("Save preset for '" + getPath() + "'");
                 saveButton->getParameter().trackVariable(&presetManager.bSaveOpen);
-                addControl(saveButton);
+                add(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
                 loadButton->layout.positionMode = 1;
@@ -46,14 +46,14 @@ namespace msa {
                 loadButton->setMode(ParameterBool::kToggle);
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
                 loadButton->getParameter().trackVariable(&presetManager.bLoadOpen);
-                addControl(loadButton);
+                add(loadButton);
                 
                 presetDropdown = new List(this, "presets");
                 presetDropdown->layout.positionMode = 1;
                 presetDropdown->layout.doIncludeInContainerRect = false;
                 presetDropdown->setZ(1e100);
                 presetDropdown->setMode(ParameterNamedIndex::kList);
-                addControl(presetDropdown);
+                add(presetDropdown);
                 presetManager.setup(presetDropdown->getParameter());
                 
                 // add wrap button only if we are the root
@@ -63,7 +63,7 @@ namespace msa {
                     wrapButton->setZ(2);
                     wrapButton->setMode(ParameterBool::kToggle);
                     wrapButton->getParameter().setTooltip("Wrap");
-                    addControl(wrapButton);
+                    add(wrapButton);
                     
                     scrollbar = new ScrollBar(this);
                     scrollbar->layout.positionMode = 2;
@@ -71,7 +71,7 @@ namespace msa {
                     scrollbar->doIsolateOnActive = false;
                     scrollbar->layout.doIncludeInContainerRect = false;
                     scrollbar->getParameter().setTooltip("Scroll " + getPath());
-                    addControl(scrollbar);
+                    add(scrollbar);
                 } else {
                     wrapButton = NULL;
                     scrollbar = NULL;
@@ -81,7 +81,7 @@ namespace msa {
                 children = new Container(this, getName() + "_children");
                 children->layout.doAffectFlow = false;
 //                children->layout.set(0, 0, 1, 3);
-                addControl(children);
+                add(children);
                 
                 children->addParameters(p);
             }
@@ -104,8 +104,8 @@ namespace msa {
             void Panel::showPanel(bool bOpen, bool bRecursive) {
                 titleButton->getParameter().set(bOpen);
                 if(bRecursive) {
-                    for(int i=0; i<children->getNumControls(); i++) {
-                        Panel *p = dynamic_cast<Panel*>(children->getControl(i));
+                    for(int i=0; i<children->size(); i++) {
+                        Panel *p = dynamic_cast<Panel*>(&children->get(i));
                         if(p) p->showPanel(bOpen, true);
                     }
                 }
