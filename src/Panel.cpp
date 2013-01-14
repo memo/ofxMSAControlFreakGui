@@ -142,7 +142,7 @@ namespace msa {
                         scrollbar->layout.set(0, 0, getConfig().layout.scrollbarWidth, ofGetHeight());
                         float sbheight = scrollbar->layout.height;
                         scrollbar->barThickness = sbheight / layoutManager->getCurRect().height;
-                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->getCurRect().height - sbheight * 0.9);
+                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->getCurRect().height - sbheight * 0.5);
                     } else {
                         scrollbar->visible = false;
                     }

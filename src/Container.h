@@ -81,7 +81,7 @@ namespace msa {
                 Control* getActiveControl();
                 
             private:
-                OrderedPointerMap<Control> _controls;
+                OrderedPointerMap<string, Control> _controls;
                 Control *_pactiveControl; // currently active control (only this control receives events)
 
                 void setActiveControl(Control *control);
