@@ -174,7 +174,7 @@ namespace msa {
                         presetManager.openLoad();
                     }
                     presetDropdown->layout.x = loadButton->layout.getRight();
-                    if(presetDropdown->getParameter().hasChanged()) paramT->loadXmlSchema(presetManager.getPresetName());
+                    if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) paramT->loadXmlSchema(presetManager.getPresetName());
                 }
                 
                 // save preset
@@ -183,7 +183,7 @@ namespace msa {
                         presetManager.openSave();
                     }
                     presetDropdown->layout.x = saveButton->layout.getRight();
-                    if(presetDropdown->getParameter().hasChanged()) {
+                    if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) {
                         paramT->saveXmlSchema(presetManager.getPresetName());
                         presetManager.close();
                     }

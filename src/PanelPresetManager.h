@@ -72,7 +72,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 string getPresetName() {
                     string s;
-                    if(bLoadOpen || (bSaveOpen && presetsNamedIndex->value() < presetsNamedIndex->getNumLabels()-2))
+                    if(bLoadOpen || (bSaveOpen && presetsNamedIndex->value() < presetsNamedIndex->getNumLabels()-1))
                         s = presetsNamedIndex->getSelectedLabel();
                     else s = ofSystemTextBoxDialog("enter preset name");
                     return "presets/" + s;
