@@ -2,7 +2,7 @@
 
 #include "ofxMSAControlFreakGui/src/Container.h"
 #include "ofxMSAControlFreakGui/src/LayoutManager.h"
-#include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
+//#include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
 
 namespace msa {
     namespace ControlFreak {
@@ -23,6 +23,8 @@ namespace msa {
             class Slider2d;
             class SliderInt;
             class SliderFloat;
+            
+            class PanelPresetManager;
 
 //            class Panel;
 //            typedef std::tr1::shared_ptr<Panel> PanelPtr;
@@ -54,7 +56,7 @@ namespace msa {
                 List *presetDropdown;
                 Container *children;
                 
-                PanelPresetManager presetManager;
+                PanelPresetManager *presetManager;
                 
                 void init();
                 

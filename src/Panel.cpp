@@ -1,5 +1,6 @@
 
 #include "ofxMSAControlFreakGui/src/Includes.h"
+#include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
 
 #include "ofxMSAControlFreak/src/ControlFreak.h"
 
@@ -20,6 +21,8 @@ namespace msa {
 //                layout.width = 1;
 //                layout.height = 1;
                 
+                presetManager = new PanelPresetManager(this);
+                
                 titleButton = new BoolTitle(this, getName());
                 titleButton->layout.positionMode = 1;
                 titleButton->setZ(1);
@@ -37,7 +40,7 @@ namespace msa {
                 saveButton->setZ(2);
                 saveButton->setMode(ParameterBool::kToggle);
                 saveButton->getParameter().setTooltip("Save preset for '" + getPath() + "'");
-                saveButton->getParameter().trackVariable(&presetManager.bSaveOpen);
+                saveButton->getParameter().trackVariable(&presetManager->bSaveOpen);
                 add(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
@@ -45,7 +48,7 @@ namespace msa {
                 loadButton->setZ(2);
                 loadButton->setMode(ParameterBool::kToggle);
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
-                loadButton->getParameter().trackVariable(&presetManager.bLoadOpen);
+                loadButton->getParameter().trackVariable(&presetManager->bLoadOpen);
                 add(loadButton);
                 
                 presetDropdown = new List(this, "presets");
@@ -54,7 +57,6 @@ namespace msa {
                 presetDropdown->setZ(1e100);
                 presetDropdown->setMode(ParameterNamedIndex::kList);
                 add(presetDropdown);
-                presetManager.setup(presetDropdown->getParameter());
                 
                 // add wrap button only if we are the root
                 if(getParent() == NULL) {
@@ -164,28 +166,28 @@ namespace msa {
                 
                 
                 // Preset save load
-                presetDropdown->visible = presetDropdown->enabled = presetManager.isOpen();
+                presetDropdown->visible = presetDropdown->enabled = presetManager->isOpen();
 
                 // TODO: on mousemove, hilight the controls which would be affected
                 
                 // load preset
                 if(loadButton->getParameter().value()) {
                     if(loadButton->getParameter().hasChanged()) {
-                        presetManager.openLoad();
+                        presetManager->openLoad();
                     }
                     presetDropdown->layout.x = loadButton->layout.getRight();
-                    if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) paramT->loadXmlSchema(presetManager.getPresetName());
+                    if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) paramT->loadXmlSchema(presetManager->getPresetName());
                 }
                 
                 // save preset
                 if(saveButton->getParameter().value()) {
                     if(saveButton->getParameter().hasChanged()) {
-                        presetManager.openSave();
+                        presetManager->openSave();
                     }
                     presetDropdown->layout.x = saveButton->layout.getRight();
                     if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) {
-                        paramT->saveXmlSchema(presetManager.getPresetName());
-                        presetManager.close();
+                        paramT->saveXmlSchema(presetManager->getPresetName());
+                        presetManager->close();
                     }
                 }
 
