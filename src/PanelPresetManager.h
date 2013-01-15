@@ -77,15 +77,10 @@ namespace msa {
                     ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::readDir";
                     checkPresetsControl();
                     
-                    ofDirectory dir;
                     ParameterGroup *panelParams = dynamic_cast<ParameterGroup*>(&panel->getParameter());
                     if(panelParams) {
-                        dir.listDir(panelParams->getPresetsDir());
-                        for(int i=0; i<dir.size(); i++) {
-                            // TODO: do format check here?
-                            // TODO: only load presets which are relevant to that section?
-                            presetsNamedIndex->addLabel(dir.getName(i));
-                        }
+                        vector<string> presetsList = panelParams->getPresetsList();
+                        for(int i=0; i<presetsList.size(); i++) presetsNamedIndex->addLabel(presetsList[i]);
                     } else {
                         ofLogError() << "msa::ControlFreak::gui::PanelPresetManager::readDir - no PanelParams";
                     }
