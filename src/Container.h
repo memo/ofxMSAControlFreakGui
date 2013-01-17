@@ -16,9 +16,10 @@ namespace msa {
             class BoolTitle;
             class BoolToggle;
             class ColorPicker;
+            class Content;
             class DropdownList;
             class List;
-            class Content;
+            class Options;
             class FPSCounter;
             class QuadWarp;
             class Slider2d;
@@ -34,7 +35,7 @@ namespace msa {
                 friend class Renderer;
                 
                 Container(Container *parent, string s);
-                Container(Container *parent, Parameter* p);
+                Container(Container *parent, Parameter* p, bool bOwnsParameter = false);
                 ~Container();
                 
                 void clear();
@@ -45,6 +46,7 @@ namespace msa {
                 ColorPicker		&addColorPicker(Parameter* p);
                 DropdownList&   addDropdownList(ParameterNamedIndex* p);
                 List&           addList(ParameterNamedIndex* p);
+                Options&        addOptions(ParameterNamedIndex* p);
                 Content			&addContent(Parameter* p, ofBaseDraws &content, float fixwidth = -1);
                 FPSCounter		&addFPSCounter();
                 QuadWarp		&addQuadWarper(Parameter* p);

@@ -9,11 +9,13 @@ namespace msa {
             class BoolToggle : public BoolBase {
             public:
                 
-                //--------------------------------------------------------------
-                BoolToggle(Container *parent, string s) : BoolBase(parent, s) {}
+                bool bDrawCross;
                 
                 //--------------------------------------------------------------
-                BoolToggle(Container *parent, ParameterBool* p) : BoolBase(parent, p) {}
+                BoolToggle(Container *parent, string s) : BoolBase(parent, s) { bDrawCross = true; }
+                
+                //--------------------------------------------------------------
+                BoolToggle(Container *parent, ParameterBool* p) : BoolBase(parent, p) { bDrawCross = true; }
                
                 //--------------------------------------------------------------
                 void onDraw() {
@@ -24,9 +26,13 @@ namespace msa {
                     
                     if(getParameter().value()) {
                         setTextColor();
-                        ofSetLineWidth(2);
-                        ofLine(0, 0, height, height);
-                        ofLine(height, 0, 0, height);
+                        if(bDrawCross) {
+                            ofSetLineWidth(2);
+                            ofLine(0, 0, height, height);
+                            ofLine(height, 0, 0, height);
+                        } else {
+                            ofCircle(height/2, height/2, height/4);
+                        }
                     }
                     
                     setBGColor();

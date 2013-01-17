@@ -14,7 +14,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Container::Container(Container *parent, Parameter* p):Control(parent, p) {
+            Container::Container(Container *parent, Parameter* p, bool bOwnsParameter):Control(parent, p, bOwnsParameter) {
                 _pactiveControl = NULL;
             }
             
@@ -120,6 +120,11 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
+            Options& Container::addOptions(ParameterNamedIndex* p) {
+                return (Options&)add(new Options(this, p));
+            }
+
+            //--------------------------------------------------------------
             Content& Container::addContent(Parameter* p, ofBaseDraws &content, float fixwidth) {
                 if(fixwidth == -1) fixwidth = getConfig().layout.columnWidth;
                 return (Content&)add(new Content(this, p, content, fixwidth));
@@ -190,8 +195,19 @@ namespace msa {
                 if(typeid(*p) == typeid(ParameterNamedIndex)) {
                     ParameterNamedIndex *pp(dynamic_cast<ParameterNamedIndex*>(p));
                     if(pp) {
-                        if(pp->getMode() == ParameterNamedIndex::kDropdown) addDropdownList(pp);
-                        else addList(pp);
+                        switch(pp->getMode()) {
+                            case ParameterNamedIndex::kDropdown:
+                                addDropdownList(pp);
+                                break;
+                                
+                            case ParameterNamedIndex::kList:
+                                addList(pp);
+                                break;
+                                
+                            case ParameterNamedIndex::kOptions:
+                                addOptions(pp);
+                                break;
+                        }
                         return;
                     }
                 }
