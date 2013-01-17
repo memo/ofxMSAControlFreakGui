@@ -92,7 +92,11 @@ namespace msa {
                     
                     
                     if(getParameter().getSnap()) {
-                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
+//                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
+                        float xinc = width * (float)getParameter().getIncrement() / ((float)getParameter().getMax() - (float)getParameter().getMin());
+                        if(getParameter().getName() == "x") {
+                            assert(true);
+                        }
                         if(xinc >=3) {
                             setColor(c.colors.bg[0]);
                             ofSetLineWidth(1);
