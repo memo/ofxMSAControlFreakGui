@@ -37,12 +37,16 @@ namespace msa {
                 friend class LayoutManager;
                 friend class PanelPresetManager;
                 
-//                Panel(Container *parent, string s);
+                Container *children;
+
+                //                Panel(Container *parent, string s);
                 Panel(Container *parent, ParameterGroup* p);
                 ~Panel();
                 
                 void onUpdate();
                 
+                void showPanel(bool bOpen, bool bRecursive = false);
+
             protected:
                 ParameterGroup  *paramT;
                 LayoutManager* layoutManager;
@@ -54,13 +58,10 @@ namespace msa {
                 BoolBase *wrapButton;
                 ScrollBar *scrollbar;
                 List *presetDropdown;
-                Container *children;
                 
                 PanelPresetManager *presetManager;
                 
                 void init();
-                
-                void showPanel(bool bOpen, bool bRecursive = false);
             };
             
             

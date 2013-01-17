@@ -42,7 +42,8 @@ namespace msa {
                 void onMouseMove(int x, int y) {
                     int a = this->y;
                     int b = this->y + getConfig().layout.dropdownListTextHeight * paramT->getNumLabels();
-                    mouseOverIndex = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+//                    mouseOverIndex = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+                    mouseOverIndex = floor(ofMap(y, a, b, 0, paramT->getNumLabels(), true));
                 }
 
                 //--------------------------------------------------------------

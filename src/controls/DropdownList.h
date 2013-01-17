@@ -29,7 +29,8 @@ namespace msa {
                 void onDragOutside(int x, int y, int button) {
                     int a = this->y + height;
                     int b = this->y + height + getConfig().layout.dropdownListTextHeight * paramT->getNumLabels();
-                    int v = floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+                    int v = //floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+                        floor(ofMap(y, a, b, 0, paramT->getNumLabels(), true));
                     paramT->set(v);
                 }
                 

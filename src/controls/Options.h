@@ -42,7 +42,7 @@ namespace msa {
                 void onMouseMove(int x, int y) {
                     int a = this->y;
                     int b = this->y + getConfig().layout.buttonHeight * paramT->getNumLabels();
-                    mouseOverIndex = floor(ofMap(y + getConfig().layout.buttonHeight/2, a, b, 0, paramT->getNumLabels()-1, true));
+                    mouseOverIndex = floor(ofMap(y, a, b, 0, paramT->getNumLabels(), true));
                 }
                 
                 //--------------------------------------------------------------
@@ -59,7 +59,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 void onDraw() {
                     int numLabels = paramT->getNumLabels();
-                    layout.height = height = getConfig().layout.buttonHeight * (numLabels + 0.5) + 3;
+                    layout.height = height = getConfig().layout.buttonHeight * numLabels + 3;
                     
                     setBGColor();
                     ofFill();
