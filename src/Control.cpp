@@ -273,6 +273,8 @@ namespace msa {
                     ofEnableAlphaBlending();
                     ofPushMatrix(); {
                         ofTranslate(x, y);
+                        ofVec2f s(getInheritedScale());
+                        ofScale(s.x, s.y, 1);
                         
                         ofPushMatrix(); {
                             onDraw();
