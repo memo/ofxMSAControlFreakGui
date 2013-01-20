@@ -26,7 +26,7 @@ namespace msa {
                 titleButton = new BoolTitle(this, getName());
                 titleButton->layout.positionMode = 1;
                 titleButton->setZ(1);
-                titleButton->getParameter().set(true);
+                titleButton->getParameter().trackVariable(&paramT->bOpen);
                 add(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
@@ -82,6 +82,7 @@ namespace msa {
                 
                 children = new Container(this, getName() + "_children");
                 children->layout.doAffectFlow = false;
+                children->scale.y = 0;  // everything start closed
 //                children->layout.set(0, 0, 1, 3);
                 add(children);
                 
