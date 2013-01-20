@@ -4,7 +4,7 @@
 #include "ofxMSAControlFreakGui/src/controls/BoolSimpleBox.h"
 #include "ofxMSAControlFreakGui/src/controls/SliderRawT.h"
 
-#include "ofxMSAControlFreak/src/ControlFreak.h"
+#include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {

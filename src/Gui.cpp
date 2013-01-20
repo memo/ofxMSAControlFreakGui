@@ -1,5 +1,5 @@
 
-#include "ofxMSAControlFreakGui/src/Gui.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 #include "ofxMSAControlFreakGui/src/Includes.h"
 
 
