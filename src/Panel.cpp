@@ -1,5 +1,5 @@
 
-#include "ofxMSAControlFreakGui/src/Includes.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 #include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
 
 #include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
@@ -8,18 +8,30 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-//            //--------------------------------------------------------------
-//            Panel::Panel(Container *parent, string s) : Container(parent, s) {
-//                init();
-//            }
-            
             //--------------------------------------------------------------
             Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
+                pgui = NULL;
                 init();
-
-//                layout.doAutoLayout = true;
-//                layout.width = 1;
-//                layout.height = 1;
+            }
+            
+            //--------------------------------------------------------------
+            Panel::Panel(Gui *pgui, ParameterGroup* p) : Container(NULL, p) {
+                this->pgui = pgui;
+                init();
+            }
+            
+            //--------------------------------------------------------------
+            Panel::~Panel() {
+                if(layoutManager) delete layoutManager;
+            }
+            
+            //--------------------------------------------------------------
+            void Panel::init() {
+                disableAllEvents();
+                layoutManager = NULL;
+                width = 0;
+                height = 0;
+                paramT = dynamic_cast<ParameterGroup*>(&getParameter());
                 
                 presetManager = new PanelPresetManager(this);
                 
@@ -59,13 +71,21 @@ namespace msa {
                 add(presetDropdown);
                 
                 // add wrap button only if we are the root
-                if(getParent() == NULL) {
+                if(pgui) {
                     wrapButton = new BoolSimpleCircle(this, "w");
                     wrapButton->layout.positionMode = 1;
                     wrapButton->setZ(2);
                     wrapButton->setMode(ParameterBool::kToggle);
                     wrapButton->getParameter().setTooltip("Wrap");
                     add(wrapButton);
+                    
+                    nextPageButton = new BoolSimpleCircle(this, ">");
+                    nextPageButton->layout.positionMode = 1;
+                    nextPageButton->setZ(2);
+                    nextPageButton->setMode(ParameterBool::kBang);
+                    nextPageButton->getParameter().setTooltip("Next page");
+                    add(nextPageButton);
+                    
                     
                     scrollbar = new ScrollBar(this);
                     scrollbar->layout.positionMode = 2;
@@ -76,31 +96,18 @@ namespace msa {
                     add(scrollbar);
                 } else {
                     wrapButton = NULL;
+                    nextPageButton = NULL;
                     scrollbar = NULL;
                 }
-
+                
                 
                 children = new Container(this, getName() + "_children");
                 children->layout.doAffectFlow = false;
                 children->scale.y = 0;  // everything start closed
-//                children->layout.set(0, 0, 1, 3);
+                //                children->layout.set(0, 0, 1, 3);
                 add(children);
                 
-                children->addParameters(p);
-            }
-            
-            //--------------------------------------------------------------
-            Panel::~Panel() {
-                if(layoutManager) delete layoutManager;
-            }
-            
-            //--------------------------------------------------------------
-            void Panel::init() {
-                disableAllEvents();
-                layoutManager = NULL;
-                width = 0;
-                height = 0;
-                paramT = dynamic_cast<ParameterGroup*>(&getParameter());
+                children->addParameters(paramT);
             }
             
             //--------------------------------------------------------------
@@ -136,6 +143,10 @@ namespace msa {
                 if(wrapButton) {
                     wrapButton->layout.set(titleButton->width - (s + p) * 3, y, s, s);
                     if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
+                }
+                
+                if(nextPageButton) {
+                    nextPageButton->layout.set(titleButton->width + p, y, s, s);
                 }
                 
                 if(scrollbar) {
@@ -192,7 +203,9 @@ namespace msa {
                     }
                 }
 
-                
+                if(pgui && nextPageButton && nextPageButton->getParameter().value()) {
+                    pgui->nextPage();
+                }
 
 //                if(loadButton->getParameter().value()) {
 //                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));

@@ -1,6 +1,6 @@
 
 
-#include "ofxMSAControlFreakGui/src/Includes.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 
 namespace msa {

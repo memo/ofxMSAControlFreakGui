@@ -41,6 +41,7 @@ namespace msa {
 
                 //                Panel(Container *parent, string s);
                 Panel(Container *parent, ParameterGroup* p);
+                Panel(Gui *parent, ParameterGroup* p);
                 ~Panel();
                 
                 void onUpdate();
@@ -48,6 +49,7 @@ namespace msa {
                 void showPanel(bool bOpen, bool bRecursive = false);
 
             protected:
+                Gui *pgui;
                 ParameterGroup  *paramT;
                 LayoutManager* layoutManager;
                 
@@ -56,6 +58,7 @@ namespace msa {
                 BoolBase *loadButton;
                 BoolBase *saveButton;
                 BoolBase *wrapButton;
+                BoolBase *nextPageButton;
                 ScrollBar *scrollbar;
                 List *presetDropdown;
                 

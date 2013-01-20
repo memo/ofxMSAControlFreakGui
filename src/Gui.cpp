@@ -1,6 +1,6 @@
 
 #include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
-#include "ofxMSAControlFreakGui/src/Includes.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 
 
@@ -114,21 +114,19 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Gui::nextPageWithBlank() {
-                if(doDraw) {
-                    setPage(currentPageIndex + 1);
-                    if(currentPageIndex == 1) setDraw(false);
-                } else {
-                    setDraw(true);
-                    setPage(1);
-                }
-            }
+//            void Gui::nextPageWithBlank() {
+//                if(doDraw) {
+//                    setPage(currentPageIndex + 1);
+//                    if(currentPageIndex == 0) setDraw(false);
+//                } else {
+//                    setDraw(true);
+//                    setPage(1);
+//                }
+//            }
             
             //--------------------------------------------------------------
             void Gui::setPage(int i) {
-                currentPageIndex = i;
-                if(currentPageIndex >= pages.size()) currentPageIndex = 1;
-                else if(currentPageIndex < 1) currentPageIndex = pages.size()-1;
+                if(pages.size()) currentPageIndex = i % pages.size();
             }
             
             //--------------------------------------------------------------
@@ -166,7 +164,7 @@ namespace msa {
 
             //--------------------------------------------------------------
             Panel& Gui::addPage(ParameterGroup &parameters) {
-                Panel* panel(new Panel(NULL, &parameters));
+                Panel* panel(new Panel(this, &parameters));
                 return addPanel(panel);
             }
 
@@ -176,7 +174,7 @@ namespace msa {
                 
                 pages.push_back(page);
                 page->setConfig(&config);
-                setPage(pages.size() - 1);
+//                setPage(pages.size() - 1);
                 return *page;
             }
 
