@@ -165,8 +165,8 @@ namespace msa {
 //            }
 
             //--------------------------------------------------------------
-            Panel& Gui::addPage(ParameterGroup* parameters) {
-                Panel* panel(new Panel(NULL, parameters));
+            Panel& Gui::addPage(ParameterGroup &parameters) {
+                Panel* panel(new Panel(NULL, &parameters));
                 return addPanel(panel);
             }
 

@@ -51,7 +51,7 @@ namespace msa {
 //                Panel& addPage(string name = "");
                 
                 // create and add a page from the given parameter group
-                Panel& addPage(ParameterGroup* parameters);
+                Panel& addPage(ParameterGroup &parameters);
                 
                 // add a page
                 Panel& addPanel(Panel* page);
