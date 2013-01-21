@@ -283,8 +283,8 @@ namespace msa {
                 if(doDefaultKeys) {
                     if(e.key == ' ') {
                         toggleDraw();
-                    } else if(e.key>='0' && e.key<='9') {
-                        setPage((int)(e.key - '0'));
+                    } else if(e.key>='1' && e.key<='9') {
+                        setPage((int)(e.key - '1'));
                         setDraw(true);
                     } else if(doDraw) {
                         switch(e.key) {
