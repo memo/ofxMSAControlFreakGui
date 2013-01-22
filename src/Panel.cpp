@@ -79,6 +79,13 @@ namespace msa {
                     wrapButton->getParameter().setTooltip("Wrap");
                     add(wrapButton);
                     
+                    prevPageButton = new BoolSimpleCircle(this, "<");
+                    prevPageButton->layout.positionMode = 1;
+                    prevPageButton->setZ(2);
+                    prevPageButton->setMode(ParameterBool::kBang);
+                    prevPageButton->getParameter().setTooltip("Previous page");
+                    add(prevPageButton);
+
                     nextPageButton = new BoolSimpleCircle(this, ">");
                     nextPageButton->layout.positionMode = 1;
                     nextPageButton->setZ(2);
@@ -96,6 +103,7 @@ namespace msa {
                     add(scrollbar);
                 } else {
                     wrapButton = NULL;
+                    prevPageButton = NULL;
                     nextPageButton = NULL;
                     scrollbar = NULL;
                 }
@@ -145,9 +153,14 @@ namespace msa {
                     if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
                 }
                 
-                if(nextPageButton) {
-                    nextPageButton->layout.set(titleButton->width + p, y, s, s);
+                if(prevPageButton) {
+                    prevPageButton->layout.set(titleButton->width + p, y, s, s);
                 }
+                
+                if(nextPageButton) {
+                    nextPageButton->layout.set(titleButton->width + s + p * 2, y, s, s);
+                }
+
                 
                 if(scrollbar) {
                     if(layoutManager) {// && !layoutManager->doWrap) {
@@ -206,6 +219,11 @@ namespace msa {
                 if(pgui && nextPageButton && nextPageButton->getParameter().value()) {
                     pgui->nextPage();
                 }
+                
+                if(pgui && prevPageButton && prevPageButton->getParameter().value()) {
+                    pgui->prevPage();
+                }
+
 
 //                if(loadButton->getParameter().value()) {
 //                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));

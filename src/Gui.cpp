@@ -23,7 +23,6 @@ namespace msa {
             //--------------------------------------------------------------
             Gui::~Gui() {
                 for(int i=0; i<pages.size(); i++) delete pages[i];
-
             }
             
             //--------------------------------------------------------------
@@ -97,7 +96,7 @@ namespace msa {
             bool Gui::isOn() {
                 return doDraw;
             }
-
+            
             //--------------------------------------------------------------
             void Gui::setDefaultKeys(bool b) {
                 doDefaultKeys = b;
@@ -114,15 +113,15 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-//            void Gui::nextPageWithBlank() {
-//                if(doDraw) {
-//                    setPage(currentPageIndex + 1);
-//                    if(currentPageIndex == 0) setDraw(false);
-//                } else {
-//                    setDraw(true);
-//                    setPage(1);
-//                }
-//            }
+            //            void Gui::nextPageWithBlank() {
+            //                if(doDraw) {
+            //                    setPage(currentPageIndex + 1);
+            //                    if(currentPageIndex == 0) setDraw(false);
+            //                } else {
+            //                    setDraw(true);
+            //                    setPage(1);
+            //                }
+            //            }
             
             //--------------------------------------------------------------
             void Gui::setPage(int i) {
@@ -131,7 +130,14 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::setPage(string name) {
-                // TODO
+                for(int i=0; i<pages.size(); i++) {
+                    Panel &page = *pages[i];
+                    if(page.getName() == name) {
+                        currentPageIndex = i;
+                        return;
+                    }
+                };
+                setPage(currentPageIndex);
             }
             
             //--------------------------------------------------------------
@@ -157,34 +163,34 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-//            Panel& Gui::addPage(string name) {
-//                Panel* panel(new Panel(NULL, name));
-//                return addPanel(panel);
-//            }
-
+            //            Panel& Gui::addPage(string name) {
+            //                Panel* panel(new Panel(NULL, name));
+            //                return addPanel(panel);
+            //            }
+            
             //--------------------------------------------------------------
             Panel& Gui::addPage(ParameterGroup &parameters) {
                 Panel* panel(new Panel(this, &parameters));
                 return addPanel(panel);
             }
-
+            
             //--------------------------------------------------------------
             Panel& Gui::addPanel(Panel* page) {
                 if(!isSetup) setup();
                 
                 pages.push_back(page);
                 page->setConfig(&config);
-//                setPage(pages.size() - 1);
+                //                setPage(pages.size() - 1);
                 return *page;
             }
-
+            
             //--------------------------------------------------------------
-//            Panel& Gui::addParameters(ParameterGroup* parameters) {
-//                if(!isSetup) setup();
-//                if(getNumPages() == 0) addPage(parameters);
-//                else getCurrentPage().addParameters(parameters);
-//                return getCurrentPage();
-//            }
+            //            Panel& Gui::addParameters(ParameterGroup* parameters) {
+            //                if(!isSetup) setup();
+            //                if(getNumPages() == 0) addPage(parameters);
+            //                else getCurrentPage().addParameters(parameters);
+            //                return getCurrentPage();
+            //            }
             
             
             //--------------------------------------------------------------
@@ -210,7 +216,7 @@ namespace msa {
             void Gui::update(ofEventArgs& e) {
                 if(!isSetup) setup();
                 if(!pages.size()) return;
-
+                
                 pages[currentPageIndex]->update();
             }
             
@@ -224,7 +230,7 @@ namespace msa {
                 ofDisableNormalizedTexCoords();
                 ofDisableLighting();
                 glDisable(GL_DEPTH_TEST);
-//                glDisableClientState(GL_COLOR_ARRAY);
+                //                glDisableClientState(GL_COLOR_ARRAY);
                 
                 
                 Renderer::instance().clearControls();
@@ -233,7 +239,7 @@ namespace msa {
                 
                 // create layout manager for the panel if one doesn't exist
                 if(!panel.layoutManager) panel.layoutManager = new LayoutManager;
-               
+                
                 // configure layout manager
                 panel.layoutManager->boundRect.set(config.layout.scrollbarWidth + config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
                 
@@ -241,7 +247,7 @@ namespace msa {
                 panel.layoutManager->update(panel);
                 
                 // sort and draw
-//                Renderer::instance().update();
+                //                Renderer::instance().update();
                 Renderer::instance().draw(config);
                 
                 ofPopStyle();
@@ -250,28 +256,28 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::mouseMoved(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
-//                headerPage->_mouseMoved(e);
+                //                headerPage->_mouseMoved(e);
                 pages[currentPageIndex]->mouseMoved(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mousePressed(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
-//                headerPage->_mousePressed(e);
+                //                headerPage->_mousePressed(e);
                 pages[currentPageIndex]->mousePressed(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseDragged(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
-//                headerPage->_mouseDragged(e);
+                //                headerPage->_mouseDragged(e);
                 pages[currentPageIndex]->mouseDragged(e);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseReleased(ofMouseEventArgs& e) {
                 if(!pages.size()) return;
-//                headerPage->_mouseReleased(e);
+                //                headerPage->_mouseReleased(e);
                 pages[currentPageIndex]->mouseReleased(e);
                 //	if(doAutoSave) doSave = true;
                 //                if(doAutoSave) saveXml();
@@ -295,7 +301,7 @@ namespace msa {
                 }
                 
                 if(doDraw) {
-//                    headerPage->_keyPressed(e);
+                    //                    headerPage->_keyPressed(e);
                     pages[currentPageIndex]->keyPressed(e);
                 }
                 
@@ -304,7 +310,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::keyReleased(ofKeyEventArgs& e) {
                 if(!pages.size()) return;
-//                headerPage->_keyReleased(e);
+                //                headerPage->_keyReleased(e);
                 pages[currentPageIndex]->keyReleased(e);
             }
             
