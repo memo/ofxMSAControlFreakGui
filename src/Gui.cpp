@@ -1,6 +1,5 @@
 
 #include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
-#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 
 
