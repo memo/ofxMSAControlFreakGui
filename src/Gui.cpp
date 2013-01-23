@@ -130,7 +130,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::setPage(string name) {
                 for(int i=0; i<pages.size(); i++) {
-                    Panel &page = *pages[i];
+                    Page &page = *pages[i];
                     if(page.getName() == name) {
                         currentPageIndex = i;
                         return;
@@ -145,36 +145,36 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Panel& Gui::getPage(int i) {
+            Page& Gui::getPage(int i) {
                 if(!isSetup) setup();
                 return *pages.at(i);
             }
             
             //--------------------------------------------------------------
-            Panel& Gui::getPage(string name) {
+            Page& Gui::getPage(string name) {
                 if(!isSetup) setup();
                 for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->getName()) == 0) return *pages[i];
             }
             
             //--------------------------------------------------------------
-            Panel& Gui::getCurrentPage() {
+            Page& Gui::getCurrentPage() {
                 return getPage(currentPageIndex);
             }
             
             //--------------------------------------------------------------
-            //            Panel& Gui::addPage(string name) {
-            //                Panel* panel(new Panel(NULL, name));
-            //                return addPanel(panel);
+            //            Page& Gui::addPage(string name) {
+            //                Page* page(new Page(NULL, name));
+            //                return addPage(page);
             //            }
             
             //--------------------------------------------------------------
-            Panel& Gui::addPage(ParameterGroup &parameters) {
-                Panel* panel(new Panel(this, &parameters));
-                return addPanel(panel);
+            Page& Gui::addPage(ParameterGroup &parameters) {
+                Page* page(new Page(this, &parameters));
+                return addPage(page);
             }
             
             //--------------------------------------------------------------
-            Panel& Gui::addPanel(Panel* page) {
+            Page& Gui::addPage(Page* page) {
                 if(!isSetup) setup();
                 
                 pages.push_back(page);
@@ -184,7 +184,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            //            Panel& Gui::addParameters(ParameterGroup* parameters) {
+            //            Page& Gui::addParameters(ParameterGroup* parameters) {
             //                if(!isSetup) setup();
             //                if(getNumPages() == 0) addPage(parameters);
             //                else getCurrentPage().addParameters(parameters);
@@ -234,16 +234,16 @@ namespace msa {
                 
                 Renderer::instance().clearControls();
                 
-                Panel &panel = *pages[currentPageIndex];
+                Page &page = *pages[currentPageIndex];
                 
-                // create layout manager for the panel if one doesn't exist
-                if(!panel.layoutManager) panel.layoutManager = new LayoutManager;
+                // create layout manager for the page if one doesn't exist
+                if(!page.layoutManager) page.layoutManager = new LayoutManager;
                 
                 // configure layout manager
-                panel.layoutManager->boundRect.set(config.layout.scrollbarWidth + config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
+                page.layoutManager->boundRect.set(config.layout.scrollbarWidth + config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
                 
-                // iterate all controls on panel, set position and add to render queue
-                panel.layoutManager->update(panel);
+                // iterate all controls on page, set position and add to render queue
+                page.layoutManager->update(page);
                 
                 // sort and draw
                 //                Renderer::instance().update();

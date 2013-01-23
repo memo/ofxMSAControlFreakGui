@@ -2,33 +2,18 @@
 #include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 #include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
 
-#include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
-
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
             //--------------------------------------------------------------
             Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
-                pgui = NULL;
                 init();
-            }
-            
-            //--------------------------------------------------------------
-            Panel::Panel(Gui *pgui, ParameterGroup* p) : Container(NULL, p) {
-                this->pgui = pgui;
-                init();
-            }
-            
-            //--------------------------------------------------------------
-            Panel::~Panel() {
-                if(layoutManager) delete layoutManager;
             }
             
             //--------------------------------------------------------------
             void Panel::init() {
                 disableAllEvents();
-                layoutManager = NULL;
                 width = 0;
                 height = 0;
                 paramT = dynamic_cast<ParameterGroup*>(&getParameter());
@@ -70,45 +55,6 @@ namespace msa {
                 presetDropdown->setMode(ParameterNamedIndex::kList);
                 add(presetDropdown);
                 
-                // add wrap button only if we are the root
-                if(pgui) {
-                    wrapButton = new BoolSimpleCircle(this, "w");
-                    wrapButton->layout.positionMode = 1;
-                    wrapButton->setZ(2);
-                    wrapButton->setMode(ParameterBool::kToggle);
-                    wrapButton->getParameter().setTooltip("Wrap");
-                    add(wrapButton);
-                    
-                    prevPageButton = new BoolSimpleCircle(this, "<");
-                    prevPageButton->layout.positionMode = 1;
-                    prevPageButton->setZ(2);
-                    prevPageButton->setMode(ParameterBool::kBang);
-                    prevPageButton->getParameter().setTooltip("Previous page");
-                    add(prevPageButton);
-
-                    nextPageButton = new BoolSimpleCircle(this, ">");
-                    nextPageButton->layout.positionMode = 1;
-                    nextPageButton->setZ(2);
-                    nextPageButton->setMode(ParameterBool::kBang);
-                    nextPageButton->getParameter().setTooltip("Next page");
-                    add(nextPageButton);
-                    
-                    
-                    scrollbar = new ScrollBar(this);
-                    scrollbar->layout.positionMode = 2;
-                    scrollbar->setZ(-1);
-                    scrollbar->doIsolateOnActive = false;
-                    scrollbar->layout.doIncludeInContainerRect = false;
-                    scrollbar->getParameter().setTooltip("Scroll " + getPath());
-                    add(scrollbar);
-                } else {
-                    wrapButton = NULL;
-                    prevPageButton = NULL;
-                    nextPageButton = NULL;
-                    scrollbar = NULL;
-                }
-                
-                
                 children = new Container(this, getName() + "_children");
                 children->layout.doAffectFlow = false;
                 children->scale.y = 0;  // everything start closed
@@ -131,52 +77,22 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::onUpdate() {
-
+                
                 // set positions and layout
                 int s = titleButton->height * 0.7;
                 int y = (titleButton->height - s)/2;
                 int p = 3;
                 
-//                layout.setPosition(0, titleButton->height);
-//                layout.paddingPre.y = titleButton->height;
-//                layout.paddingPost.y = titleButton->height/2;
-
+                //                layout.setPosition(0, titleButton->height);
+                //                layout.paddingPre.y = titleButton->height;
+                //                layout.paddingPost.y = titleButton->height/2;
+                
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->layout.set(titleButton->width - (s + p), y, s, s);
                 presetDropdown->layout.set(0, loadButton->layout.getBottom(), titleButton->width*1.5, titleButton->height);
-
                 
-                // check buttons and stuff
-                if(wrapButton) {
-                    wrapButton->layout.set(titleButton->width - (s + p) * 3, y, s, s);
-                    if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
-                }
                 
-                if(prevPageButton) {
-                    prevPageButton->layout.set(titleButton->width + p, y, s, s);
-                }
-                
-                if(nextPageButton) {
-                    nextPageButton->layout.set(titleButton->width + s + p * 2, y, s, s);
-                }
-
-                
-                if(scrollbar) {
-                    if(layoutManager) {// && !layoutManager->doWrap) {
-                        // TODO: custom scrollbar layout
-                        scrollbar->visible = true;
-                        scrollbar->layout.set(0, 0, getConfig().layout.scrollbarWidth, ofGetHeight());
-                        float sbheight = scrollbar->layout.height;
-                        scrollbar->barThickness = sbheight / layoutManager->getCurRect().height;
-                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->getCurRect().height - sbheight * 0.5);
-                    } else {
-                        scrollbar->visible = false;
-                    }
-                }
-                
-
-
                 if(titleButton->getParameter().value()) {
                     titleButton->getParameter().setTooltip("Collapse panel");
                     collapseAllButton->getParameter().setName("-");
@@ -192,7 +108,7 @@ namespace msa {
                 
                 // Preset save load
                 presetDropdown->visible = presetDropdown->enabled = presetManager->isOpen();
-
+                
                 // TODO: on mousemove, hilight the controls which would be affected
                 
                 // load preset
@@ -216,33 +132,6 @@ namespace msa {
                     }
                 }
 
-                if(pgui && nextPageButton && nextPageButton->getParameter().value()) {
-                    pgui->nextPage();
-                }
-                
-                if(pgui && prevPageButton && prevPageButton->getParameter().value()) {
-                    pgui->prevPage();
-                }
-
-
-//                if(loadButton->getParameter().value()) {
-//                    ofFileDialogResult f = ofSystemLoadDialog("Load preset", false, ofToDataPath(""));
-//                    if(f.bSuccess) {
-//                        paramT->loadXmlValues(f.filePath);
-//                    }
-//                }
-                
-//                if(saveButton->getParameter().value()) {
-//                    ofFileDialogResult f = ofSystemSaveDialog(getPath(), "Save preset");
-//                    if(f.bSuccess) {
-//                        paramT->saveXmlValues(f.getPath());
-//                        //                            string path = ofFilePath::getEnclosingDirectory(f.getPath(), false);//f.filePath.substr(0, f.filePath.rfind("/"));
-//                        //                            paramT->saveXml(false, path + "/" + getPath() + "-" + f.fileName + ".xml");
-//                        //                            ofDirectory dir(path + "/" + getPath());
-//                        //                            if(!dir.exists()) dir.create(true);
-//                        //                            paramT->saveXml(false, dir.getAbsolutePath() + "/" + f.fileName + ".xml");
-//                    }
-//                }
             }
             
             
