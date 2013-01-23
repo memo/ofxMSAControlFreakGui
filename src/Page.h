@@ -15,7 +15,7 @@ namespace msa {
                 friend class Gui;
                 friend class LayoutManager;
                 
-                Page(Gui *parent, ParameterGroup* p);
+                Page(Gui *parent, ParameterGroup* p, int index);
                 ~Page();
                 
                 void onUpdate();
@@ -23,11 +23,17 @@ namespace msa {
             protected:
                 Gui *pgui;
                 LayoutManager* layoutManager;
+                int index;
                 
                 BoolBase *wrapButton;
-                BoolBase *prevPageButton;
-                BoolBase *nextPageButton;
+                BoolBase *pagesButton;
                 ScrollBar *scrollbar;
+
+                List *pagesDropdown;
+                
+                void updatePagesList();
+                
+
             };
             
             

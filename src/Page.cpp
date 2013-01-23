@@ -6,30 +6,19 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
-            Page::Page(Gui *pgui, ParameterGroup* p) : Panel(NULL, p) {
+            Page::Page(Gui *pgui, ParameterGroup* p, int index) : Panel(NULL, p) {
                 layoutManager = NULL;
                 this->pgui = pgui;
+                this->index = index;
+                
+                titleButton->getParameter().setName(ofToString(index+1) + ": " + getName());
+                
                 wrapButton = new BoolSimpleCircle(this, "w");
                 wrapButton->layout.positionMode = 1;
                 wrapButton->setZ(2);
                 wrapButton->setMode(ParameterBool::kToggle);
                 wrapButton->getParameter().setTooltip("Wrap");
                 add(wrapButton);
-                
-                prevPageButton = new BoolSimpleCircle(this, "<");
-                prevPageButton->layout.positionMode = 1;
-                prevPageButton->setZ(2);
-                prevPageButton->setMode(ParameterBool::kBang);
-                prevPageButton->getParameter().setTooltip("Previous page");
-                add(prevPageButton);
-                
-                nextPageButton = new BoolSimpleCircle(this, ">");
-                nextPageButton->layout.positionMode = 1;
-                nextPageButton->setZ(2);
-                nextPageButton->setMode(ParameterBool::kBang);
-                nextPageButton->getParameter().setTooltip("Next page");
-                add(nextPageButton);
-                
                 
                 scrollbar = new ScrollBar(this);
                 scrollbar->layout.positionMode = 2;
@@ -38,12 +27,40 @@ namespace msa {
                 scrollbar->layout.doIncludeInContainerRect = false;
                 scrollbar->getParameter().setTooltip("Scroll " + getPath());
                 add(scrollbar);
+                
+                pagesButton = new BoolSimpleBox(this, ">");
+                pagesButton->layout.positionMode = 1;
+                pagesButton->setZ(2);
+                pagesButton->setMode(ParameterBool::kToggle);
+                pagesButton->getParameter().setTooltip("more pages...");
+                add(pagesButton);
+                
+                pagesDropdown = new List(this, "pages");
+                pagesDropdown->layout.positionMode = 1;
+                pagesDropdown->layout.doIncludeInContainerRect = false;
+                pagesDropdown->setZ(1e100);
+                pagesDropdown->setMode(ParameterNamedIndex::kList);
+                pagesButton->getParameter().setTooltip("Show pages");
+                add(pagesDropdown);
+                
+                updatePagesList();
             }
             
             //--------------------------------------------------------------
             Page::~Page() {
                 if(layoutManager) delete layoutManager;
             }
+            
+            //--------------------------------------------------------------
+            void Page::updatePagesList() {
+                ofLogNotice() << "updatePagesList";
+                ParameterNamedIndex *p = dynamic_cast<ParameterNamedIndex*>(&pagesDropdown->getParameter());
+                if(p) {
+                    p->clearLabels();
+                    for(int i=0; i<pgui->getNumPages(); i++) p->addLabel(ofToString(i+1) + ": " + pgui->getPage(i).getName());
+                }
+            }
+            
             
             //--------------------------------------------------------------
             void Page::onUpdate() {
@@ -55,40 +72,42 @@ namespace msa {
                 int p = 3;
                 
                 // check buttons and stuff
-                if(wrapButton) {
-                    wrapButton->layout.set(titleButton->width - (s + p) * 3, y, s, s);
-                    if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
+                wrapButton->layout.set(titleButton->width - (s + p) * 3, y, s, s);
+                if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
+                
+                pagesButton->layout.set(titleButton->width + p, y, s, s);
+                
+                pagesDropdown->layout.set(pagesButton->layout.getRight(), pagesButton->layout.getBottom(), titleButton->width*1.5, titleButton->height);
+                pagesDropdown->visible = pagesDropdown->enabled = pagesButton->getParameter().value();
+                
+                
+                if(layoutManager) {// && !layoutManager->doWrap) {
+                    // TODO: custom scrollbar layout
+                    scrollbar->visible = true;
+                    scrollbar->layout.set(0, 0, getConfig().layout.scrollbarWidth, ofGetHeight());
+                    float sbheight = scrollbar->layout.height;
+                    scrollbar->barThickness = sbheight / layoutManager->getCurRect().height;
+                    layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->getCurRect().height - sbheight * 0.5);
+                } else {
+                    scrollbar->visible = false;
                 }
                 
-                if(prevPageButton) {
-                    prevPageButton->layout.set(titleButton->width + p, y, s, s);
-                }
                 
-                if(nextPageButton) {
-                    nextPageButton->layout.set(titleButton->width + s + p * 2, y, s, s);
-                }
-                
-                
-                if(scrollbar) {
-                    if(layoutManager) {// && !layoutManager->doWrap) {
-                        // TODO: custom scrollbar layout
-                        scrollbar->visible = true;
-                        scrollbar->layout.set(0, 0, getConfig().layout.scrollbarWidth, ofGetHeight());
-                        float sbheight = scrollbar->layout.height;
-                        scrollbar->barThickness = sbheight / layoutManager->getCurRect().height;
-                        layoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, layoutManager->getCurRect().height - sbheight * 0.5);
-                    } else {
-                        scrollbar->visible = false;
+                if(pagesButton->getParameter().hasChanged()) {
+                    if(pagesButton->getParameter().value()) {
+                        updatePagesList();
                     }
                 }
                 
-                if(pgui && nextPageButton && nextPageButton->getParameter().value()) {
-                    pgui->nextPage();
+                if(pagesDropdown->getParameter().hasChanged()) {
+                    pgui->setPage((int)pagesDropdown->getParameter());
                 }
                 
-                if(pgui && prevPageButton && prevPageButton->getParameter().value()) {
-                    pgui->prevPage();
-                }
+                
+                //
+                //                if(pgui && prevPageButton && prevPageButton->getParameter().value()) {
+                ////                    pgui->prevPage();
+                //                }
                 
             }
             

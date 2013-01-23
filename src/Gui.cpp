@@ -124,7 +124,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::setPage(int i) {
-                if(pages.size()) currentPageIndex = i % pages.size();
+                if(pages.size()) currentPageIndex = (i + pages.size()) % pages.size();
             }
             
             //--------------------------------------------------------------
@@ -169,7 +169,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::addPage(ParameterGroup &parameters) {
-                Page* page(new Page(this, &parameters));
+                Page* page(new Page(this, &parameters, pages.size()));
                 return addPage(page);
             }
             

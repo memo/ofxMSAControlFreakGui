@@ -43,10 +43,6 @@ namespace msa {
                 BoolBase *collapseAllButton;
                 BoolBase *loadButton;
                 BoolBase *saveButton;
-                BoolBase *wrapButton;
-                BoolBase *prevPageButton;
-                BoolBase *nextPageButton;
-                ScrollBar *scrollbar;
                 List *presetDropdown;
                 
                 PanelPresetManager *presetManager;
