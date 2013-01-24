@@ -9,6 +9,7 @@ namespace msa {
             Page::Page(Gui *gui, ParameterGroup* p, int index) : Panel(NULL, p) {
                 layoutManager = NULL;
                 this->index = index;
+                this->pgui = gui;
                 
                 titleButton->getParameter().setName(ofToString(index+1) + ": " + getName());
                 
