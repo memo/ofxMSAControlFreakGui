@@ -35,19 +35,25 @@ namespace msa {
                 pagesDropdown->setMode(ParameterNamedIndex::kList);
                 pagesButton->getParameter().setTooltip("Show pages");
                 addControl(pagesDropdown);
+                
+                scrollbar = new ScrollBar(this);
+                scrollbar->layout.positionMode = LayoutSettings::kFixed;
+                scrollbar->setZ(-1);
+                scrollbar->doIsolateOnActive = false;
+                scrollbar->layout.doIncludeInContainerRect = false;
+                scrollbar->getParameter().setTooltip("Scroll " + getPath());
+                addControl(scrollbar);
+                
+                _pgui = dynamic_cast<Gui*>(getRoot());
             }
             
             //--------------------------------------------------------------
             void GuiControls::updatePagesList() {
                 ofLogNotice() << "updatePagesList";
                 ParameterNamedIndex *p = dynamic_cast<ParameterNamedIndex*>(&pagesDropdown->getParameter());
-                if(p) {
-                    //                TODO: move this to gui
-                    //                    TabContainer *tabs = dynamic_cast<TabContainer*>(getParent());
-                    //                    if(tabs) {
-                    //                       p->clearLabels();
-                    //                        for(int i=0; i<tabs->getNumTabs(); i++) p->addLabel(ofToString(i+1) + ": " + tabs->getTab(i).getName());
-                    //                    }
+                if(p && _pgui) {
+                    p->clearLabels();
+                    for(int i=0; i<_pgui->getNumPages(); i++) p->addLabel(ofToString(i+1) + ": " + _pgui->getPage(i).getName());
                 }
             }
             
@@ -55,7 +61,11 @@ namespace msa {
             //--------------------------------------------------------------
             void GuiControls::update() {
                 Container::update();
-
+                
+                LayoutManager* playoutManager = _pgui->playoutManager.get();
+                
+                if(playoutManager == NULL) return;
+                
                 // set positions and layout
                 int s = pconfig->layout.buttonHeight * 0.7;
                 int y = (pconfig->layout.buttonHeight - s)/2;
@@ -63,7 +73,7 @@ namespace msa {
                 
                 // check buttons and stuff
                 wrapButton->layout.set(pconfig->layout.columnWidth - (s + p) * 3, y, s, s);
-                if(layoutManager) wrapButton->getParameter().trackVariable(&layoutManager->doWrap);
+                wrapButton->getParameter().trackVariable(&playoutManager->doWrap);
                 
                 pagesButton->layout.set(pconfig->layout.columnWidth + p, y, s, s);
                 
@@ -78,21 +88,29 @@ namespace msa {
                 }
                 
                 if(pagesDropdown->getParameter().hasChanged()) {
-                    Gui *gui = dynamic_cast<Gui*>(getRoot());
-                    if(gui) {
-                        gui->setPage((int)pagesDropdown->getParameter());
+                    if(_pgui) {
+                        _pgui->setPage((int)pagesDropdown->getParameter());
                     }
                 }
                 
-                
-                //
-                //                if(pgui && prevPageButton && prevPageButton->getParameter().value()) {
-                ////                    pgui->prevPage();
-                //                }
+                // TODO: custom scrollbar layout
+                scrollbar->visible = true;
+                scrollbar->layout.set(0, 0, pconfig->layout.scrollbarWidth, ofGetHeight());
+                float sbheight = scrollbar->layout.height;
+                scrollbar->barThickness = sbheight / playoutManager->getCurRect().height;
+                playoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, playoutManager->getCurRect().height - sbheight * 0.5);
                 
             }
             
             
+            //
+            //                if(_pgui && prevPageButton && prevPageButton->getParameter().value()) {
+            ////                    _pgui->prevPage();
+            //                }
+            
         }
+        
+        
     }
+    
 }

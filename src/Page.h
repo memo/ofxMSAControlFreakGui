@@ -7,8 +7,6 @@ namespace msa {
         namespace gui {
             
             class Gui;
-            class BoolBase;
-            
             class Page : public Panel {
             public:
                 friend class Gui;
@@ -16,12 +14,9 @@ namespace msa {
                 
                 Page(Container *parent, ParameterGroup *p, int index);
                 
-                void update();
-                
             protected:
                 int index;
                 
-                ScrollBar *scrollbar;
             };
             
             

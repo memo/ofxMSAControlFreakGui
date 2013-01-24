@@ -43,10 +43,9 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Container* Control::getRoot(bool bUpdate) {
-                if(bUpdate) _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Container*>(this) );
+            Gui* Control::getRoot(bool bUpdate) {
+                if(bUpdate) _proot = ( getParent() ? getParent()->getRoot(true) : dynamic_cast<Gui*>(this) );
                 return _proot;
-                //                return getParent() ? getParent()->_proot : _proot;
             }
             
             //--------------------------------------------------------------

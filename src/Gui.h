@@ -10,6 +10,10 @@ namespace msa {
             
             class Gui : public Container {
             public:
+                
+                friend class GuiControls;
+                friend class Container;
+                
                 Gui();
                 ~Gui();
                 
@@ -19,19 +23,19 @@ namespace msa {
                 void show();		// simply calls setDraw(true);
                 void hide();		// simply calls setDraw(false);
                 bool isOn();
-
+                
                 
                 // TABMANAGER:
                 void nextPage();
                 void prevPage();
                 void setPage(int i);				// 1 based index of page
                 void setPage(string name);
-
+                
                 int getNumPages();
                 Page& getPage(int i);				// 1 based index of page
                 Page& getPage(string name);			// returns page by name
                 Page& getCurrentPage();				// returns current page
-               
+                
                 
                 
                 
@@ -41,18 +45,16 @@ namespace msa {
                 // create and add a page from the given parameter group
                 Page& addParameters(ParameterGroup &parameters);
                 
-                // TABMANAGER:
                 // add a page
                 Page& addPage(Page* page);
                 
-
+                
                 //--------------------------------------------------------------
                 // ADVANCED FUNCTIONS
                 
                 // by default all gui events are managed automatically
-                // by default these are called automatically so you don't need to call them
+                // these are called automatically so you don't need to call them
                 // however if you've disabled AutoEvents, then you need to call them manually from your app. IMPORTANT!
-//                void setup();
                 void update();
                 void draw();
                 void mouseMoved(int x, int y);
@@ -62,9 +64,11 @@ namespace msa {
                 void keyPressed(int key);
                 void keyReleased(int key);
                 
+                LayoutManagerPtr playoutManager;
                 
-            protected:
-                bool    isSetup;
+                Control* getActiveControl();
+                
+            private:
                 bool    doDefaultKeys;
                 int     currentPageIndex;
                 bool    doDraw;
@@ -73,6 +77,10 @@ namespace msa {
                 
                 bool checkOkToRun();
                 void setDraw(bool b);
+                
+                Control *_pactiveControl; // currently active control (only this control receives events)
+                void setActiveControl(Control *control);
+                void releaseActiveControl();
             };
             
         }

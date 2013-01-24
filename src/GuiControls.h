@@ -8,10 +8,14 @@ namespace msa {
             
             class Gui;
             class BoolBase;
+            class List;
+            class Scrollbar;
             
             class GuiControls : public Container {
             private:
                 friend class Gui;
+                
+                Gui *_pgui;
                 
                 GuiControls(Container *parent);
                 
@@ -20,6 +24,7 @@ namespace msa {
                 BoolBase *wrapButton;
                 BoolBase *pagesButton;
                 List *pagesDropdown;
+                ScrollBar *scrollbar;
                 
                 void updatePagesList();
             };

@@ -10,9 +10,7 @@ namespace msa {
         namespace gui {
             
             
-            class Gui;
             class Panel;
-            class Page;
             class BoolButton;
             class BoolTitle;
             class BoolTitle;
@@ -27,15 +25,14 @@ namespace msa {
             class Slider2d;
             class SliderInt;
             class SliderFloat;
-            class Renderer;
 
             
             class Container : public Control {
             public:
                 
-                friend class Control;
-                friend class Renderer;
-                
+//                friend class Control;
+//                friend class Renderer;
+//                
                 Container(Container *parent, string s);
                 Container(Container *parent, Parameter* p, bool bOwnsParameter = false);
                 ~Container();
@@ -81,20 +78,8 @@ namespace msa {
                 void keyReleased(int key);
 
                 
-                Control* getActiveControl();
-                
-
-            protected:
-                LayoutManagerPtr layoutManager;
-
             private:
                 OrderedPointerMap<string, Control> _controls;
-                
-                Control *_pactiveControl; // currently active control (only this control receives events)
-                void setActiveControl(Control *control);
-                void releaseActiveControl();
-            
-                
                 
                 void addParameter(Parameter* p);
             };

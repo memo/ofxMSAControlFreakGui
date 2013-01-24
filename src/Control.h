@@ -12,6 +12,7 @@ namespace msa {
             
             class Config;
             class Container;
+            class Gui;
             
 //            class Control;
 //            typedef std::tr1::shared_ptr<Control> ControlPtr;
@@ -36,7 +37,7 @@ namespace msa {
                 ~Control();
                 
                 Container *getParent() const;     // parent panel
-                Container *getRoot(bool bUpdate = false);       // root
+                Gui *getRoot(bool bUpdate = false);       // root
                 
                 int getDepth(bool bUpdate = false);         // how deep in the heirarchy it is (how many levels deep)
                 bool isActive();       // whether the control is active or not
@@ -55,7 +56,6 @@ namespace msa {
                 string getPath();
                 
                 Parameter& getParameter();
-//                Control& setKeyboardShortcut(char c);
                 
                 // override these
                 
@@ -97,7 +97,7 @@ namespace msa {
                 float _alpha;
                 int _depth;
                 Container *_pparent;
-                Container *_proot;
+                Gui *_proot;
                 Parameter *_pparameter;
                 bool _bOwnsParameter;    // whether the control owns the parameter or not. TODO: this is a bit hackish?
 //                bool _active;

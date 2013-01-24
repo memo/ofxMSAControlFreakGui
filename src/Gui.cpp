@@ -11,11 +11,12 @@ namespace msa {
             
             //--------------------------------------------------------------
             Gui::Gui() : Container(NULL, "ofxMSAControlFreakGui") {
-                isSetup = false;
                 doDefaultKeys = false;
                 currentPageIndex = false;
                 doDraw = true;
+                _pactiveControl = NULL;
                 pconfig = ConfigPtr(new Config);
+                playoutManager = LayoutManagerPtr(new LayoutManager);
                 guiControls = new GuiControls(this);
                 addControl(guiControls);
                 enableAllEvents();
@@ -103,13 +104,11 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::getPage(int i) {
-                if(!isSetup) setup();
                 return *pages.at(i);
             }
             
             //--------------------------------------------------------------
             Page& Gui::getPage(string name) {
-                if(!isSetup) setup();
                 for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->getName()) == 0) return *pages[i];
             }
             
@@ -132,11 +131,43 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::addPage(Page* page) {
-                if(!isSetup) setup();
-                
                 pages.push_back(page);
                 return *page;
             }
+            
+            
+            //--------------------------------------------------------------
+            void Gui::setActiveControl(Control *control) {
+                ofLogVerbose() << "msa::ControlFreak::Gui::Gui::setActiveControl: " << (control ? control->getParameter().getPath() : "NULL");
+                // if old control exists, put it at the back
+                if(_pactiveControl) _pactiveControl->popZ();
+                
+                _pactiveControl = control;
+                
+                // put new active control at the front
+                if(_pactiveControl) {
+                    _pactiveControl->setZ(1e100);
+                }
+            }
+            
+            //--------------------------------------------------------------
+            Control* Gui::getActiveControl() {
+                return _pactiveControl;
+            }
+            
+            //--------------------------------------------------------------
+            void Gui::releaseActiveControl() {
+                setActiveControl(NULL);
+            }
+            
+            //--------------------------------------------------------------
+            //            bool Container::isActive() {
+            //                bool b = pactiveControl == titleButton;//pactiveControl != NULL;
+            //                return parent ? b | parent->isActive() : b;
+            //            }
+            
+            
+
          
             //--------------------------------------------------------------
             void Gui::update() {
@@ -165,15 +196,15 @@ namespace msa {
                 Page &page = *pages[currentPageIndex];
                 
                 // create layout manager for the page if one doesn't exist
-                if(!page.layoutManager) page.layoutManager = LayoutManagerPtr(new LayoutManager);
+                if(!playoutManager) playoutManager = LayoutManagerPtr(new LayoutManager);
                 
                 // configure layout manager
-                page.layoutManager->boundRect.set(pconfig->layout.scrollbarWidth + pconfig->layout.padding.x, pconfig->layout.padding.y, 0, 0);  // use full width and height of window
+                playoutManager->boundRect.set(pconfig->layout.scrollbarWidth + pconfig->layout.padding.x, pconfig->layout.padding.y, 0, 0);  // use full width and height of window
                 
                 // iterate all controls on page, set position and add to render queue
-                page.layoutManager->update(page);
+                playoutManager->update(page);
                 
-                page.layoutManager->update(*guiControls);
+                playoutManager->update(*guiControls);
                 
                 // sort and draw
                 Renderer::instance().draw();
@@ -207,6 +238,7 @@ namespace msa {
                 if(!checkOkToRun()) return;
                 getCurrentPage().mouseReleased(x, y, button);
                 guiControls->mouseReleased(x, y, button);
+                releaseActiveControl();
             }
             
             //--------------------------------------------------------------

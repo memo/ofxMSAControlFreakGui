@@ -10,12 +10,10 @@ namespace msa {
             
             //--------------------------------------------------------------
             Container::Container(Container *parent, string s) : Control(parent, new ParameterGroup(s, NULL), true) {
-                _pactiveControl = NULL;
             }
             
             //--------------------------------------------------------------
             Container::Container(Container *parent, Parameter* p, bool bOwnsParameter):Control(parent, p, bOwnsParameter) {
-                _pactiveControl = NULL;
             }
             
             //--------------------------------------------------------------
@@ -60,37 +58,6 @@ namespace msa {
                 control->setParent(this);
                 return *control;
             }
-            
-            //--------------------------------------------------------------
-            void Container::setActiveControl(Control *control) {
-                ofLogVerbose() << "msa::ControlFreak::Gui::Container::setActiveControl: " << (control ? control->getParameter().getPath() : "NULL");
-                // if old control exists, put it at the back
-                if(_pactiveControl) _pactiveControl->popZ();
-                
-                _pactiveControl = control;
-                
-                // put new active control at the front
-                if(_pactiveControl) {
-                    _pactiveControl->setZ(1e100);
-                }
-            }
-            
-            //--------------------------------------------------------------
-            Control* Container::getActiveControl() {
-                return _pactiveControl;
-            }
-            
-            //--------------------------------------------------------------
-            void Container::releaseActiveControl() {
-                setActiveControl(NULL);
-            }
-            
-            //--------------------------------------------------------------
-            //            bool Container::isActive() {
-            //                bool b = pactiveControl == titleButton;//pactiveControl != NULL;
-            //                return parent ? b | parent->isActive() : b;
-            //            }
-            
             
             
             //--------------------------------------------------------------
@@ -252,14 +219,14 @@ namespace msa {
                 e.x = x;
                 e.y = y;
                 
-                if(_pactiveControl)
-                    _pactiveControl->_mouseMoved(e);
-                else {
+//                if(_pactiveControl)
+//                    _pactiveControl->_mouseMoved(e);
+//                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mouseMoved(e);
                         //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                     }
-                }
+//                }
             }
             
             //--------------------------------------------------------------
@@ -269,9 +236,9 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-                if(_pactiveControl)
-                    _pactiveControl->_mousePressed(e);
-                else {
+//                if(_pactiveControl)
+//                    _pactiveControl->_mousePressed(e);
+//                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mousePressed(e);
                         if(get(i).isMouseOver()) {
@@ -279,7 +246,7 @@ namespace msa {
                             return;    // don't propogate event if this control processed it
                         }
                     }
-                }
+//                }
             }
             
             //--------------------------------------------------------------
@@ -289,14 +256,14 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-                if(_pactiveControl)
-                    _pactiveControl->_mouseDragged(e);
-                else {
+//                if(_pactiveControl)
+//                    _pactiveControl->_mouseDragged(e);
+//                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mouseDragged(e);
                         //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                     }
-                }
+//                }
             }
             
             //--------------------------------------------------------------
@@ -306,13 +273,13 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-                if(_pactiveControl)
-                    _pactiveControl->_mouseReleased(e);
-                else {
+//                if(_pactiveControl)
+//                    _pactiveControl->_mouseReleased(e);
+//                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i)._mouseReleased(e);
-                }
+//                }
                 
-                if(getRoot()) getRoot()->releaseActiveControl();
+//                if(getRoot()) getRoot()->releaseActiveControl();
             }
             
             //--------------------------------------------------------------
