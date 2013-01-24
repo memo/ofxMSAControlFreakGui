@@ -10,7 +10,7 @@ namespace msa {
             //            Gui gui;
             
             //--------------------------------------------------------------
-            Gui::Gui() {
+            Gui::Gui() : Container(NULL, NULL) {
                 isSetup = false;
                 doAutoEvents = false;
                 eventsAreRegistered = false;
@@ -169,7 +169,7 @@ namespace msa {
             //            }
             
             //--------------------------------------------------------------
-            Page& Gui::addPage(ParameterGroup &parameters) {
+            Page& Gui::addParameters(ParameterGroup &parameters) {
                 Page* page(new Page(this, &parameters, pages.size()));
                 return addPage(page);
             }

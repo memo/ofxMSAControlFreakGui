@@ -6,9 +6,8 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
-            Page::Page(Gui *pgui, ParameterGroup* p, int index) : Panel(NULL, p) {
+            Page::Page(Gui *gui, ParameterGroup* p, int index) : Panel(NULL, p) {
                 layoutManager = NULL;
-                this->pgui = pgui;
                 this->index = index;
                 
                 titleButton->getParameter().setName(ofToString(index+1) + ": " + getName());

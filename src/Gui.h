@@ -1,5 +1,7 @@
 
 
+#include "ofxMSAControlFreakGui/src/Container.h"
+
 
 namespace msa {
     namespace ControlFreak {
@@ -8,7 +10,7 @@ namespace msa {
             class BoolButton;
             class Config;
             
-            class Gui {
+            class Gui : public Container {
             public:
                 Config config;
                 
@@ -40,7 +42,7 @@ namespace msa {
                 //                Page& addPage(string name = "");
                 
                 // create and add a page from the given parameter group
-                Page& addPage(ParameterGroup &parameters);
+                Page& addParameters(ParameterGroup &parameters);
                 
                 // add a page
                 Page& addPage(Page* page);

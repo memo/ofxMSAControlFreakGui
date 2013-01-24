@@ -9,7 +9,7 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Container::Container(Container *parent, string s):Control(parent, new ParameterGroup(s, NULL), true) {
+            Container::Container(Container *parent, string s) : Control(parent, new ParameterGroup(s, NULL), true) {
                 _pactiveControl = NULL;
             }
             
@@ -95,10 +95,15 @@ namespace msa {
             
             
             //--------------------------------------------------------------
+            Page& Container::addPage(ParameterGroup* p) {
+//                return (Page&)pgui->addParameters(p);
+            }
+            
+            //--------------------------------------------------------------
             Panel& Container::addPanel(ParameterGroup* p) {
                 return (Panel&)add(new Panel(this, p));
             }
-            
+
             //--------------------------------------------------------------
             BoolButton& Container::addButton(ParameterBool* p) {
                 return (BoolButton&)add(new BoolButton(this, p));
@@ -173,7 +178,18 @@ namespace msa {
                 // if parameter already exists, remove it first
                 
                 if(typeid(*p) == typeid(ParameterGroup)) {
-                    addPanel(dynamic_cast<ParameterGroup*>(p));
+                    ParameterGroup* pp = dynamic_cast<ParameterGroup*>(p);
+                    if(pp) {
+                        switch(pp->getMode()) {
+                            case ParameterGroup::kTab:
+                                addPage(pp);
+                                break;
+                                
+                            case ParameterGroup::kGroup:
+                                addPanel(pp);
+                                break;
+                        }
+                    }
                     return;
                 }
                 if(typeid(*p) == typeid(ParameterFloat)) {
@@ -189,8 +205,8 @@ namespace msa {
                     if(pp) {
                         if(pp->getMode() == ParameterBool::kToggle) addToggle(pp);
                         else addButton(pp);
-                        return;
                     }
+                    return;
                 }
                 if(typeid(*p) == typeid(ParameterNamedIndex)) {
                     ParameterNamedIndex *pp(dynamic_cast<ParameterNamedIndex*>(p));
@@ -208,8 +224,8 @@ namespace msa {
                                 addOptions(pp);
                                 break;
                         }
-                        return;
                     }
+                    return;
                 }
                 
                 

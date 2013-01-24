@@ -11,6 +11,7 @@ namespace msa {
             
             class Gui;
             class Panel;
+            class Page;
             class BoolButton;
             class BoolTitle;
             class BoolTitle;
@@ -41,6 +42,7 @@ namespace msa {
                 void clear();
 
                 // adding
+                Page            &addPage(ParameterGroup* p);
                 Panel           &addPanel(ParameterGroup* p);
                 BoolButton		&addButton(ParameterBool* p);
                 ColorPicker		&addColorPicker(Parameter* p);
