@@ -59,8 +59,6 @@ namespace msa {
                 
                 // override these
                 
-                virtual void onUpdate() {}
-
                 virtual void onKeyUp() {}			// up key is pressed
                 virtual void onKeyDown() {}			// down key is pressed
                 virtual void onKeyLeft() {}			// left key is pressed
@@ -88,8 +86,10 @@ namespace msa {
                 void drawTextCentered(string s="", ofColor *c = NULL);
                 ofRectangle getTextRect(int x=0, int y=0, string s = "");
                 
-                void update();
-                void transformAndDraw();
+                // bit messy, all external calls should call these
+                // these do a few bits and bobs and call the virtual update and draw methods
+                void _update();
+                void _draw();
                 
                 
             private:

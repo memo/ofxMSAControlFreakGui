@@ -231,13 +231,13 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Control::update() {
+            void Control::_update() {
                 if(_bOwnsParameter) getParameter().update();
-                onUpdate();
+                update();
             }
             
             //--------------------------------------------------------------
-            void Control::transformAndDraw() {
+            void Control::_draw() {
                 if(!visible) return;
                 
                 bool bTimeToChange = getStateChangeMillis() > pconfig->colors.fade.delayMillis;

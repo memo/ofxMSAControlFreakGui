@@ -65,7 +65,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onUpdate() {
+                void update() {
 //                    slider->layout.set(0, 0, width, height);
                     
                     int p = 3;

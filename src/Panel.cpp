@@ -76,7 +76,8 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Panel::onUpdate() {
+            void Panel::update() {
+                Container::update();
                 
                 // set positions and layout
                 int s = titleButton->height * 0.7;

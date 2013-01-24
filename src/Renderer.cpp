@@ -52,7 +52,7 @@ namespace msa {
 //                ofLogNotice() << "Renderer::draw :" << controls.size();
                 for(int i=0; i<controls.size(); i++) {
                     Control& control = *controls[i];
-                    if(control.intersects(ofGetWindowRect())) control.transformAndDraw();
+                    if(control.intersects(ofGetWindowRect())) control._draw();
 //                    ofLogNotice() << "   " << control.getParameter().getPath() << " " << control.getParameter().getTypeName();
                 }
 //                ofLogNotice() << "/Renderer::draw \n";

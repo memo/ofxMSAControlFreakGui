@@ -16,7 +16,7 @@ namespace msa {
                 
                 Page(Container *parent, ParameterGroup* p, int index);
                 
-                void onUpdate();
+                void update();
                 
             protected:
                 int index;

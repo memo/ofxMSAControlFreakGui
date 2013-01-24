@@ -135,40 +135,14 @@ namespace msa {
                 pages.push_back(page);
                 return *page;
             }
-            
-            //--------------------------------------------------------------
-            //            Page& Gui::addParameters(ParameterGroup* parameters) {
-            //                if(!isSetup) setup();
-            //                if(getNumPages() == 0) addPage(parameters);
-            //                else getCurrentPage().addParameters(parameters);
-            //                return getCurrentPage();
-            //            }
-            
-            
-//            //--------------------------------------------------------------
-//            void Gui::enableAutoEvents() {
-//                doAutoEvents = true;
-//                setDraw(doDraw); // add or remove listeners
-//            }
-//            
-//            //--------------------------------------------------------------
-//            void Gui::disableAutoEvents() {
-//                doAutoEvents = false;
-//                removeListeners();
-//            }
-//            
-//            //--------------------------------------------------------------
-//            bool Gui::getAutoEvents() {
-//                return doAutoEvents;
-//            }
-//            
-            
+         
             //--------------------------------------------------------------
             void Gui::update() {
                 if(!checkOkToRun()) return;
 //                if(!isSetup) setup();
                 
-                pages[currentPageIndex]->update();
+                Container::update();
+                pages[currentPageIndex]->_update();
             }
             
             //--------------------------------------------------------------

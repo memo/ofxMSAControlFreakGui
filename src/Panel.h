@@ -33,7 +33,7 @@ namespace msa {
 
                 Panel(Container *parent, ParameterGroup* p);
                 
-                void onUpdate();
+                void update();
                 void showPanel(bool bOpen, bool bRecursive = false);
 
             protected:

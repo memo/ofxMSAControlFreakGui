@@ -242,7 +242,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Container::update() {
                 Control::update();
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i).update();
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i)._update();
             }
             
             
