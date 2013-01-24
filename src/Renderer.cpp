@@ -10,8 +10,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             Renderer::Renderer() {
-                _pconfig = NULL;
-//                _pactiveControl = NULL;
             }
             
             //--------------------------------------------------------------
@@ -46,9 +44,7 @@ namespace msa {
             };
             
             //--------------------------------------------------------------
-            void Renderer::draw(Config &config) {
-                this->_pconfig = &config;
-
+            void Renderer::draw() {
                 // TODO: fix sorting, if z-order is same, undefined behaviour
                 sort(controls.begin(), controls.end(), PointerCompare());
                 
@@ -67,27 +63,30 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Renderer::setToolTip(string s, int x, int y) {
+            void Renderer::setToolTip(Control* control, string s, int x, int y) {
                 tooltip.x = x < 0 ? ofGetMouseX() : x;
                 tooltip.y = y < 0 ? ofGetMouseY() : y;
+                tooltip.control = control;
                 tooltip.s = s;
             }
             
             //--------------------------------------------------------------
             void Renderer::drawToolTip() {
 //                printf("drawTooltip: %s\n", tooltip.s.c_str());
-                if(tooltip.s.empty() || !_pconfig) return;
+                if(tooltip.s.empty()) return;
                 
-                int x = tooltip.x + _pconfig->tooltip.offset.x;
-                int y = tooltip.y + _pconfig->tooltip.offset.y;
+                Config *pconfig = tooltip.control->pconfig.get();
+                
+                int x = tooltip.x + pconfig->tooltip.offset.x;
+                int y = tooltip.y + pconfig->tooltip.offset.y;
                 
                 ofPushStyle();
                 ofSetRectMode(OF_RECTMODE_CORNER);
-                ofRectangle r = _pconfig->font.getStringBoundingBox(tooltip.s, x, y);
-                r.x -= _pconfig->tooltip.padding.x;
-                r.y -= _pconfig->tooltip.padding.y;
-                r.width += _pconfig->tooltip.padding.width;
-                r.height += _pconfig->tooltip.padding.height;
+                ofRectangle r = pconfig->font.getStringBoundingBox(tooltip.s, x, y);
+                r.x -= pconfig->tooltip.padding.x;
+                r.y -= pconfig->tooltip.padding.y;
+                r.width += pconfig->tooltip.padding.width;
+                r.height += pconfig->tooltip.padding.height;
                 
                 // make sure tooltip doesn't go offscreen
                 ofVec2f diff;
@@ -102,16 +101,16 @@ namespace msa {
                 
                 
                 ofSetLineWidth(1);
-                ofSetColor(_pconfig->tooltip.bgColor);
+                ofSetColor(pconfig->tooltip.bgColor);
                 ofFill();
                 ofRect(r);
                 
-                ofSetColor(_pconfig->tooltip.borderColor);
+                ofSetColor(pconfig->tooltip.borderColor);
                 ofNoFill();
                 ofRect(r);
                 
-                ofSetColor(_pconfig->tooltip.textColor);
-                _pconfig->drawString(tooltip.s, x, y);
+                ofSetColor(pconfig->tooltip.textColor);
+                pconfig->drawString(tooltip.s, x, y);
                 
                 ofPopStyle();
                 tooltip.s = "";

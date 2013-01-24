@@ -10,13 +10,13 @@ namespace msa {
             //            Gui gui;
             
             //--------------------------------------------------------------
-            Gui::Gui() : Container(NULL, NULL) {
+            Gui::Gui() : Container(NULL, "ofxMSAControlFreakGui") {
                 isSetup = false;
-                doAutoEvents = false;
-                eventsAreRegistered = false;
                 doDefaultKeys = false;
                 currentPageIndex = false;
                 doDraw = true;
+                pconfig = ConfigPtr(new Config);
+                enableAllEvents();
             }
             
             //--------------------------------------------------------------
@@ -25,56 +25,21 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Gui::setup() {
-                isSetup = true;
-                show();
-                ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
-            }
-            
-            //--------------------------------------------------------------
-            void Gui::addListeners() {
-                if(!eventsAreRegistered) {
-                    eventsAreRegistered = true;
-                    //	ofAddListener(ofEvents().setup, this, &Gui::setup);
-                    ofAddListener(ofEvents().update, this, &Gui::update);
-                    ofAddListener(ofEvents().draw, this, &Gui::draw);
-                    //	ofAddListener(ofEvents().exit, this, &Gui::exit);
-                    
-                    ofAddListener(ofEvents().mousePressed, this, &Gui::mousePressed);
-                    ofAddListener(ofEvents().mouseMoved, this, &Gui::mouseMoved);
-                    ofAddListener(ofEvents().mouseDragged, this, &Gui::mouseDragged);
-                    ofAddListener(ofEvents().mouseReleased, this, &Gui::mouseReleased);
-                    
-                    //	ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
-                    ofAddListener(ofEvents().keyReleased, this, &Gui::keyReleased);
-                }
-            }
+//            void Gui::setup() {
+//                isSetup = true;
+////                show();
+////                ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
+//            }
             
             
             //--------------------------------------------------------------
-            void Gui::removeListeners() {
-                if(eventsAreRegistered) {
-                    eventsAreRegistered = false;
-                    //	ofRemoveListener(ofEvents().setup, this, &Gui::setup);
-                    ofRemoveListener(ofEvents().update, this, &Gui::update);
-                    ofRemoveListener(ofEvents().draw, this, &Gui::draw);
-                    //	ofRemoveListener(ofEvents().exit, this, &Gui::exit);
-                    
-                    ofRemoveListener(ofEvents().mousePressed, this, &Gui::mousePressed);
-                    ofRemoveListener(ofEvents().mouseMoved, this, &Gui::mouseMoved);
-                    ofRemoveListener(ofEvents().mouseDragged, this, &Gui::mouseDragged);
-                    ofRemoveListener(ofEvents().mouseReleased, this, &Gui::mouseReleased);
-                    
-                    //	ofRemoveListener(ofEvents().keyPressed, this, &Gui::keyPressed);
-                    ofRemoveListener(ofEvents().keyReleased, this, &Gui::keyReleased);
-                }
+            bool Gui::checkOkToRun() {
+                return pages.empty() == false && doDraw;
             }
-            
+
             //--------------------------------------------------------------
             void Gui::setDraw(bool b) {
                 doDraw = b;
-                if(doDraw) addListeners();
-                else removeListeners();
             }
             
             //--------------------------------------------------------------
@@ -111,17 +76,6 @@ namespace msa {
             void Gui::prevPage() {
                 setPage(currentPageIndex - 1);
             }
-            
-            //--------------------------------------------------------------
-            //            void Gui::nextPageWithBlank() {
-            //                if(doDraw) {
-            //                    setPage(currentPageIndex + 1);
-            //                    if(currentPageIndex == 0) setDraw(false);
-            //                } else {
-            //                    setDraw(true);
-            //                    setPage(1);
-            //                }
-            //            }
             
             //--------------------------------------------------------------
             void Gui::setPage(int i) {
@@ -179,8 +133,6 @@ namespace msa {
                 if(!isSetup) setup();
                 
                 pages.push_back(page);
-                page->setConfig(&config);
-                //                setPage(pages.size() - 1);
                 return *page;
             }
             
@@ -193,37 +145,35 @@ namespace msa {
             //            }
             
             
-            //--------------------------------------------------------------
-            void Gui::enableAutoEvents() {
-                doAutoEvents = true;
-                setDraw(doDraw); // add or remove listeners
-            }
+//            //--------------------------------------------------------------
+//            void Gui::enableAutoEvents() {
+//                doAutoEvents = true;
+//                setDraw(doDraw); // add or remove listeners
+//            }
+//            
+//            //--------------------------------------------------------------
+//            void Gui::disableAutoEvents() {
+//                doAutoEvents = false;
+//                removeListeners();
+//            }
+//            
+//            //--------------------------------------------------------------
+//            bool Gui::getAutoEvents() {
+//                return doAutoEvents;
+//            }
+//            
             
             //--------------------------------------------------------------
-            void Gui::disableAutoEvents() {
-                doAutoEvents = false;
-                removeListeners();
-            }
-            
-            //--------------------------------------------------------------
-            bool Gui::getAutoEvents() {
-                return doAutoEvents;
-            }
-            
-            
-            //--------------------------------------------------------------
-            //void Gui::setup(ofEventArgs& e) {
-            void Gui::update(ofEventArgs& e) {
-                if(!isSetup) setup();
-                if(!pages.size()) return;
+            void Gui::update() {
+                if(!checkOkToRun()) return;
+//                if(!isSetup) setup();
                 
                 pages[currentPageIndex]->update();
             }
             
             //--------------------------------------------------------------
-            void Gui::draw(ofEventArgs& e) {
-                if(!doDraw) return;
-                if(!pages.size()) return;
+            void Gui::draw() {
+                if(!checkOkToRun()) return;
                 
                 ofPushStyle();
                 ofEnableSmoothing();
@@ -238,62 +188,58 @@ namespace msa {
                 Page &page = *pages[currentPageIndex];
                 
                 // create layout manager for the page if one doesn't exist
-                if(!page.layoutManager) page.layoutManager = new LayoutManager;
+                if(!page.layoutManager) page.layoutManager = LayoutManagerPtr(new LayoutManager);
                 
                 // configure layout manager
-                page.layoutManager->boundRect.set(config.layout.scrollbarWidth + config.layout.padding.x, config.layout.padding.y, 0, 0);  // use full width and height of window
+                page.layoutManager->boundRect.set(pconfig->layout.scrollbarWidth + pconfig->layout.padding.x, pconfig->layout.padding.y, 0, 0);  // use full width and height of window
                 
                 // iterate all controls on page, set position and add to render queue
                 page.layoutManager->update(page);
                 
                 // sort and draw
                 //                Renderer::instance().update();
-                Renderer::instance().draw(config);
+                Renderer::instance().draw();
                 
                 ofPopStyle();
             }
             
             //--------------------------------------------------------------
-            void Gui::mouseMoved(ofMouseEventArgs& e) {
-                if(!pages.size()) return;
-                //                headerPage->_mouseMoved(e);
-                pages[currentPageIndex]->mouseMoved(e);
+            void Gui::mouseMoved(int x, int y) {
+                if(!checkOkToRun()) return;
+                pages[currentPageIndex]->mouseMoved(x, y);
             }
             
             //--------------------------------------------------------------
-            void Gui::mousePressed(ofMouseEventArgs& e) {
-                if(!pages.size()) return;
-                //                headerPage->_mousePressed(e);
-                pages[currentPageIndex]->mousePressed(e);
+            void Gui::mousePressed(int x, int y, int button) {
+                if(!checkOkToRun()) return;
+                pages[currentPageIndex]->mousePressed(x, y, button);
             }
             
             //--------------------------------------------------------------
-            void Gui::mouseDragged(ofMouseEventArgs& e) {
-                if(!pages.size()) return;
-                //                headerPage->_mouseDragged(e);
-                pages[currentPageIndex]->mouseDragged(e);
+            void Gui::mouseDragged(int x, int y, int button) {
+                if(!checkOkToRun()) return;
+                pages[currentPageIndex]->mouseDragged(x, y, button);
             }
             
             //--------------------------------------------------------------
-            void Gui::mouseReleased(ofMouseEventArgs& e) {
-                if(!pages.size()) return;
-                //                headerPage->_mouseReleased(e);
-                pages[currentPageIndex]->mouseReleased(e);
+            void Gui::mouseReleased(int x, int y, int button) {
+                if(!checkOkToRun()) return;
+                pages[currentPageIndex]->mouseReleased(x, y, button);
                 //	if(doAutoSave) doSave = true;
                 //                if(doAutoSave) saveXml();
             }
             
             //--------------------------------------------------------------
-            void Gui::keyPressed(ofKeyEventArgs& e) {
+            void Gui::keyPressed(int key) {
                 if(!pages.size()) return;
                 if(doDefaultKeys) {
-                    if(e.key == ' ') {
+                    if(key == ' ') {
                         toggleDraw();
-                    } else if(e.key>='1' && e.key<='9') {
-                        setPage((int)(e.key - '1'));
+                    } else if(key>='1' && key<='9') {
+                        setPage((int)(key - '1'));
                         setDraw(true);
                     } else if(doDraw) {
-                        switch(e.key) {
+                        switch(key) {
                             case '[': prevPage(); break;
                             case ']': nextPage(); break;
                         }
@@ -301,17 +247,15 @@ namespace msa {
                 }
                 
                 if(doDraw) {
-                    //                    headerPage->_keyPressed(e);
-                    pages[currentPageIndex]->keyPressed(e);
+                    pages[currentPageIndex]->keyPressed(key);
                 }
                 
             }
             
             //--------------------------------------------------------------
-            void Gui::keyReleased(ofKeyEventArgs& e) {
-                if(!pages.size()) return;
-                //                headerPage->_keyReleased(e);
-                pages[currentPageIndex]->keyReleased(e);
+            void Gui::keyReleased(int key) {
+                if(!checkOkToRun()) return;
+                pages[currentPageIndex]->keyReleased(key);
             }
             
             

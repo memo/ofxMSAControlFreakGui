@@ -7,8 +7,8 @@ namespace msa {
         namespace gui {
             
             
-//            class Config;
-//            typedef std::tr1::shared_ptr<Config> ConfigPtr;
+            class Config;
+            typedef std::tr1::shared_ptr<Config> ConfigPtr;
             
             class Config {
             public:

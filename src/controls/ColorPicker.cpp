@@ -21,7 +21,7 @@
 //            }
 //            
 //            void ColorPicker::setup() {
-//                setSize(getConfig().layout.columnWidth - getConfig().layout.padding.x, getConfig().layout.sliderHeight * 8 + getConfig().layout.sliderTextHeight);
+//                setSize(pconfig->layout.columnWidth - pconfig->layout.padding.x, pconfig->layout.sliderHeight * 8 + pconfig->layout.sliderTextHeight);
 //                for(int i=0; i<4; i++) {
 //                    pct[i] = ofMap(get(i), 0, max, 0.0, width);
 //                    barwidth[i] = pct[i];
@@ -60,7 +60,7 @@
 //            void ColorPicker::updateSlider() {
 //                if(!enabled) return;
 //                
-//                int i= (getMouseY() - y) / getConfig().layout.sliderHeight/2;
+//                int i= (getMouseY() - y) / pconfig->layout.sliderHeight/2;
 //                if(i<0 || i>=4) return;
 //                
 //                if(pct[i] > width) {
@@ -117,7 +117,7 @@
 //                    ofEnableAlphaBlending();
 //                    ofFill();
 //                    setEmptyColor();
-//                    ofRect(0, startY, width, getConfig().layout.sliderHeight*1.8);
+//                    ofRect(0, startY, width, pconfig->layout.sliderHeight*1.8);
 //                    
 //                    
 //                    switch(i) {
@@ -127,9 +127,9 @@
 //                        case 3:glColor3f(get(i), get(i), get(i)); break;
 //                    }
 //                    
-//                    ofRect(0, startY, barwidth[i], getConfig().layout.sliderHeight * 1.8);
+//                    ofRect(0, startY, barwidth[i], pconfig->layout.sliderHeight * 1.8);
 //                    
-//                    int iover = (getMouseY() - y) / getConfig().layout.sliderHeight/2;
+//                    int iover = (getMouseY() - y) / pconfig->layout.sliderHeight/2;
 //                    bool isOver = iover == i;
 //                    if(isOver) {
 //                        glColor3f(1, 1, 1);
@@ -137,22 +137,22 @@
 //                        glColor3f(0.5, 0.5, 0.5);
 //                    }
 //                    
-//                    getConfig().drawString(ofToString(get(i), 4), 3, startY + 14);
+//                    pconfig->drawString(ofToString(get(i), 4), 3, startY + 14);
 //                    
-//                    startY += getConfig().layout.sliderHeight * 2;
+//                    startY += pconfig->layout.sliderHeight * 2;
 //                }
 //                
 //                ofFill();
 //                
 //                setBGColor();
-//                ofRect(0, startY, width, getConfig().layout.sliderTextHeight);
+//                ofRect(0, startY, width, pconfig->layout.sliderTextHeight);
 //                
 //                glColor3f(get(0), get(1), get(2));
-//                //	ofRect(0, startY+getConfig().layout.sliderTextHeight, width, getConfig().layout.sliderTextHeight * 1.5);
-//                ofRect(150, startY + 3, width - 150 -3, getConfig().layout.sliderTextHeight - 8);
+//                //	ofRect(0, startY+pconfig->layout.sliderTextHeight, width, pconfig->layout.sliderTextHeight * 1.5);
+//                ofRect(150, startY + 3, width - 150 -3, pconfig->layout.sliderTextHeight - 8);
 //                
 //                setTextColor();
-//                getConfig().drawString(getName(), 3, startY + 14);
+//                pconfig->drawString(getName(), 3, startY + 14);
 //                ofDisableAlphaBlending();
 //                glPopMatrix();
 //            }

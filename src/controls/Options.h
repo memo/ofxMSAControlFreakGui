@@ -41,7 +41,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 void onMouseMove(int x, int y) {
                     int a = this->y;
-                    int b = this->y + getConfig().layout.buttonHeight * paramT->size();
+                    int b = this->y + pconfig->layout.buttonHeight * paramT->size();
                     mouseOverIndex = floor(ofMap(y, a, b, 0, paramT->size(), true));
                 }
                 
@@ -59,7 +59,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 void onDraw() {
                     int numLabels = paramT->size();
-                    layout.height = height = getConfig().layout.buttonHeight * numLabels + 3;
+                    layout.height = height = pconfig->layout.buttonHeight * numLabels + 3;
                     
                     setBGColor();
                     ofFill();
@@ -70,18 +70,18 @@ namespace msa {
                     
                     for(int i=0; i < numLabels; i++) {
                         setTextColor();
-                        float curY = i * getConfig().layout.buttonHeight;
+                        float curY = i * pconfig->layout.buttonHeight;
                         if(i == mouseOverIndex) {
                             ofNoFill();
-                            ofRect(0, curY+3, width, getConfig().layout.buttonHeight);
+                            ofRect(0, curY+3, width, pconfig->layout.buttonHeight);
                         }
                         if(i == getParameter().value()) {
                             ofFill();
-                            ofRect(0, curY+3, width, getConfig().layout.buttonHeight);
+                            ofRect(0, curY+3, width, pconfig->layout.buttonHeight);
                             setBGColor();
                         }
                         
-                        getConfig().drawString(paramT->getLabel(i), getConfig().layout.textPos.x, curY + getConfig().layout.textPos.y);
+                        pconfig->drawString(paramT->getLabel(i), pconfig->layout.textPos.x, curY + pconfig->layout.textPos.y);
                     }
                 }
                 

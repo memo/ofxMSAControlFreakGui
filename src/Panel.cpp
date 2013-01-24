@@ -68,7 +68,7 @@ namespace msa {
             void Panel::showPanel(bool bOpen, bool bRecursive) {
                 titleButton->getParameter().set(bOpen);
                 if(bRecursive) {
-                    for(int i=0; i<children->size(); i++) {
+                    for(int i=0; i<children->getNumControls(); i++) {
                         Panel *p = dynamic_cast<Panel*>(&children->get(i));
                         if(p) p->showPanel(bOpen, true);
                     }

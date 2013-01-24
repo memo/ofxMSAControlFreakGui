@@ -12,7 +12,6 @@
 #include "ofxMSAControlFreakGui/src/Container.h"
 #include "ofxMSAControlFreakGui/src/Panel.h"
 #include "ofxMSAControlFreakGui/src/Page.h"
-#include "ofxMSAControlFreakGui/src/Config.h"
 #include "ofxMSAControlFreakGui/src/LayoutSettings.h"
 #include "ofxMSAControlFreakGui/src/Controls/BoolButton.h"
 #include "ofxMSAControlFreakGui/src/Controls/BoolSimpleBox.h"
@@ -31,6 +30,7 @@
 #include "ofxMSAControlFreakGui/src/Controls/SliderT.h"
 #include "ofxMSAControlFreakGui/src/Renderer.h"
 #include "ofxMSAControlFreakGui/src/Gui.h"
+
 
 
 

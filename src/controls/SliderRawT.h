@@ -74,39 +74,37 @@ namespace msa {
                 void onDraw() {
                     ofFill();
                     
-                    Config &c = getConfig();
-                    
                     float barwidth = ofClamp(getParameter().getMappedTo(0, width), 0, width);
                     
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
                     setSliderColor(false);
-                    ofRect(0, 0, width, c.layout.sliderHeight);
+                    ofRect(0, 0, width, pconfig->layout.sliderHeight);
                     
                     setSliderColor(true);
-                    ofRect(0, 0, barwidth, c.layout.sliderHeight);
+                    ofRect(0, 0, barwidth, pconfig->layout.sliderHeight);
                     
                     string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
-                    drawText(c.layout.textPos.x + 10, c.layout.sliderHeight/2 + c.layout.textPos.y, s);
+                    drawText(pconfig->layout.textPos.x + 10, pconfig->layout.sliderHeight/2 + pconfig->layout.textPos.y, s);
                     
                     
                     if(getParameter().getSnap()) {
 //                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
                         float xinc = width * (float)getParameter().getIncrement() / ((float)getParameter().getMax() - (float)getParameter().getMin());
                         if(xinc >=3) {
-                            setColor(c.colors.bg[0]);
+                            setColor(pconfig->colors.bg[0]);
                             ofSetLineWidth(1);
                             for(float f=0; f<=width; f+=xinc) {
-                                ofLine(f, 0, f, c.layout.sliderHeight);
+                                ofLine(f, 0, f, pconfig->layout.sliderHeight);
                             }
                         }
                     }
                     
                     if(getParameter().getClamp()) {
-                        setColor(ofColor(c.colors.text[1].r, c.colors.text[1].g, c.colors.text[1].b, 128));
+                        setColor(ofColor(pconfig->colors.text[1].r, pconfig->colors.text[1].g, pconfig->colors.text[1].b, 128));
                         int w = 2;
-                        int h = c.layout.sliderHeight;
+                        int h = pconfig->layout.sliderHeight;
                         ofRect(0, 0, w, h);
                         ofRect(width-w-1, 0, w, h);
                     }

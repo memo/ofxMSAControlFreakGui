@@ -10,6 +10,9 @@ namespace msa {
             Control::Control(Container *parent, Parameter* parameter, bool bOwnsParameter) {
                 setParent(parent);
                 setParameter(parameter, bOwnsParameter);
+
+                // by default, use same pconfig as parent
+                if(parent) pconfig = parent->pconfig;
                 
                 setZ(0);
                 visible = true;
@@ -21,9 +24,8 @@ namespace msa {
                 
                 _alpha = 1;
                 _depth = 0;
-                _pconfig = NULL;
                 
-                setup();
+//                setup();
                 
                 // we don't want auto events (they will be controlled via the parent panels)
                 disableAllEvents();
@@ -34,13 +36,6 @@ namespace msa {
                 if(_bOwnsParameter && _pparameter) delete _pparameter;
             }
             
-            
-            //--------------------------------------------------------------
-            Control &Control::setConfig(Config *config) {
-                _pconfig = config;
-                setup();
-                return *this;
-            }
             
             //--------------------------------------------------------------
             Container* Control::getParent() const {
@@ -54,11 +49,6 @@ namespace msa {
                 //                return getParent() ? getParent()->_proot : _proot;
             }
             
-            //--------------------------------------------------------------
-            Config &Control::getConfig() {
-                return *_pconfig;
-            }
-            //
             //--------------------------------------------------------------
             int Control::getDepth(bool bUpdate) {
                 if(bUpdate) {
@@ -157,30 +147,30 @@ namespace msa {
             
             //--------------------------------------------------------------
             ofColor Control::setBGColor() {
-                return setColor(getConfig().colors.bg);
+                return setColor(pconfig->colors.bg);
             }
             
             //--------------------------------------------------------------
             ofColor Control::setTextColor() {
-                return setColor(getConfig().colors.text);
+                return setColor(pconfig->colors.text);
             }
             
             
             //--------------------------------------------------------------
             ofColor Control::setSliderColor(bool b) {
-                if(b) return setColor(getConfig().colors.slider.full);
-                else return setColor(getConfig().colors.slider.empty);
+                if(b) return setColor(pconfig->colors.slider.full);
+                else return setColor(pconfig->colors.slider.empty);
             }
             
             //--------------------------------------------------------------
             ofColor Control::setToggleColor(bool b) {
-                if(b) return setColor(getConfig().colors.toggle.full);
-                else return setColor(getConfig().colors.toggle.empty);
+                if(b) return setColor(pconfig->colors.toggle.full);
+                else return setColor(pconfig->colors.toggle.empty);
             }
             
             //--------------------------------------------------------------
             ofColor Control::setBorderColor() {
-                return setColor(getConfig().colors.border);
+                return setColor(pconfig->colors.border);
             }
             
             //--------------------------------------------------------------
@@ -193,7 +183,7 @@ namespace msa {
                 // if s is empty, use string from parameter
                 if(s.empty()) s = getParameter().getTooltip();
                 if(doTooltip() && !s.empty()) {
-                    Renderer::instance().setToolTip(getParameter().getTooltip());
+                    Renderer::instance().setToolTip(this, getParameter().getTooltip());
                 }
             }
             
@@ -201,8 +191,8 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::drawText(int x, int y, string s, ofColor *c) {
                 s = s.empty() ? getName() : s;
-                setColor(c ? c : getConfig().colors.text);
-                getConfig().drawString(s, x, y);
+                setColor(c ? c : pconfig->colors.text);
+                pconfig->drawString(s, x, y);
             }
             
             //--------------------------------------------------------------
@@ -216,7 +206,7 @@ namespace msa {
             //--------------------------------------------------------------
             ofRectangle Control::getTextRect(int x, int y, string s) {
                 s = s.empty() ? getName() : s;
-                return getConfig().font.getStringBoundingBox(s, x, y);
+                return pconfig->font.getStringBoundingBox(s, x, y);
             }
             
             
@@ -235,7 +225,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::drawBorder(ofColor *c) {
                 ofNoFill();
-                setColor(c ? c : getConfig().colors.border);
+                setColor(c ? c : pconfig->colors.border);
                 glLineWidth(1.0);
                 ofRect(0, 0, width, height);
             }
@@ -250,13 +240,13 @@ namespace msa {
             void Control::draw() {
                 if(!visible) return;
                 
-                bool bTimeToChange = getStateChangeMillis() > getConfig().colors.fade.delayMillis;
+                bool bTimeToChange = getStateChangeMillis() > pconfig->colors.fade.delayMillis;
                 bool bAControlIsActive = getRoot()->getActiveControl() && getRoot()->getActiveControl()->doIsolateOnActive;
                 bool bThisIsActive = getParentActive();
                 
-                float targetAlpha = bTimeToChange && bAControlIsActive && !bThisIsActive ? getConfig().colors.fade.alpha : 1.0f;
+                float targetAlpha = bTimeToChange && bAControlIsActive && !bThisIsActive ? pconfig->colors.fade.alpha : 1.0f;
                 float diff = (targetAlpha - _alpha);
-                _alpha += diff * getConfig().colors.fade.speed;
+                _alpha += diff * pconfig->colors.fade.speed;
                 if(fabsf(diff) < 0.05) _alpha = targetAlpha;
                 
                 if(_alpha < 0.001) return;

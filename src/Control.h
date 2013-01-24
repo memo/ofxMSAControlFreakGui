@@ -23,6 +23,8 @@ namespace msa {
                 friend class Container;
                 friend class Renderer;
 
+
+                ConfigPtr pconfig;
                 bool    visible;
                 bool    doIsolateOnActive;   // fade other controls if this is active
                 char	keyboardShortcut;
@@ -32,9 +34,6 @@ namespace msa {
                 
                 Control(Container *parent, Parameter* p, bool bOwnsParameter = false);
                 ~Control();
-                
-                Control& setConfig(Config *config);
-                Config &getConfig();
                 
                 Container *getParent() const;     // parent panel
                 Container *getRoot(bool bUpdate = false);       // root
@@ -71,18 +70,18 @@ namespace msa {
                 
                 
                 // from ofxMSAInteractiveObject
-                virtual void onRollOver(int x, int y)					{}		// called when mouse enters object x, y, width, height
-                virtual void onRollOut()								{}		// called when mouse leaves object x, y, width, height
-                virtual void onMouseMove(int x, int y)					{}		// called when mouse moves while over object x, y, width, height
-                virtual void onDragOver(int x, int y, int button)		{}		// called when mouse moves while over object and button is down
-                virtual void onDragOutside(int x, int y, int button)	{}		// called when mouse moves while outside the object after being clicked on it
-                virtual void onPress(int x, int y, int button)			{}		// called when mouse presses while over object
-                virtual void onPressOutside(int x, int y, int button)	{}		// called when mouse presses while outside object
-                virtual void onRelease(int x, int y, int button)		{}		// called when mouse releases while over object
-                virtual void onReleaseOutside(int x, int y, int button)	{}		// called when mouse releases outside of object after being pressed on object
-                
-                virtual void keyPressed( int key ){}
-                virtual void keyReleased( int key ){}
+//                virtual void onRollOver(int x, int y)					{}		// called when mouse enters object x, y, width, height
+//                virtual void onRollOut()								{}		// called when mouse leaves object x, y, width, height
+//                virtual void onMouseMove(int x, int y)					{}		// called when mouse moves while over object x, y, width, height
+//                virtual void onDragOver(int x, int y, int button)		{}		// called when mouse moves while over object and button is down
+//                virtual void onDragOutside(int x, int y, int button)	{}		// called when mouse moves while outside the object after being clicked on it
+//                virtual void onPress(int x, int y, int button)			{}		// called when mouse presses while over object
+//                virtual void onPressOutside(int x, int y, int button)	{}		// called when mouse presses while outside object
+//                virtual void onRelease(int x, int y, int button)		{}		// called when mouse releases while over object
+//                virtual void onReleaseOutside(int x, int y, int button)	{}		// called when mouse releases outside of object after being pressed on object
+//                
+//                virtual void keyPressed( int key ){}
+//                virtual void keyReleased( int key ){}
 
             protected:
                 
@@ -109,12 +108,10 @@ namespace msa {
                 void draw();
                 
                 
-                Config *_pconfig;
             private:
                 stack<int>_z;
                 float _alpha;
                 int _depth;
-//                Gui *_pgui;
                 Container *_pparent;
                 Container *_proot;
                 Parameter *_pparameter;

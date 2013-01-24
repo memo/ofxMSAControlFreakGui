@@ -27,7 +27,7 @@ namespace msa {
 //                    drawText(40, 15);
                     drawTextCentered();
 
-//                    drawBorder(getConfig().colors.text);
+//                    drawBorder(pconfig->colors.text);
                     drawBorder();
                     
                     BoolBase::onDraw();

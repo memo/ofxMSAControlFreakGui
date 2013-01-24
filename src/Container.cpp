@@ -30,7 +30,7 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            int Container::size() const {
+            int Container::getNumControls() const {
                 return _controls.size();
             }
             
@@ -93,17 +93,11 @@ namespace msa {
             
             
             
-            
-            //--------------------------------------------------------------
-            Page& Container::addPage(ParameterGroup* p) {
-//                return (Page&)pgui->addParameters(p);
-            }
-            
             //--------------------------------------------------------------
             Panel& Container::addPanel(ParameterGroup* p) {
                 return (Panel&)add(new Panel(this, p));
             }
-
+            
             //--------------------------------------------------------------
             BoolButton& Container::addButton(ParameterBool* p) {
                 return (BoolButton&)add(new BoolButton(this, p));
@@ -128,10 +122,10 @@ namespace msa {
             Options& Container::addOptions(ParameterNamedIndex* p) {
                 return (Options&)add(new Options(this, p));
             }
-
+            
             //--------------------------------------------------------------
             Content& Container::addContent(Parameter* p, ofBaseDraws &content, float fixwidth) {
-                if(fixwidth == -1) fixwidth = getConfig().layout.columnWidth;
+                if(fixwidth == -1) fixwidth = pconfig->layout.columnWidth;
                 return (Content&)add(new Content(this, p, content, fixwidth));
             }
             
@@ -181,8 +175,10 @@ namespace msa {
                     ParameterGroup* pp = dynamic_cast<ParameterGroup*>(p);
                     if(pp) {
                         switch(pp->getMode()) {
-                            case ParameterGroup::kTab:
-                                addPage(pp);
+                            case ParameterGroup::kPage: {
+                                Gui* gui = dynamic_cast<Gui*>(getRoot());
+                                if(gui) gui->addParameters(*pp);
+                            }
                                 break;
                                 
                             case ParameterGroup::kGroup:
@@ -244,11 +240,22 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            void Container::mouseMoved(ofMouseEventArgs &e) {
+            void Container::update() {
+                Control::update();
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i).update();
+            }
+            
+            
+            //--------------------------------------------------------------
+            void Container::mouseMoved(int x, int y) {
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                
                 if(_pactiveControl)
                     _pactiveControl->_mouseMoved(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mouseMoved(e);
                         //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                     }
@@ -256,18 +263,16 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Container::update() {
-                Control::update();
-                if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) get(i).update();
-            }
-            
-            
-            //--------------------------------------------------------------
-            void Container::mousePressed(ofMouseEventArgs &e) {
+            void Container::mousePressed(int x, int y, int button) {
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                e.button = button;
+                
                 if(_pactiveControl)
                     _pactiveControl->_mousePressed(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mousePressed(e);
                         if(get(i).isMouseOver()) {
                             getRoot()->setActiveControl(&get(i));
@@ -278,11 +283,16 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Container::mouseDragged(ofMouseEventArgs &e) {
+            void Container::mouseDragged(int x, int y, int button) {
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                e.button = button;
+                
                 if(_pactiveControl)
                     _pactiveControl->_mouseDragged(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mouseDragged(e);
                         //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                     }
@@ -290,25 +300,33 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Container::mouseReleased(ofMouseEventArgs &e) {
+            void Container::mouseReleased(int x, int y, int button) {
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                e.button = button;
+                
                 if(_pactiveControl)
                     _pactiveControl->_mouseReleased(e);
                 else {
-                    if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) get(i)._mouseReleased(e);
+                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i)._mouseReleased(e);
                 }
                 
                 if(getRoot()) getRoot()->releaseActiveControl();
             }
             
             //--------------------------------------------------------------
-            void Container::keyPressed(ofKeyEventArgs &e) {
+            void Container::keyPressed(int key) {
+                ofKeyEventArgs e;
+                e.key = key;
+                
                 bool keyUp		= e.key == OF_KEY_UP;
                 bool keyDown	= e.key == OF_KEY_DOWN;
                 bool keyLeft	= e.key == OF_KEY_LEFT;
                 bool keyRight	= e.key == OF_KEY_RIGHT;
                 bool keyEnter	= e.key == OF_KEY_RETURN;
                 
-                if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) {
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
                     if(c.isMouseOver()) {
                         if(keyUp)		c.onKeyUp();
@@ -322,8 +340,11 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Container::keyReleased(ofKeyEventArgs &e) {
-                if(getInheritedScale().y>0.9) for(int i=size()-1; i>=0; --i) if(get(i).isMouseOver()) get(i)._keyReleased(e);
+            void Container::keyReleased(int key) {
+                ofKeyEventArgs e;
+                e.key = key;
+                
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) if(get(i).isMouseOver()) get(i)._keyReleased(e);
             }
             
             

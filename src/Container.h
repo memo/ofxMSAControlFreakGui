@@ -2,6 +2,7 @@
 
 #include "ofxMSAControlFreakGui/src/Control.h"
 #include "ofxMSAOrderedPointerMap/src/ofxMSAOrderedPointerMap.h"
+#include "ofxMSAControlFreakGui/src/LayoutManager.h"
 
 
 namespace msa {
@@ -42,7 +43,6 @@ namespace msa {
                 void clear();
 
                 // adding
-                Page            &addPage(ParameterGroup* p);
                 Panel           &addPanel(ParameterGroup* p);
                 BoolButton		&addButton(ParameterBool* p);
                 ColorPicker		&addColorPicker(Parameter* p);
@@ -64,7 +64,7 @@ namespace msa {
 
                 
                 // accessing
-                int size() const;
+                int getNumControls() const;
 
                 Control& get(int index) const;
                 Control& get(string name) const;
@@ -74,18 +74,23 @@ namespace msa {
                 
                 // events from ofxMSAInteractiveObject
                 void update();
-                void mouseMoved(ofMouseEventArgs &e);
-                void mousePressed(ofMouseEventArgs &e);
-                void mouseDragged(ofMouseEventArgs &e);
-                void mouseReleased(ofMouseEventArgs &e);
-                void keyPressed(ofKeyEventArgs &e);
-                void keyReleased(ofKeyEventArgs &e);
+                void mouseMoved(int x, int y);
+                void mousePressed(int x, int y, int button);
+                void mouseDragged(int x, int y, int button);
+                void mouseReleased(int x, int y, int button);
+                void keyPressed(int key);
+                void keyReleased(int key);
 
                 
                 Control* getActiveControl();
                 
+
+            protected:
+                LayoutManagerPtr layoutManager;
+
             private:
                 OrderedPointerMap<string, Control> _controls;
+                
                 Control *_pactiveControl; // currently active control (only this control receives events)
 
                 void setActiveControl(Control *control);

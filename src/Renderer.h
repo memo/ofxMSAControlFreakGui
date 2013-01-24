@@ -28,20 +28,20 @@ namespace msa {
                 
                 void add(Control *c);
                 void clearControls();
-                void draw(Config &config);
+                void draw();
                 
-                void setToolTip(string s, int x = -1, int y = -1);
+                void setToolTip(Control* control, string s, int x = -1, int y = -1);
                 
             protected:
                 static Renderer *renderer;
                 
-                Config *_pconfig;
-                vector<Control *> controls;
+                vector<Control*> controls;
                 
                 struct {
                     string s;
                     int x;
                     int y;
+                    Control* control;
                 } tooltip;
                 
                 Renderer();

@@ -9,9 +9,8 @@ namespace msa {
             class Gui;
             class Panel;
             
-//            class LayoutManager;
-//            typedef std::tr1::shared_ptr<LayoutManager> LayoutManagerPtr;
-
+            class LayoutManager;
+            typedef std::tr1::shared_ptr<LayoutManager> LayoutManagerPtr;
             
             // for auto-layout
             class LayoutManager {
@@ -33,7 +32,7 @@ namespace msa {
                 
                 ofVec2f getMaxPos();
                 ofVec2f clampPoint(ofVec2f p);
-                void prepareControl(Control &control, Config &config, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos);
+                void prepareControl(Control &control, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos);
                 void prepareContainer(Container &container);
             };
             

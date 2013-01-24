@@ -27,18 +27,16 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void LayoutManager::prepareControl(Control &control, Config &config, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos) {
-                
-                control.setConfig(&config);
+            void LayoutManager::prepareControl(Control &control, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos) {
                 
                 // calculate scale
                 ofVec2f curScale = containerScale * control.scale;
                 
-                int indent = panelDepth * config.layout.indent;
+                int indent = panelDepth * control.pconfig->layout.indent;
                 
                 // update dimensions
-                control.width = (control.layout.width ? control.layout.width : config.layout.columnWidth - indent) * curScale.x;
-                control.height = (control.layout.height ? control.layout.height : config.layout.buttonHeight) * curScale.y;
+                control.width = (control.layout.width ? control.layout.width : control.pconfig->layout.columnWidth - indent) * curScale.x;
+                control.height = (control.layout.height ? control.layout.height : control.pconfig->layout.buttonHeight) * curScale.y;
                 
                 // TODO: think about scales
                 switch(control.layout.positionMode) {
@@ -47,9 +45,9 @@ namespace msa {
                         ofVec2f newHead(_curHead);
                         ofVec2f controlOffset((control.layout.position + control.layout.paddingPre) * curScale);
                         ofVec2f controlPos(newHead + controlOffset);
-                        float postHeight = (control.height + control.layout.paddingPost.y + config.layout.padding.y) * curScale.y;
+                        float postHeight = (control.height + control.layout.paddingPost.y + control.pconfig->layout.padding.y) * curScale.y;
                         if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
-                            newHead.x = _curRect.getRight() + control.layout.paddingPost.x + config.layout.padding.x;
+                            newHead.x = _curRect.getRight() + control.layout.paddingPost.x + control.pconfig->layout.padding.x;
                             newHead.y = boundRect.y;
                             controlPos = newHead + controlOffset;
                         }
@@ -78,14 +76,14 @@ namespace msa {
                 //                        if(control.layout.positionMode) {
                 // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
                 //                            if(control.newColumn || (doWrap && _curHead.y + control.height > maxPos.y)) {
-                //                                _curHead.x = _curRect.x + _curRect.width + config.layout.padding.x;
+                //                                _curHead.x = _curRect.x + _curRect.width + pconfig->layout.padding.x;
                 //                                _curHead.y = boundRect.y;
                 //                            }
                 
                 //                            _curHead += control.layout.position * curScale;
                 
                 //                            control.setPosition(_curHead.x + indent, _curHead.y - _scrollY);
-                //                            _curHead.y += control.height + config.layout.padding.y * curScale.y;
+                //                            _curHead.y += control.height + pconfig->layout.padding.y * curScale.y;
                 //                        } else {
                 //                            control.setPosition(container.position + control.layout.position);
                 //                        }
@@ -100,7 +98,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void LayoutManager::prepareContainer(Container &container) {
-                Config &config      = container.getRoot()->getConfig();
+//                Config &pconfig      = container.getRoot()->pconfig;
                 ofVec2f maxPos      = getMaxPos();
                 
 //                // TODO: hack?
@@ -125,19 +123,19 @@ namespace msa {
                     }
                 }
                 
-                int panelDepth          = container.getDepth();// * config.layout.indent;
+                int panelDepth          = container.getDepth();// * pconfig->layout.indent;
                 ofVec2f containerScale  = container.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
                 
                 // TODO: parent isn't being processed, thats why root doesn't have it.
                 if(containerScale.y > 0) {
-                    prepareControl(container, config, containerScale, panelDepth, maxPos);
-                    for(int i=0; i<container.size(); i++) {
+                    prepareControl(container, containerScale, panelDepth, maxPos);
+                    for(int i=0; i<container.getNumControls(); i++) {
                         Control& control = container.get(i);
                         
                         
                         Container *c = dynamic_cast<Container*>(&control);
                         if(c) prepareContainer(*c);
-                        else prepareControl(control, config, containerScale, panelDepth, maxPos);
+                        else prepareControl(control, containerScale, panelDepth, maxPos);
 
                     }
                     

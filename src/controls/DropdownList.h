@@ -28,8 +28,8 @@ namespace msa {
                 //--------------------------------------------------------------
                 void onDragOutside(int x, int y, int button) {
                     int a = this->y + height;
-                    int b = this->y + height + getConfig().layout.dropdownListTextHeight * paramT->size();
-                    int v = //floor(ofMap(y + getConfig().layout.dropdownListTextHeight/2, a, b, 0, paramT->size()-1, true));
+                    int b = this->y + height + pconfig->layout.dropdownListTextHeight * paramT->size();
+                    int v = //floor(ofMap(y + pconfig->layout.dropdownListTextHeight/2, a, b, 0, paramT->size()-1, true));
                         floor(ofMap(y, a, b, 0, paramT->size(), true));
                     paramT->set(v);
                 }
@@ -40,7 +40,7 @@ namespace msa {
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
-                    drawText(getConfig().layout.textPos.x, getConfig().layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
+                    drawText(pconfig->layout.textPos.x, pconfig->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
                     drawBorder();
                     
                     int ty = height/3;
@@ -52,23 +52,23 @@ namespace msa {
                         int numLabels = paramT->size();
                         setBGColor();
                         ofFill();
-                        ofRect(0, height, width, getConfig().layout.dropdownListTextHeight * (numLabels + 0.5));
+                        ofRect(0, height, width, pconfig->layout.dropdownListTextHeight * (numLabels + 0.5));
                         
                         ofNoFill();
                         ofSetLineWidth(1);
                         setBorderColor();
-                        ofRect(0, height, width, getConfig().layout.dropdownListTextHeight * (numLabels + 0.5));
+                        ofRect(0, height, width, pconfig->layout.dropdownListTextHeight * (numLabels + 0.5));
                         ofFill();
                         
                         for(int i=0; i < numLabels; i++) {
                             setTextColor();
-                            float curY = height + i*getConfig().layout.dropdownListTextHeight;
+                            float curY = height + i*pconfig->layout.dropdownListTextHeight;
                             if(i == getParameter().value()) {
-                                ofRect(0, curY+3, width, getConfig().layout.dropdownListTextHeight);
+                                ofRect(0, curY+3, width, pconfig->layout.dropdownListTextHeight);
                                 setBGColor();
                             }
                             
-                            getConfig().drawString(paramT->getLabel(i), getConfig().layout.textPos.x, curY + getConfig().layout.textPos.y);
+                            pconfig->drawString(paramT->getLabel(i), pconfig->layout.textPos.x, curY + pconfig->layout.textPos.y);
                         }
                     }
                 }
