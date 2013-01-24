@@ -23,7 +23,7 @@ namespace msa {
                 titleButton = new BoolTitle(this, getName());
                 titleButton->layout.positionMode = 1;
                 titleButton->setZ(1);
-                titleButton->getParameter().trackVariable(&paramT->bOpen);
+                titleButton->getParameter().trackVariable(&paramT->isOpen());
                 add(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");

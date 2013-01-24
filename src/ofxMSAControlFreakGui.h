@@ -4,6 +4,9 @@
 
 #include "ofMain.h"
 
+#include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
+
+
 #include "ofxMSAControlFreakGui/src/Config.h"
 #include "ofxMSAControlFreakGui/src/Control.h"
 #include "ofxMSAControlFreakGui/src/Container.h"
@@ -29,6 +32,5 @@
 #include "ofxMSAControlFreakGui/src/Renderer.h"
 #include "ofxMSAControlFreakGui/src/Gui.h"
 
-#include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
 
 

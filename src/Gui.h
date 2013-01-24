@@ -19,7 +19,6 @@ namespace msa {
                 
                 void setDefaultKeys(bool b);
                 
-                void setDraw(bool b);
                 void toggleDraw();
                 void show();		// simply calls setDraw(true);
                 void hide();		// simply calls setDraw(false);
@@ -83,6 +82,7 @@ namespace msa {
                 
                 void addListeners();
                 void removeListeners();
+                void setDraw(bool b);
             };
             
         }

@@ -16,7 +16,7 @@ namespace msa {
                 eventsAreRegistered = false;
                 doDefaultKeys = false;
                 currentPageIndex = false;
-                doDraw = false;
+                doDraw = true;
             }
             
             //--------------------------------------------------------------
@@ -27,6 +27,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::setup() {
                 isSetup = true;
+                show();
                 ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
             }
             
