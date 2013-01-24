@@ -171,7 +171,6 @@ namespace msa {
                 page.layoutManager->update(page);
                 
                 // sort and draw
-                //                Renderer::instance().update();
                 Renderer::instance().draw();
                 
                 ofPopStyle();
