@@ -1,37 +1,25 @@
 #pragma once
 
 #include "ofxMSAControlFreakGui/src/Container.h"
-//#include "ofxMSAControlFreakGui/src/PanelPresetManager.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
             class BoolBase;
-            class ColorPicker;
-            class DropdownList;
-            class Content;
-            class FPSCounter;
-            class QuadWarp;
-            class ScrollBar;
-            class Slider2d;
-            class SliderInt;
-            class SliderFloat;
-
             class LayoutManager;
-            
             class PanelPresetManager;
 
             class Panel : public Container {
             public:
                 
-                friend class BoolTitle;
                 friend class LayoutManager;
                 friend class PanelPresetManager;
+                friend class Gui;
                 
                 Container *children;
 
-                Panel(Container *parent, ParameterGroup* p);
+                Panel(Container *parent, ParameterGroup* p, bool bInitOnCreation);
                 
                 void update();
                 void showPanel(bool bOpen, bool bRecursive = false);

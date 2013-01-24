@@ -6,12 +6,12 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
-            Page::Page(Container *parent, ParameterGroup* p, int index) : Panel(parent, p) {
-                this->index = index;
-                titleButton->getParameter().setName(ofToString(index+1) + ": " + getName());
-                
-            }
-            
+//            Page::Page(Container *parent, ParameterGroup* p, int index) : Panel(parent, p) {
+//                this->index = index;
+//                titleButton->getParameter().setName(ofToString(index+1) + ": " + getName());
+//                
+//            }
+//            
         }
     }
 }

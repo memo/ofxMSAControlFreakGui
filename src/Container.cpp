@@ -61,39 +61,39 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Panel& Container::addPanel(ParameterGroup* p) {
-                return (Panel&)addControl(new Panel(this, p));
+            Panel& Container::addPanel(ParameterGroup& p) {
+                return (Panel&)addControl(new Panel(this, &p, true));
             }
             
             //--------------------------------------------------------------
-            BoolButton& Container::addButton(ParameterBool* p) {
-                return (BoolButton&)addControl(new BoolButton(this, p));
+            BoolButton& Container::addButton(ParameterBool& p) {
+                return (BoolButton&)addControl(new BoolButton(this, &p));
             }
             
             //--------------------------------------------------------------
-            ColorPicker& Container::addColorPicker(Parameter* p) {
-                //                return (ColorPicker&)add(new ColorPicker(this, p));
+            ColorPicker& Container::addColorPicker(Parameter& p) {
+                //                return (ColorPicker&)add(new ColorPicker(this, &p));
             }
             
             //--------------------------------------------------------------
-            DropdownList& Container::addDropdownList(ParameterNamedIndex* p) {
-                return (DropdownList&)addControl(new DropdownList(this, p));
+            DropdownList& Container::addDropdownList(ParameterNamedIndex& p) {
+                return (DropdownList&)addControl(new DropdownList(this, &p));
             }
             
             //--------------------------------------------------------------
-            List& Container::addList(ParameterNamedIndex* p) {
-                return (List&)addControl(new List(this, p));
+            List& Container::addList(ParameterNamedIndex& p) {
+                return (List&)addControl(new List(this, &p));
             }
             
             //--------------------------------------------------------------
-            Options& Container::addOptions(ParameterNamedIndex* p) {
-                return (Options&)addControl(new Options(this, p));
+            Options& Container::addOptions(ParameterNamedIndex& p) {
+                return (Options&)addControl(new Options(this, &p));
             }
             
             //--------------------------------------------------------------
-            Content& Container::addContent(Parameter* p, ofBaseDraws &content, float fixwidth) {
+            Content& Container::addContent(Parameter& p, ofBaseDraws &content, float fixwidth) {
                 if(fixwidth == -1) fixwidth = pconfig->layout.columnWidth;
-                return (Content&)addControl(new Content(this, p, content, fixwidth));
+                return (Content&)addControl(new Content(this, &p, content, fixwidth));
             }
             
             //--------------------------------------------------------------
@@ -102,89 +102,88 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            QuadWarp& Container::addQuadWarper(Parameter* p) {
-                //                return (QuadWarp&)add(new QuadWarp(this, p));
+            QuadWarp& Container::addQuadWarper(Parameter& p) {
+                //                return (QuadWarp&)add(new QuadWarp(this, &p));
             }
             
             //--------------------------------------------------------------
-            SliderInt& Container::addSliderInt(ParameterInt* p) {
-                return (SliderInt&)addControl(new SliderT<int>(this, p));
+            SliderInt& Container::addSliderInt(ParameterInt& p) {
+                return (SliderInt&)addControl(new SliderT<int>(this, &p));
             }
             
             //--------------------------------------------------------------
-            SliderFloat& Container::addSliderFloat(ParameterFloat* p) {
-                return (SliderFloat&)addControl(new SliderT<float>(this, p));
+            SliderFloat& Container::addSliderFloat(ParameterFloat& p) {
+                return (SliderFloat&)addControl(new SliderT<float>(this, &p));
             }
             
             //--------------------------------------------------------------
-            Slider2d& Container::addSlider2d(Parameter* p) {
-                //                return (Slider2d&)add(new Slider2d(this, p));
+            Slider2d& Container::addSlider2d(Parameter& p) {
+                //                return (Slider2d&)add(new Slider2d(this, &p));
             }
             
             //--------------------------------------------------------------
-            //            BoolTitle& Container::addTitle(Parameter* p) {
-            //                return (BoolTitle&)add(new BoolTitle(this, p));
+            //            BoolTitle& Container::addTitle(Parameter& p) {
+            //                return (BoolTitle&)add(new BoolTitle(this, &p));
             //            }
             
             //--------------------------------------------------------------
-            BoolToggle& Container::addToggle(ParameterBool* p) {
-                return (BoolToggle&)addControl(new BoolToggle(this,p));
+            BoolToggle& Container::addToggle(ParameterBool& p) {
+                return (BoolToggle&)addControl(new BoolToggle(this, &p));
             }
             
             
             
             //--------------------------------------------------------------
-            void Container::addParameter(Parameter* p) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Container::add: " << getPath() << ": " << p->getPath();
-                // if parameter already exists, remove it first
+            void Container::addParameter(Parameter& p) {
+                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameter: " << getPath() << ": " << p.getPath();
+                // TODO: if parameter already exists, remove it first, or update it
                 
-                if(typeid(*p) == typeid(ParameterGroup)) {
-                    ParameterGroup* pp = dynamic_cast<ParameterGroup*>(p);
+                if(typeid(p) == typeid(ParameterGroup)) {
+                    ParameterGroup* pp = dynamic_cast<ParameterGroup*>(&p);
                     if(pp) {
                         switch(pp->getMode()) {
                             case ParameterGroup::kPage: {
-                                Gui* gui = dynamic_cast<Gui*>(getRoot());
-                                if(gui) gui->addParameters(*pp);
+                                getRoot()->addPage(*pp);
                             }
                                 break;
                                 
                             case ParameterGroup::kGroup:
-                                addPanel(pp);
+                                addPanel(*pp);
                                 break;
                         }
                     }
                     return;
                 }
-                if(typeid(*p) == typeid(ParameterFloat)) {
-                    addSliderFloat(dynamic_cast<ParameterFloat*>(p));
+                if(typeid(p) == typeid(ParameterFloat)) {
+                    addSliderFloat(*dynamic_cast<ParameterFloat*>(&p));
                     return;
                 }
-                if(typeid(*p) == typeid(ParameterInt)) {
-                    addSliderInt(dynamic_cast<ParameterInt*>(p));
+                if(typeid(p) == typeid(ParameterInt)) {
+                    addSliderInt(*dynamic_cast<ParameterInt*>(&p));
                     return;
                 }
-                if(typeid(*p) == typeid(ParameterBool)) {
-                    ParameterBool *pp(dynamic_cast<ParameterBool*>(p));
+                if(typeid(p) == typeid(ParameterBool)) {
+                    ParameterBool *pp(dynamic_cast<ParameterBool*>(&p));
                     if(pp) {
-                        if(pp->getMode() == ParameterBool::kToggle) addToggle(pp);
-                        else addButton(pp);
+                        if(pp->getMode() == ParameterBool::kToggle) addToggle(*pp);
+                        else addButton(*pp);
                     }
                     return;
                 }
-                if(typeid(*p) == typeid(ParameterNamedIndex)) {
-                    ParameterNamedIndex *pp(dynamic_cast<ParameterNamedIndex*>(p));
+                if(typeid(p) == typeid(ParameterNamedIndex)) {
+                    ParameterNamedIndex *pp(dynamic_cast<ParameterNamedIndex*>(&p));
                     if(pp) {
                         switch(pp->getMode()) {
                             case ParameterNamedIndex::kDropdown:
-                                addDropdownList(pp);
+                                addDropdownList(*pp);
                                 break;
                                 
                             case ParameterNamedIndex::kList:
-                                addList(pp);
+                                addList(*pp);
                                 break;
                                 
                             case ParameterNamedIndex::kOptions:
-                                addOptions(pp);
+                                addOptions(*pp);
                                 break;
                         }
                     }
@@ -192,16 +191,16 @@ namespace msa {
                 }
                 
                 
-                ofLogWarning() << "msa::ControlFreak::gui::Container::add: unknown type adding parameter " << p->getPath() << " " << p->getTypeName();
+                ofLogWarning() << "msa::ControlFreak::gui::Container::add: unknown type adding parameter " << p.getPath() << " " << p.getTypeName();
             }
             
             //--------------------------------------------------------------
-            void Container::addParameters(ParameterGroup* parameters) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameters: " << getPath() << ": " << parameters->getPath();
-                
-                int np = parameters->size();
+            void Container::addParameterChildren(ParameterGroup& parameters) {
+                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameterChildren: " << getPath() << ": " << parameters.getPath();
+
+                int np = parameters.size();
                 for(int i=0; i<np; i++) {
-                    addParameter(&parameters->get(i));
+                    addParameter(parameters.get(i));
                 }
             }
             
@@ -219,8 +218,8 @@ namespace msa {
                 e.x = x;
                 e.y = y;
                 
-//                if(_pactiveControl)
-//                    _pactiveControl->_mouseMoved(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mouseMoved(e);
 //                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mouseMoved(e);
@@ -236,8 +235,8 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-//                if(_pactiveControl)
-//                    _pactiveControl->_mousePressed(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mousePressed(e);
 //                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mousePressed(e);
@@ -256,8 +255,8 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-//                if(_pactiveControl)
-//                    _pactiveControl->_mouseDragged(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mouseDragged(e);
 //                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                         get(i)._mouseDragged(e);
@@ -273,8 +272,8 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-//                if(_pactiveControl)
-//                    _pactiveControl->_mouseReleased(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mouseReleased(e);
 //                else {
                     if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i)._mouseReleased(e);
 //                }

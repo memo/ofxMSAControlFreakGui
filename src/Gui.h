@@ -24,8 +24,9 @@ namespace msa {
                 void hide();		// simply calls setDraw(false);
                 bool isOn();
                 
-                
-                // TABMANAGER:
+
+                Page& addPage(ParameterGroup &parameters);
+
                 void nextPage();
                 void prevPage();
                 void setPage(int i);				// 1 based index of page
@@ -35,19 +36,7 @@ namespace msa {
                 Page& getPage(int i);				// 1 based index of page
                 Page& getPage(string name);			// returns page by name
                 Page& getCurrentPage();				// returns current page
-                
-                
-                
-                
-                //                // create and add a page with given name
-                //                Page& addPage(string name = "");
-                
-                // create and add a page from the given parameter group
-                Page& addParameters(ParameterGroup &parameters);
-                
-                // add a page
-                Page& addPage(Page* page);
-                
+
                 
                 //--------------------------------------------------------------
                 // ADVANCED FUNCTIONS
@@ -64,7 +53,7 @@ namespace msa {
                 void keyPressed(int key);
                 void keyReleased(int key);
                 
-                LayoutManagerPtr playoutManager;
+                LayoutManagerPtr pLayoutManager;
                 
                 Control* getActiveControl();
                 
@@ -73,14 +62,17 @@ namespace msa {
                 int     currentPageIndex;
                 bool    doDraw;
                 vector<Page*> pages;
-                GuiControls *guiControls;
+                GuiControls *_pGuiControls;
                 
                 bool checkOkToRun();
                 void setDraw(bool b);
                 
-                Control *_pactiveControl; // currently active control (only this control receives events)
+                Control *_pActiveControl; // currently active control (only this control receives events)
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
+                
+                
+                Page& addPage(Page* page);
             };
             
         }

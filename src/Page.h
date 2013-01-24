@@ -6,16 +6,18 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class Gui;
+            
+//            typedef Panel Page;
+            
+//            class Gui;
+            class Container;
+            
             class Page : public Panel {
             public:
-                friend class Gui;
-                friend class LayoutManager;
-                
-                Page(Container *parent, ParameterGroup *p, int index);
+                Page(Container *parent, ParameterGroup *p) : Panel(parent, p, false) {}
                 
             protected:
-                int index;
+//                int index;
                 
             };
             

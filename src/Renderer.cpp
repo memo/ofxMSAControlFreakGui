@@ -120,11 +120,11 @@ namespace msa {
 //            //--------------------------------------------------------------
 //            void Renderer::update() {
 //                if(controls.empty()) {
-//                    _pactiveControl = NULL;
+//                    _pActiveControl = NULL;
 //                    return;
 //                }
 //                
-//                _pactiveControl = controls[0]->getRoot()->getActiveControl();
+//                _pActiveControl = controls[0]->getRoot()->getActiveControl();
 //                
 //                for(int i=controls.size()-1; i>=0; --i) controls[i]->update();
 //            }
@@ -134,8 +134,8 @@ namespace msa {
 //            void Renderer::mouseMoved(ofMouseEventArgs &e) {
 //                if(controls.empty()) return;
 //                
-//                if(_pactiveControl)
-//                    _pactiveControl->_mouseMoved(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mouseMoved(e);
 //                else {
 //                    for(int i=controls.size()-1; i>=0; --i) {
 //                        controls[i]->_mouseMoved(e);
@@ -149,8 +149,8 @@ namespace msa {
 //            void Renderer::mousePressed(ofMouseEventArgs &e) {
 //                if(controls.empty()) return;
 //
-//                if(_pactiveControl)
-//                    _pactiveControl->_mousePressed(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mousePressed(e);
 //                else {
 //                   for(int i=controls.size()-1; i>=0; --i) {
 //                        controls[i]->_mousePressed(e);
@@ -166,8 +166,8 @@ namespace msa {
 //            void Renderer::mouseDragged(ofMouseEventArgs &e) {
 //                if(controls.empty()) return;
 //
-//                if(_pactiveControl)
-//                    _pactiveControl->_mouseDragged(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mouseDragged(e);
 //                else {
 //                    for(int i=controls.size()-1; i>=0; --i) {
 //                        controls[i]->_mouseDragged(e);
@@ -180,8 +180,8 @@ namespace msa {
 //            void Renderer::mouseReleased(ofMouseEventArgs &e) {
 //                if(controls.empty()) return;
 //
-//                if(_pactiveControl)
-//                    _pactiveControl->_mouseReleased(e);
+//                if(_pActiveControl)
+//                    _pActiveControl->_mouseReleased(e);
 //                else {
 //                    for(int i=controls.size()-1; i>=0; --i) controls[i]->_mouseReleased(e);
 //                }

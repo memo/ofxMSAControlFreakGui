@@ -1,5 +1,5 @@
 //
-//  GuiControls.cpp
+//  _pGuiControls.cpp
 //  ofxMSAControlFreak example
 //
 //  Created by Memo Akten on 24/01/2013.
@@ -62,9 +62,9 @@ namespace msa {
             void GuiControls::update() {
                 Container::update();
                 
-                LayoutManager* playoutManager = _pgui->playoutManager.get();
+                LayoutManager* pLayoutManager = _pgui->pLayoutManager.get();
                 
-                if(playoutManager == NULL) return;
+                if(pLayoutManager == NULL) return;
                 
                 // set positions and layout
                 int s = pconfig->layout.buttonHeight * 0.7;
@@ -73,7 +73,7 @@ namespace msa {
                 
                 // check buttons and stuff
                 wrapButton->layout.set(pconfig->layout.columnWidth - (s + p) * 3, y, s, s);
-                wrapButton->getParameter().trackVariable(&playoutManager->doWrap);
+                wrapButton->getParameter().trackVariable(&pLayoutManager->doWrap);
                 
                 pagesButton->layout.set(pconfig->layout.columnWidth + p, y, s, s);
                 
@@ -97,8 +97,8 @@ namespace msa {
                 scrollbar->visible = true;
                 scrollbar->layout.set(0, 0, pconfig->layout.scrollbarWidth, ofGetHeight());
                 float sbheight = scrollbar->layout.height;
-                scrollbar->barThickness = sbheight / playoutManager->getCurRect().height;
-                playoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, playoutManager->getCurRect().height - sbheight * 0.5);
+                scrollbar->barThickness = sbheight / pLayoutManager->getCurRect().height;
+                pLayoutManager->scrollY = ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, pLayoutManager->getCurRect().height - sbheight * 0.5);
                 
             }
             

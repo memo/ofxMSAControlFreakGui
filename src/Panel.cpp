@@ -7,8 +7,8 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
-            Panel::Panel(Container *parent, ParameterGroup* p) : Container(parent, p) {
-                init();
+            Panel::Panel(Container *parent, ParameterGroup* p, bool bInitOnCreation) : Container(parent, p) {
+                if(bInitOnCreation) init();
             }
             
             //--------------------------------------------------------------
@@ -61,7 +61,7 @@ namespace msa {
                 //                children->layout.set(0, 0, 1, 3);
                 addControl(children);
                 
-                children->addParameters(paramT);
+                children->addParameterChildren(*paramT);
             }
             
             //--------------------------------------------------------------

@@ -13,7 +13,6 @@ namespace msa {
             class Panel;
             class BoolButton;
             class BoolTitle;
-            class BoolTitle;
             class BoolToggle;
             class ColorPicker;
             class Content;
@@ -30,9 +29,8 @@ namespace msa {
             class Container : public Control {
             public:
                 
-//                friend class Control;
-//                friend class Renderer;
-//                
+                friend class Panel;
+                
                 Container(Container *parent, string s);
                 Container(Container *parent, Parameter* p, bool bOwnsParameter = false);
                 ~Container();
@@ -40,21 +38,20 @@ namespace msa {
                 void clear();
 
                 // adding
-                Panel           &addPanel(ParameterGroup* p);
-                BoolButton		&addButton(ParameterBool* p);
-                ColorPicker		&addColorPicker(Parameter* p);
-                DropdownList&   addDropdownList(ParameterNamedIndex* p);
-                List&           addList(ParameterNamedIndex* p);
-                Options&        addOptions(ParameterNamedIndex* p);
-                Content			&addContent(Parameter* p, ofBaseDraws &content, float fixwidth = -1);
+                Panel           &addPanel(ParameterGroup& p);
+                BoolButton		&addButton(ParameterBool& p);
+                ColorPicker		&addColorPicker(Parameter& p);
+                DropdownList&   addDropdownList(ParameterNamedIndex& p);
+                List&           addList(ParameterNamedIndex& p);
+                Options&        addOptions(ParameterNamedIndex& p);
+                Content			&addContent(Parameter& p, ofBaseDraws &content, float fixwidth = -1);
                 FPSCounter		&addFPSCounter();
-                QuadWarp		&addQuadWarper(Parameter* p);
-                Slider2d		&addSlider2d(Parameter* p);
-                SliderInt		&addSliderInt(ParameterInt* p);
-                SliderFloat		&addSliderFloat(ParameterFloat* p);
-                BoolToggle		&addToggle(ParameterBool* p);
+                QuadWarp		&addQuadWarper(Parameter& p);
+                Slider2d		&addSlider2d(Parameter& p);
+                SliderInt		&addSliderInt(ParameterInt& p);
+                SliderFloat		&addSliderFloat(ParameterFloat& p);
+                BoolToggle		&addToggle(ParameterBool& p);
 
-                void addParameters(ParameterGroup* parameters);
                 
                 Control& addControl(Control *control);
 
@@ -81,7 +78,8 @@ namespace msa {
             private:
                 OrderedPointerMap<string, Control> _controls;
                 
-                void addParameter(Parameter* p);
+                void addParameter(Parameter& p);
+                void addParameterChildren(ParameterGroup& parameters);
             };
             
         }
