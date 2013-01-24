@@ -9,6 +9,7 @@ namespace msa {
             class Gui;
             class BoolBase;
             class List;
+            class Options;
             class Scrollbar;
             
             class GuiControls : public Container {
@@ -23,7 +24,7 @@ namespace msa {
 
                 BoolBase *wrapButton;
                 BoolBase *pagesButton;
-                List *pagesDropdown;
+                Options *pagesDropdown;
                 ScrollBar *scrollbar;
                 
                 void updatePagesList();

@@ -14,17 +14,21 @@ namespace msa {
             
             // for auto-layout
             class LayoutManager {
-            public:
+            protected:
+                friend class Gui;
+                friend class GuiControls;
+                
                 int scrollY;
                 bool doWrap;
                 ofRectangle boundRect;
 
                 LayoutManager();
-                void update(Container &root);
+                
+                void begin();
+                void update();
                 
                 ofRectangle getCurRect() { return _curRect; }
                 
-            protected:
                 int _scrollY;   // actual one, scrollY lerps to this
 //                int panelDepth;
                 ofVec2f     _curHead;

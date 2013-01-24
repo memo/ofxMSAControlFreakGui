@@ -19,8 +19,10 @@ namespace msa {
             class Config;
             
             class Renderer {
-            public:
+            private:
                 friend class Gui;
+                friend class Control;
+                friend class LayoutManager;
                 
                 ~Renderer();
                 
@@ -32,7 +34,6 @@ namespace msa {
                 
                 void setToolTip(Control* control, string s, int x = -1, int y = -1);
                 
-            protected:
                 static Renderer *renderer;
                 
                 vector<Control*> controls;

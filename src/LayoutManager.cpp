@@ -15,16 +15,18 @@ namespace msa {
             }
             
             
-            
             //--------------------------------------------------------------
-            void LayoutManager::update(Container &root) {
+            void LayoutManager::begin() {
                 _curHead.set(boundRect.position); // start in top left
                 _curRect.set(0, 0, 0, 0);
-//                panelDepth = 0;
-                
-                prepareContainer(root);
+                //                panelDepth = 0;
+            }
+            
+            //--------------------------------------------------------------
+            void LayoutManager::update() {
                 _scrollY += (scrollY - _scrollY) * 0.1;
             }
+            
             
             //--------------------------------------------------------------
             void LayoutManager::prepareControl(Control &control, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos) {

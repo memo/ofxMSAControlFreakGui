@@ -12,7 +12,7 @@ namespace msa {
             //--------------------------------------------------------------
             Gui::Gui() : Container(NULL, "ofxMSAControlFreakGui") {
                 doDefaultKeys = false;
-                currentPageIndex = false;
+//                currentPageIndex = false;
                 doDraw = true;
                 _pActiveControl = NULL;
                 pconfig = ConfigPtr(new Config);
@@ -28,18 +28,18 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-//            void Gui::setup() {
-//                isSetup = true;
-////                show();
-////                ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
-//            }
+            //            void Gui::setup() {
+            //                isSetup = true;
+            ////                show();
+            ////                ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
+            //            }
             
             
             //--------------------------------------------------------------
             bool Gui::checkOkToRun() {
                 return pages.empty() == false && doDraw;
             }
-
+            
             //--------------------------------------------------------------
             void Gui::setDraw(bool b) {
                 doDraw = b;
@@ -72,17 +72,23 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::nextPage() {
-                setPage(currentPageIndex + 1);
+                setPage(getCurrentPageIndex() + 1);
             }
             
             //--------------------------------------------------------------
             void Gui::prevPage() {
-                setPage(currentPageIndex - 1);
+                setPage(getCurrentPageIndex() - 1);
             }
             
             //--------------------------------------------------------------
             void Gui::setPage(int i) {
-                if(pages.size()) currentPageIndex = (i + pages.size()) % pages.size();
+                if(pages.size()) {
+                    _pGuiControls->pagesDropdown->getParameter() = (i + pages.size()) % pages.size();;
+                }
+            }
+            
+            int Gui::getCurrentPageIndex() {
+                return _pGuiControls->pagesDropdown->getParameter();
             }
             
             //--------------------------------------------------------------
@@ -90,11 +96,10 @@ namespace msa {
                 for(int i=0; i<pages.size(); i++) {
                     Page &page = *pages[i];
                     if(page.getName() == name) {
-                        currentPageIndex = i;
+                        setPage(i);
                         return;
                     }
                 };
-                setPage(currentPageIndex);
             }
             
             //--------------------------------------------------------------
@@ -114,7 +119,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::getCurrentPage() {
-                return getPage(currentPageIndex);
+                return getPage(getCurrentPageIndex());
             }
             
             //--------------------------------------------------------------
@@ -171,12 +176,12 @@ namespace msa {
             //            }
             
             
-
-         
+            
+            
             //--------------------------------------------------------------
             void Gui::update() {
                 if(!checkOkToRun()) return;
-//                if(!isSetup) setup();
+                //                if(!isSetup) setup();
                 
                 Container::update();
                 getCurrentPage()._update();
@@ -197,7 +202,7 @@ namespace msa {
                 
                 Renderer::instance().clearControls();
                 
-                Page &page = *pages[currentPageIndex];
+                Page &page = getCurrentPage();
                 
                 // create layout manager for the page if one doesn't exist
                 if(!pLayoutManager) pLayoutManager = LayoutManagerPtr(new LayoutManager);
@@ -206,9 +211,10 @@ namespace msa {
                 pLayoutManager->boundRect.set(pconfig->layout.scrollbarWidth + pconfig->layout.padding.x, pconfig->layout.padding.y, 0, 0);  // use full width and height of window
                 
                 // iterate all controls on page, set position and add to render queue
-                pLayoutManager->update(page);
-                
-                pLayoutManager->update(*_pGuiControls);
+                pLayoutManager->begin();
+                pLayoutManager->prepareContainer(page);
+                pLayoutManager->prepareContainer(*_pGuiControls);
+                pLayoutManager->update();
                 
                 // sort and draw
                 Renderer::instance().draw();
@@ -219,29 +225,49 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::mouseMoved(int x, int y) {
                 if(!checkOkToRun()) return;
-                getCurrentPage().mouseMoved(x, y);
-                _pGuiControls->mouseMoved(x, y);
+                
+//                if(getActiveControl()) {
+//                    getActiveControl()->mouseMoved(x, y);
+//                } else {
+                    getCurrentPage().mouseMoved(x, y);
+                    _pGuiControls->mouseMoved(x, y);
+//                }
             }
             
             //--------------------------------------------------------------
             void Gui::mousePressed(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                getCurrentPage().mousePressed(x, y, button);
-                _pGuiControls->mousePressed(x, y, button);
+                
+//                if(getActiveControl()) {
+//                    getActiveControl()->mousePressed(x, y, button);
+//                } else {
+                    getCurrentPage().mousePressed(x, y, button);
+                    _pGuiControls->mousePressed(x, y, button);
+//                }
             }
             
             //--------------------------------------------------------------
             void Gui::mouseDragged(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                getCurrentPage().mouseDragged(x, y, button);
-                _pGuiControls->mouseDragged(x, y, button);
+                
+//                if(getActiveControl()) {
+//                    getActiveControl()->mouseDragged(x, y, button);
+//                } else {
+                    getCurrentPage().mouseDragged(x, y, button);
+                    _pGuiControls->mouseDragged(x, y, button);
+//                }
             }
             
             //--------------------------------------------------------------
             void Gui::mouseReleased(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                getCurrentPage().mouseReleased(x, y, button);
-                _pGuiControls->mouseReleased(x, y, button);
+                
+//                if(getActiveControl()) {
+//                    getActiveControl()->mouseReleased(x, y, button);
+//                } else {
+                    getCurrentPage().mouseReleased(x, y, button);
+                    _pGuiControls->mouseReleased(x, y, button);
+//                }
                 releaseActiveControl();
             }
             
@@ -263,8 +289,12 @@ namespace msa {
                 }
                 
                 if(doDraw) {
-                    getCurrentPage().keyPressed(key);
-                    _pGuiControls->keyPressed(key);
+//                    if(getActiveControl()) {
+//                        getActiveControl()->keyPressed(key);
+//                    } else {
+                        getCurrentPage().keyPressed(key);
+                        _pGuiControls->keyPressed(key);
+//                    }
                 }
                 
             }
@@ -272,8 +302,12 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::keyReleased(int key) {
                 if(!checkOkToRun()) return;
-                getCurrentPage().keyReleased(key);
-                _pGuiControls->keyReleased(key);
+//                if(getActiveControl()) {
+//                    getActiveControl()->keyReleased(key);
+//                } else {
+                    getCurrentPage().keyReleased(key);
+                    _pGuiControls->keyReleased(key);
+//                }
             }
             
             

@@ -59,7 +59,7 @@ namespace msa {
                 
             private:
                 bool    doDefaultKeys;
-                int     currentPageIndex;
+//                int     currentPageIndex;
                 bool    doDraw;
                 vector<Page*> pages;
                 GuiControls *_pGuiControls;
@@ -73,6 +73,7 @@ namespace msa {
                 
                 
                 Page& addPage(Page* page);
+                int getCurrentPageIndex();
             };
             
         }
