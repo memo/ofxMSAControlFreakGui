@@ -16,7 +16,7 @@ namespace msa {
                 BoolButton(Container *parent, ParameterBool* p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     // draw bg
                     ofFill();
                     setToggleColor(getParameter().value());
@@ -26,7 +26,7 @@ namespace msa {
                     drawTextCentered();
                     drawBorder();
                     
-                    BoolBase::onDraw();
+                    BoolBase::draw();
                 }
             };
             

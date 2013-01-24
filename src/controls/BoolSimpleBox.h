@@ -16,7 +16,7 @@ namespace msa {
                 BoolSimpleBox(Container *parent, ParameterBool* p) : BoolBase(parent, p) {}
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     if(isMousePressed() || getParameter().value()) setColor(ofColor(255, 100));
                     else setColor(ofColor(0, 100));
                     ofPushMatrix();
@@ -33,7 +33,7 @@ namespace msa {
                     drawTextCentered();
                     drawBorder();
                     
-                    BoolBase::onDraw();
+                    BoolBase::draw();
                 }
             };
             

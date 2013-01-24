@@ -35,7 +35,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     ofFill();
                     setBGColor();
                     ofRect(0, 0, width, height);

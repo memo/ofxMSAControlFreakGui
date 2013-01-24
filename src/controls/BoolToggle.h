@@ -18,7 +18,7 @@ namespace msa {
                 BoolToggle(Container *parent, ParameterBool* p) : BoolBase(parent, p) { bDrawCross = true; }
                
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                                         
                     ofFill();
                     setToggleColor(getParameter().value());
@@ -43,7 +43,7 @@ namespace msa {
                     drawTextCentered();
                     drawBorder();
                     
-                    BoolBase::onDraw();
+                    BoolBase::draw();
                 }
                 
             };

@@ -54,7 +54,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     if(paramT->getMode() == ParameterBool::kBang && getParameter().value()) getParameter().set(false);
                 }
                 

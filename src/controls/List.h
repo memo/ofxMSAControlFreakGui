@@ -58,7 +58,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     int numLabels = paramT->size();
                     layout.height = height = pconfig->layout.dropdownListTextHeight * (numLabels + 0.5);
 

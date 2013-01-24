@@ -237,7 +237,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Control::draw() {
+            void Control::transformAndDraw() {
                 if(!visible) return;
                 
                 bool bTimeToChange = getStateChangeMillis() > pconfig->colors.fade.delayMillis;
@@ -267,7 +267,7 @@ namespace msa {
                         ofScale(s.x, s.y, 1);
                         
                         ofPushMatrix(); {
-                            onDraw();
+                            draw();
                             //                drawBorder();
                             //                drawTextCentered(getParameter().getName() + " " + ofToString(getInheritedZ()));
                         } ofPopMatrix();

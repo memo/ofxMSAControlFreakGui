@@ -15,7 +15,7 @@ namespace msa {
                 
                 Content(Container *parent, Parameter* p, ofBaseDraws& content, float fixwidth=250.0);
                 void setup();
-                void onDraw();
+                void draw();
             };
             
         }

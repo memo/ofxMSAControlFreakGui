@@ -18,7 +18,7 @@ namespace msa {
                 
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     // draw bg
                     ofFill();
                     setToggleColor(getParameter().value());
@@ -30,7 +30,7 @@ namespace msa {
 //                    drawBorder(pconfig->colors.text);
                     drawBorder();
                     
-                    BoolBase::onDraw();
+                    BoolBase::draw();
                 }
             };
             

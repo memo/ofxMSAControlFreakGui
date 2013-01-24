@@ -18,7 +18,7 @@ namespace msa {
                 height = fixheight + pconfig->layout.buttonHeight;
             }
             
-            void Content::onDraw() {
+            void Content::draw() {
                 if(content == NULL) return;
                 
                 if(content->getWidth() == 0 && content->getHeight() ==0) return;

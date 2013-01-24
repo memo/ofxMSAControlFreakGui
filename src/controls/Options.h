@@ -57,7 +57,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     int numLabels = paramT->size();
                     layout.height = height = pconfig->layout.buttonHeight * numLabels + 3;
                     

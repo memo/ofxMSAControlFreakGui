@@ -81,7 +81,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     ofFill();
                     
                     setBGColor();

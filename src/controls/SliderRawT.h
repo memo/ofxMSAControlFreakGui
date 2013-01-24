@@ -71,7 +71,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     ofFill();
                     
                     float barwidth = ofClamp(getParameter().getMappedTo(0, width), 0, width);

@@ -20,7 +20,7 @@ namespace msa {
                 }
 
                 //--------------------------------------------------------------
-                void onDraw() {
+                void draw() {
                     glPushMatrix();
                     glTranslatef(x, y, 0);
                     
