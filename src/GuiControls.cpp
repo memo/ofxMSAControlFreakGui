@@ -55,7 +55,7 @@ namespace msa {
             //--------------------------------------------------------------
             void GuiControls::update() {
                 Container::update();
-                
+
                 // set positions and layout
                 int s = pconfig->layout.buttonHeight * 0.7;
                 int y = (pconfig->layout.buttonHeight - s)/2;

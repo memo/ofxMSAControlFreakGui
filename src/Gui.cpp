@@ -144,7 +144,8 @@ namespace msa {
 //                if(!isSetup) setup();
                 
                 Container::update();
-                pages[currentPageIndex]->_update();
+                getCurrentPage()._update();
+                guiControls->update();
             }
             
             //--------------------------------------------------------------
@@ -172,6 +173,8 @@ namespace msa {
                 // iterate all controls on page, set position and add to render queue
                 page.layoutManager->update(page);
                 
+                page.layoutManager->update(*guiControls);
+                
                 // sort and draw
                 Renderer::instance().draw();
                 
@@ -181,27 +184,29 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::mouseMoved(int x, int y) {
                 if(!checkOkToRun()) return;
-                pages[currentPageIndex]->mouseMoved(x, y);
+                getCurrentPage().mouseMoved(x, y);
+                guiControls->mouseMoved(x, y);
             }
             
             //--------------------------------------------------------------
             void Gui::mousePressed(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                pages[currentPageIndex]->mousePressed(x, y, button);
+                getCurrentPage().mousePressed(x, y, button);
+                guiControls->mousePressed(x, y, button);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseDragged(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                pages[currentPageIndex]->mouseDragged(x, y, button);
+                getCurrentPage().mouseDragged(x, y, button);
+                guiControls->mouseDragged(x, y, button);
             }
             
             //--------------------------------------------------------------
             void Gui::mouseReleased(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                pages[currentPageIndex]->mouseReleased(x, y, button);
-                //	if(doAutoSave) doSave = true;
-                //                if(doAutoSave) saveXml();
+                getCurrentPage().mouseReleased(x, y, button);
+                guiControls->mouseReleased(x, y, button);
             }
             
             //--------------------------------------------------------------
@@ -222,7 +227,8 @@ namespace msa {
                 }
                 
                 if(doDraw) {
-                    pages[currentPageIndex]->keyPressed(key);
+                    getCurrentPage().keyPressed(key);
+                    guiControls->keyPressed(key);
                 }
                 
             }
@@ -230,7 +236,8 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::keyReleased(int key) {
                 if(!checkOkToRun()) return;
-                pages[currentPageIndex]->keyReleased(key);
+                getCurrentPage().keyReleased(key);
+                guiControls->keyReleased(key);
             }
             
             
