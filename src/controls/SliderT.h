@@ -17,51 +17,51 @@ namespace msa {
                 //--------------------------------------------------------------
                 SliderT(Container *parent, Parameter* p) : Container(parent, p) {
                     setZ(-1);
-//                    layout.positionMode = 1;
+//                    layout.positionMode = LayoutSettings::kAbsolute;
 //                    layout.width = 1;
 //                    layout.height = 1;
                     
                     slider = new SliderRawT<T>(parent, p);
-                    slider->layout.positionMode = 1;
+                    slider->layout.positionMode = LayoutSettings::kAbsolute;
                     slider->setZ(0);
-                    add(slider);
+                    addControl(slider);
                     
                     decButton = new BoolSimpleBox(this, "<");
-                    decButton->layout.positionMode = 1;
+                    decButton->layout.positionMode = LayoutSettings::kAbsolute;
                     decButton->setZ(1);
                     decButton->setMode(ParameterBool::kBang);
                     decButton->getParameter().setTooltip("dec");
-                    add(decButton);
+                    addControl(decButton);
 
                     incButton = new BoolSimpleBox(this, ">");
-                    incButton->layout.positionMode = 1;
+                    incButton->layout.positionMode = LayoutSettings::kAbsolute;
                     incButton->setZ(1);
                     incButton->setMode(ParameterBool::kBang);
                     incButton->getParameter().setTooltip("inc");
-                    add(incButton);
+                    addControl(incButton);
 
                     clampButton = new BoolSimpleBox(this, "c");
-                    clampButton->layout.positionMode = 1;
+                    clampButton->layout.positionMode = LayoutSettings::kAbsolute;
                     clampButton->setZ(1);
                     clampButton->setMode(ParameterBool::kToggle);
                     clampButton->getParameter().setTooltip("Clamp");
                     clampButton->getParameter().trackVariable(&p->getClamp());
-                    add(clampButton);
+                    addControl(clampButton);
 
                     snapButton = new BoolSimpleBox(this, "s");
-                    snapButton->layout.positionMode = 1;
+                    snapButton->layout.positionMode = LayoutSettings::kAbsolute;
                     snapButton->setZ(1);
                     snapButton->setMode(ParameterBool::kToggle);
                     snapButton->getParameter().setTooltip("Snap");
                     snapButton->getParameter().trackVariable(&p->getSnap());
-                    add(snapButton);
+                    addControl(snapButton);
 
                     moreButton = new BoolSimpleBox(this, ".");
-                    moreButton->layout.positionMode = 1;
+                    moreButton->layout.positionMode = LayoutSettings::kAbsolute;
                     moreButton->setZ(1);
                     moreButton->setMode(ParameterBool::kBang);
                     moreButton->getParameter().setTooltip("More... (coming soon)");
-                    add(moreButton);
+                    addControl(moreButton);
                 }
                 
                 //--------------------------------------------------------------

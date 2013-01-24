@@ -21,45 +21,45 @@ namespace msa {
                 presetManager = new PanelPresetManager(this);
                 
                 titleButton = new BoolTitle(this, getName());
-                titleButton->layout.positionMode = 1;
+                titleButton->layout.positionMode = LayoutSettings::kAbsolute;
                 titleButton->setZ(1);
                 titleButton->getParameter().trackVariable(&paramT->isOpen());
-                add(titleButton);
+                addControl(titleButton);
                 
                 collapseAllButton = new BoolSimpleCircle(this, "-");
-                collapseAllButton->layout.positionMode = 1;
+                collapseAllButton->layout.positionMode = LayoutSettings::kAbsolute;
                 collapseAllButton->setZ(2);
                 collapseAllButton->setMode(ParameterBool::kBang);
-                add(collapseAllButton);
+                addControl(collapseAllButton);
                 
                 saveButton = new BoolSimpleCircle(this, "s");
-                saveButton->layout.positionMode = 1;
+                saveButton->layout.positionMode = LayoutSettings::kAbsolute;
                 saveButton->setZ(2);
                 saveButton->setMode(ParameterBool::kToggle);
                 saveButton->getParameter().setTooltip("Save preset for '" + getPath() + "'");
                 saveButton->getParameter().trackVariable(&presetManager->bSaveOpen);
-                add(saveButton);
+                addControl(saveButton);
                 
                 loadButton = new BoolSimpleCircle(this, "l");
-                loadButton->layout.positionMode = 1;
+                loadButton->layout.positionMode = LayoutSettings::kAbsolute;
                 loadButton->setZ(2);
                 loadButton->setMode(ParameterBool::kToggle);
                 loadButton->getParameter().setTooltip("Load preset for '" + getPath() + "'");
                 loadButton->getParameter().trackVariable(&presetManager->bLoadOpen);
-                add(loadButton);
+                addControl(loadButton);
                 
                 presetDropdown = new List(this, "presets");
-                presetDropdown->layout.positionMode = 1;
+                presetDropdown->layout.positionMode = LayoutSettings::kAbsolute;
                 presetDropdown->layout.doIncludeInContainerRect = false;
                 presetDropdown->setZ(1e100);
                 presetDropdown->setMode(ParameterNamedIndex::kList);
-                add(presetDropdown);
+                addControl(presetDropdown);
                 
                 children = new Container(this, getName() + "_children");
                 children->layout.doAffectFlow = false;
                 children->scale.y = 0;  // everything start closed
                 //                children->layout.set(0, 0, 1, 3);
-                add(children);
+                addControl(children);
                 
                 children->addParameters(paramT);
             }

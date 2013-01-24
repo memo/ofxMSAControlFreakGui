@@ -2,13 +2,11 @@
 
 #include "ofxMSAControlFreakGui/src/Container.h"
 
-
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class BoolButton;
-            class Config;
+            class GuiControls;
             
             class Gui : public Container {
             public:
@@ -71,6 +69,7 @@ namespace msa {
                 int     currentPageIndex;
                 bool    doDraw;
                 vector<Page*> pages;
+                GuiControls *guiControls;
                 
                 bool checkOkToRun();
                 void setDraw(bool b);

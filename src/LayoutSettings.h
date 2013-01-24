@@ -8,7 +8,14 @@ namespace msa {
             
             class LayoutSettings : public ofRectangle {
             public:
-                int     positionMode;   // 0: relative (normal), 1: absolute (relative to container), 2: fixed (relative to screen)
+
+                enum Mode {
+                    kRelative,  // normal (controls are placed in a free flowing manner, like html)
+                    kAbsolute,  // relative to container
+                    kFixed      // relative to screen
+                };
+                
+                Mode     positionMode;
                 bool    doAffectFlow;
                 bool    doIncludeInContainerRect;
                 bool	newColumn;
@@ -16,7 +23,7 @@ namespace msa {
                 ofVec2f paddingPost;
                 
                 LayoutSettings() {
-                    positionMode = 0;
+                    positionMode = kRelative;
                     doAffectFlow = true;
                     doIncludeInContainerRect = true;
                     newColumn = false;

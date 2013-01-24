@@ -57,10 +57,9 @@ namespace msa {
                 SliderFloat		&addSliderFloat(ParameterFloat* p);
                 BoolToggle		&addToggle(ParameterBool* p);
 
-                void add(Parameter* p);
                 void addParameters(ParameterGroup* parameters);
                 
-                Control& add(Control *control);
+                Control& addControl(Control *control);
 
                 
                 // accessing
@@ -92,9 +91,12 @@ namespace msa {
                 OrderedPointerMap<string, Control> _controls;
                 
                 Control *_pactiveControl; // currently active control (only this control receives events)
-
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
+            
+                
+                
+                void addParameter(Parameter* p);
             };
             
         }

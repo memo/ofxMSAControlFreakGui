@@ -55,7 +55,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Control& Container::add(Control *control) {
+            Control& Container::addControl(Control *control) {
                 _controls.push_back(control->getParameter().getName(), control);
                 control->setParent(this);
                 return *control;
@@ -95,12 +95,12 @@ namespace msa {
             
             //--------------------------------------------------------------
             Panel& Container::addPanel(ParameterGroup* p) {
-                return (Panel&)add(new Panel(this, p));
+                return (Panel&)addControl(new Panel(this, p));
             }
             
             //--------------------------------------------------------------
             BoolButton& Container::addButton(ParameterBool* p) {
-                return (BoolButton&)add(new BoolButton(this, p));
+                return (BoolButton&)addControl(new BoolButton(this, p));
             }
             
             //--------------------------------------------------------------
@@ -110,28 +110,28 @@ namespace msa {
             
             //--------------------------------------------------------------
             DropdownList& Container::addDropdownList(ParameterNamedIndex* p) {
-                return (DropdownList&)add(new DropdownList(this, p));
+                return (DropdownList&)addControl(new DropdownList(this, p));
             }
             
             //--------------------------------------------------------------
             List& Container::addList(ParameterNamedIndex* p) {
-                return (List&)add(new List(this, p));
+                return (List&)addControl(new List(this, p));
             }
             
             //--------------------------------------------------------------
             Options& Container::addOptions(ParameterNamedIndex* p) {
-                return (Options&)add(new Options(this, p));
+                return (Options&)addControl(new Options(this, p));
             }
             
             //--------------------------------------------------------------
             Content& Container::addContent(Parameter* p, ofBaseDraws &content, float fixwidth) {
                 if(fixwidth == -1) fixwidth = pconfig->layout.columnWidth;
-                return (Content&)add(new Content(this, p, content, fixwidth));
+                return (Content&)addControl(new Content(this, p, content, fixwidth));
             }
             
             //--------------------------------------------------------------
             FPSCounter& Container::addFPSCounter() {
-                return (FPSCounter&)add(new FPSCounter(this));
+                return (FPSCounter&)addControl(new FPSCounter(this));
             }
             
             //--------------------------------------------------------------
@@ -141,12 +141,12 @@ namespace msa {
             
             //--------------------------------------------------------------
             SliderInt& Container::addSliderInt(ParameterInt* p) {
-                return (SliderInt&)add(new SliderT<int>(this, p));
+                return (SliderInt&)addControl(new SliderT<int>(this, p));
             }
             
             //--------------------------------------------------------------
             SliderFloat& Container::addSliderFloat(ParameterFloat* p) {
-                return (SliderFloat&)add(new SliderT<float>(this, p));
+                return (SliderFloat&)addControl(new SliderT<float>(this, p));
             }
             
             //--------------------------------------------------------------
@@ -161,13 +161,13 @@ namespace msa {
             
             //--------------------------------------------------------------
             BoolToggle& Container::addToggle(ParameterBool* p) {
-                return (BoolToggle&)add(new BoolToggle(this,p));
+                return (BoolToggle&)addControl(new BoolToggle(this,p));
             }
             
             
             
             //--------------------------------------------------------------
-            void Container::add(Parameter* p) {
+            void Container::addParameter(Parameter* p) {
                 ofLogVerbose() << "msa::ControlFreak::gui::Container::add: " << getPath() << ": " << p->getPath();
                 // if parameter already exists, remove it first
                 
@@ -234,7 +234,7 @@ namespace msa {
                 
                 int np = parameters->size();
                 for(int i=0; i<np; i++) {
-                    add(&parameters->get(i));
+                    addParameter(&parameters->get(i));
                 }
             }
             

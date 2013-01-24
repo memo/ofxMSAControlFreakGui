@@ -16,6 +16,8 @@ namespace msa {
                 currentPageIndex = false;
                 doDraw = true;
                 pconfig = ConfigPtr(new Config);
+                guiControls = new GuiControls(this);
+                addControl(guiControls);
                 enableAllEvents();
             }
             
