@@ -197,7 +197,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Container::addParameterChildren(ParameterGroup& parameters) {
                 ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameterChildren: " << getPath() << ": " << parameters.getPath();
-
+                
                 int np = parameters.size();
                 for(int i=0; i<np; i++) {
                     addParameter(parameters.get(i));
@@ -218,14 +218,15 @@ namespace msa {
                 e.x = x;
                 e.y = y;
                 
-//                if(_pActiveControl)
-//                    _pActiveControl->_mouseMoved(e);
-//                else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                        get(i)._mouseMoved(e);
-                        //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
-                    }
-//                }
+                //                if(_pActiveControl)
+                //                    _pActiveControl->_mouseMoved(e);
+                //                else {
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                    Control &c = get(i);
+                    if(c.enabled && c.visible) c._mouseMoved(e);
+                    //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
+                }
+                //                }
             }
             
             //--------------------------------------------------------------
@@ -235,17 +236,20 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-//                if(_pActiveControl)
-//                    _pActiveControl->_mousePressed(e);
-//                else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                        get(i)._mousePressed(e);
-                        if(get(i).isMouseOver()) {
-                            getRoot()->setActiveControl(&get(i));
+                //                if(_pActiveControl)
+                //                    _pActiveControl->_mousePressed(e);
+                //                else {
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                    Control &c = get(i);
+                    if(c.enabled && c.visible) {
+                        c._mousePressed(e);
+                        if(c.isMouseOver()) {
+                            getRoot()->setActiveControl(&c);
                             return;    // don't propogate event if this control processed it
                         }
                     }
-//                }
+                }
+                //                }
             }
             
             //--------------------------------------------------------------
@@ -255,14 +259,15 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-//                if(_pActiveControl)
-//                    _pActiveControl->_mouseDragged(e);
-//                else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
-                        get(i)._mouseDragged(e);
-                        //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
-                    }
-//                }
+                //                if(_pActiveControl)
+                //                    _pActiveControl->_mouseDragged(e);
+                //                else {
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                    Control &c = get(i);
+                    if(c.enabled && c.visible) c._mouseDragged(e);
+                    //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
+                }
+                //                }
             }
             
             //--------------------------------------------------------------
@@ -272,13 +277,16 @@ namespace msa {
                 e.y = y;
                 e.button = button;
                 
-//                if(_pActiveControl)
-//                    _pActiveControl->_mouseReleased(e);
-//                else {
-                    if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i)._mouseReleased(e);
-//                }
+                //                if(_pActiveControl)
+                //                    _pActiveControl->_mouseReleased(e);
+                //                else {
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                    Control &c = get(i);
+                    if(c.enabled && c.visible) c._mouseReleased(e);
+                }
+                //                }
                 
-//                if(getRoot()) getRoot()->releaseActiveControl();
+                //                if(getRoot()) getRoot()->releaseActiveControl();
             }
             
             //--------------------------------------------------------------
@@ -294,7 +302,7 @@ namespace msa {
                 
                 if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.isMouseOver()) {
+                    if(c.enabled && c.visible && c.isMouseOver()) {
                         if(keyUp)		c.onKeyUp();
                         if(keyDown)		c.onKeyDown();
                         if(keyLeft)		c.onKeyLeft();
@@ -310,7 +318,10 @@ namespace msa {
                 ofKeyEventArgs e;
                 e.key = key;
                 
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) if(get(i).isMouseOver()) get(i)._keyReleased(e);
+                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                    Control &c = get(i);
+                    if(c.enabled && c.visible /*&& c.isMouseOver()*/) c._keyReleased(e);
+                }
             }
             
             

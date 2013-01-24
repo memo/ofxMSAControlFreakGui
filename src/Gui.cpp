@@ -185,7 +185,7 @@ namespace msa {
                 
                 Container::update();
                 getCurrentPage()._update();
-                _pGuiControls->update();
+                Container::update();
             }
             
             //--------------------------------------------------------------
@@ -230,7 +230,7 @@ namespace msa {
 //                    getActiveControl()->mouseMoved(x, y);
 //                } else {
                     getCurrentPage().mouseMoved(x, y);
-                    _pGuiControls->mouseMoved(x, y);
+                    Container::mouseMoved(x, y);
 //                }
             }
             
@@ -242,7 +242,7 @@ namespace msa {
 //                    getActiveControl()->mousePressed(x, y, button);
 //                } else {
                     getCurrentPage().mousePressed(x, y, button);
-                    _pGuiControls->mousePressed(x, y, button);
+                    Container::mousePressed(x, y, button);
 //                }
             }
             
@@ -254,7 +254,7 @@ namespace msa {
 //                    getActiveControl()->mouseDragged(x, y, button);
 //                } else {
                     getCurrentPage().mouseDragged(x, y, button);
-                    _pGuiControls->mouseDragged(x, y, button);
+                    Container::mouseDragged(x, y, button);
 //                }
             }
             
@@ -266,7 +266,7 @@ namespace msa {
 //                    getActiveControl()->mouseReleased(x, y, button);
 //                } else {
                     getCurrentPage().mouseReleased(x, y, button);
-                    _pGuiControls->mouseReleased(x, y, button);
+                    Container::mouseReleased(x, y, button);
 //                }
                 releaseActiveControl();
             }
@@ -293,7 +293,7 @@ namespace msa {
 //                        getActiveControl()->keyPressed(key);
 //                    } else {
                         getCurrentPage().keyPressed(key);
-                        _pGuiControls->keyPressed(key);
+                        Container::keyPressed(key);
 //                    }
                 }
                 
@@ -306,7 +306,7 @@ namespace msa {
 //                    getActiveControl()->keyReleased(key);
 //                } else {
                     getCurrentPage().keyReleased(key);
-                    _pGuiControls->keyReleased(key);
+                    Container::keyReleased(key);
 //                }
             }
             

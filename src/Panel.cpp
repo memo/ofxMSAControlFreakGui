@@ -84,10 +84,6 @@ namespace msa {
                 int y = (titleButton->height - s)/2;
                 int p = 3;
                 
-                //                layout.setPosition(0, titleButton->height);
-                //                layout.paddingPre.y = titleButton->height;
-                //                layout.paddingPost.y = titleButton->height/2;
-                
                 collapseAllButton->layout.set(p, y, s, s);
                 saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
                 loadButton->layout.set(titleButton->width - (s + p), y, s, s);

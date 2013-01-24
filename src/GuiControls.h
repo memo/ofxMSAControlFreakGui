@@ -22,7 +22,7 @@ namespace msa {
                 
                 void update();
 
-                BoolBase *wrapButton;
+//                BoolBase *wrapButton;
                 BoolBase *pagesButton;
                 Options *pagesDropdown;
                 ScrollBar *scrollbar;

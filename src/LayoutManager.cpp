@@ -100,7 +100,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             void LayoutManager::prepareContainer(Container &container) {
-//                Config &pconfig      = container.getRoot()->pconfig;
                 ofVec2f maxPos      = getMaxPos();
                 
 //                // TODO: hack?
@@ -133,11 +132,11 @@ namespace msa {
                     prepareControl(container, containerScale, panelDepth, maxPos);
                     for(int i=0; i<container.getNumControls(); i++) {
                         Control& control = container.get(i);
-                        
-                        
-                        Container *c = dynamic_cast<Container*>(&control);
-                        if(c) prepareContainer(*c);
-                        else prepareControl(control, containerScale, panelDepth, maxPos);
+                        if(control.enabled && control.visible) {
+                            Container *c = dynamic_cast<Container*>(&control);
+                            if(c) prepareContainer(*c);
+                            else prepareControl(control, containerScale, panelDepth, maxPos);
+                        }
 
                     }
                     

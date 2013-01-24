@@ -17,12 +17,12 @@ namespace msa {
                 layout.positionMode = LayoutSettings::kFixed;
                 layout.doIncludeInContainerRect = false;
                 
-                wrapButton = new BoolSimpleCircle(this, "w");
-                wrapButton->layout.positionMode = LayoutSettings::kAbsolute;
-                wrapButton->setZ(2);
-                wrapButton->setMode(ParameterBool::kToggle);
-                wrapButton->getParameter().setTooltip("Wrap");
-                addControl(wrapButton);
+//                wrapButton = new BoolSimpleCircle(this, "w");
+//                wrapButton->layout.positionMode = LayoutSettings::kAbsolute;
+//                wrapButton->setZ(2);
+//                wrapButton->setMode(ParameterBool::kToggle);
+//                wrapButton->getParameter().setTooltip("Wrap");
+//                addControl(wrapButton);
                 
                 pagesButton = new BoolSimpleBox(this, ">");
                 pagesButton->layout.positionMode = LayoutSettings::kFixed;
@@ -76,8 +76,8 @@ namespace msa {
                 int p = 3;
                 
                 // check buttons and stuff
-                wrapButton->layout.set(pconfig->layout.columnWidth - (s + p) * 3, y, s, s);
-                wrapButton->getParameter().trackVariable(&pLayoutManager->doWrap);
+//                wrapButton->layout.set(pconfig->layout.columnWidth - (s + p) * 3, y, s, s);
+//                wrapButton->getParameter().trackVariable(&pLayoutManager->doWrap);
                 
                 // TODO: custom scrollbar layout
                 scrollbar->visible = true;
@@ -103,17 +103,7 @@ namespace msa {
                         _pgui->setPage((int)pagesDropdown->getParameter());
                     }
                 }
-                
-
-                
             }
-            
-            
-            //
-            //                if(_pgui && prevPageButton && prevPageButton->getParameter().value()) {
-            ////                    _pgui->prevPage();
-            //                }
-            
         }
         
         
