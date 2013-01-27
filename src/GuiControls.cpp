@@ -57,7 +57,7 @@ namespace msa {
                 ParameterNamedIndex *p = dynamic_cast<ParameterNamedIndex*>(&pagesDropdown->getParameter());
                 if(p && _pgui) {
                     p->clearLabels();
-                    for(int i=0; i<_pgui->getNumPages(); i++) p->addLabel(ofToString(i+1) + ": " + _pgui->getPage(i).getName());
+                    for(int i=0; i<_pgui->getNumPages(); i++) p->addLabel(ofToString(i+1) + ": " + _pgui->getPage(i+1).getName());
                 }
             }
             
@@ -101,7 +101,7 @@ namespace msa {
                 if(pagesDropdown->getParameter().hasChanged()) {
                     pagesButton->getParameter() = false;
                     if(_pgui) {
-                        _pgui->setPage((int)pagesDropdown->getParameter());
+                        _pgui->setPage((int)pagesDropdown->getParameter()+1);
                     }
                 }
             }

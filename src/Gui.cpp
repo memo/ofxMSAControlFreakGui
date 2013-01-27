@@ -83,12 +83,12 @@ namespace msa {
             //--------------------------------------------------------------
             void Gui::setPage(int i) {
                 if(pages.size()) {
-                    _pGuiControls->pagesDropdown->getParameter() = (i + pages.size()) % pages.size();;
+                    _pGuiControls->pagesDropdown->getParameter() = (i-1 + pages.size()) % pages.size();
                 }
             }
             
             int Gui::getCurrentPageIndex() {
-                return _pGuiControls->pagesDropdown->getParameter();
+                return (int)_pGuiControls->pagesDropdown->getParameter()+1;
             }
             
             //--------------------------------------------------------------
@@ -96,7 +96,7 @@ namespace msa {
                 for(int i=0; i<pages.size(); i++) {
                     Page &page = *pages[i];
                     if(page.getName() == name) {
-                        setPage(i);
+                        setPage(i+1);
                         return;
                     }
                 };
@@ -109,12 +109,12 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::getPage(int i) {
-                return *pages.at(i);
+                return *pages.at(i-1);
             }
             
             //--------------------------------------------------------------
             Page& Gui::getPage(string name) {
-                for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->getName()) == 0) return *pages[i];
+                for(int i=0; i<pages.size(); i++) if(name.compare(pages[i]->getName()) == 0) return *pages[i];
             }
             
             //--------------------------------------------------------------
@@ -278,7 +278,7 @@ namespace msa {
                     if(key == ' ') {
                         toggleDraw();
                     } else if(key>='1' && key<='9') {
-                        setPage((int)(key - '1'));
+                        setPage((int)(key - '1')+1);
                         setDraw(true);
                     } else if(doDraw) {
                         switch(key) {
