@@ -14,6 +14,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 SliderRawT(Container *parent, Parameter* p) : Control(parent, p) {
+                    lastMousePos = 0;
                 }
                 
                 //--------------------------------------------------------------
@@ -31,12 +32,20 @@ namespace msa {
                 void updateSlider() {
                     if(!enabled) return;
                     if(isMousePressed()) {
-                        getParameter().setMappedFrom(ofGetMouseX(), x, x + width);
+                        if(getParameter().getClamp()) {
+                            getParameter().setMappedFrom(ofGetMouseX(), x, x + width);
+                        } else {
+                            int diff = ofGetMouseX() - lastMousePos;
+                            float pixelMult = (float)getParameter().getRangeLength() / width;
+                            getParameter() = (T)getParameter() + diff * pixelMult;
+                            lastMousePos = ofGetMouseX();
+                        }
                     }
                 }
                 
                 //--------------------------------------------------------------
                 void onPress(int x, int y, int button) {
+                    lastMousePos = x;
                     updateSlider();
                 }
                 
@@ -91,7 +100,7 @@ namespace msa {
                     
                     if(getParameter().getSnap()) {
 //                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
-                        float xinc = width * (float)getParameter().getIncrement() / ((float)getParameter().getMax() - (float)getParameter().getMin());
+                        float xinc = width * (float)getParameter().getIncrement() / (float)getParameter().getRangeLength();
                         if(xinc >=3) {
                             setColor(pconfig->colors.bg[0]);
                             ofSetLineWidth(1);
@@ -113,6 +122,8 @@ namespace msa {
                 }
                 
                 
+            protected:
+                int lastMousePos;
             };
         }
     }
