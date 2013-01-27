@@ -99,6 +99,7 @@ namespace msa {
                 }
                 
                 if(pagesDropdown->getParameter().hasChanged()) {
+                    pagesButton->getParameter() = false;
                     if(_pgui) {
                         _pgui->setPage((int)pagesDropdown->getParameter());
                     }
