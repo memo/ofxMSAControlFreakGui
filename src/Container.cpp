@@ -76,18 +76,18 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            DropdownList& Container::addDropdownList(ParameterNamedIndex& p) {
-                return (DropdownList&)addControl(new DropdownList(this, &p));
+            OptionsDropdownList& Container::addDropdownList(ParameterNamedIndex& p) {
+                return (OptionsDropdownList&)addControl(new OptionsDropdownList(this, &p));
             }
             
             //--------------------------------------------------------------
-            List& Container::addList(ParameterNamedIndex& p) {
-                return (List&)addControl(new List(this, &p));
+            OptionsList& Container::addList(ParameterNamedIndex& p) {
+                return (OptionsList&)addControl(new OptionsList(this, &p));
             }
             
             //--------------------------------------------------------------
-            Options& Container::addOptions(ParameterNamedIndex& p) {
-                return (Options&)addControl(new Options(this, &p));
+            OptionsBoxes& Container::addOptions(ParameterNamedIndex& p) {
+                return (OptionsBoxes&)addControl(new OptionsBoxes(this, &p));
             }
             
             //--------------------------------------------------------------

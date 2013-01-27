@@ -7,17 +7,17 @@ namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class List : public Control {
+            class OptionsBase : public Control {
             public:
                 
                 //--------------------------------------------------------------
-                List(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL)) {
+                OptionsBase(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL)) {
                     paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                     init();
                 }
                 
                 //--------------------------------------------------------------
-                List(Container *parent, ParameterNamedIndex* p) : Control(parent, p) {
+                OptionsBase(Container *parent, ParameterNamedIndex* p) : Control(parent, p) {
                     paramT = p;
                     init();
                 }
@@ -40,12 +40,11 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onMouseMove(int x, int y) {
-                    int a = this->y;
-                    int b = this->y + pconfig->layout.dropdownListTextHeight * paramT->size();
-//                    mouseOverIndex = floor(ofMap(y + pconfig->layout.dropdownListTextHeight/2, a, b, 0, paramT->size()-1, true));
+                    int a = this->y + titleHeight;
+                    int b = a + listHeight();
                     mouseOverIndex = floor(ofMap(y, a, b, 0, paramT->size(), true));
                 }
-
+                
                 //--------------------------------------------------------------
                 void onDragOver(int x, int y, int button) {
                     onPress(x, y, button);
@@ -58,27 +57,37 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void draw() {
-                    int numLabels = paramT->size();
-                    layout.height = height = pconfig->layout.dropdownListTextHeight * (numLabels + 0.5);
+                int listHeight() {
+                    return lineHeight * paramT->size();
+                }
 
-                    setBGColor();
-                    ofFill();
-                    ofRect(0, 0, width, height);
-                    
+                
+                //--------------------------------------------------------------
+                void drawTitle() {
+                    height = titleHeight;
+                    drawBG(pconfig->colors.toggle.full);
+                    drawBorder();
+                    drawTextCentered();
+                }
+                
+                //--------------------------------------------------------------
+                void drawList() {
+                    height = listHeight();
+                    drawBG();
                     drawBorder();
                     ofFill();
                     
+                    int numLabels = paramT->size();
                     for(int i=0; i < numLabels; i++) {
                         setTextColor();
-                        float curY = i * pconfig->layout.dropdownListTextHeight;
+                        float curY = i * lineHeight;
                         if(i == mouseOverIndex) {
                             ofNoFill();
-                            ofRect(0, curY+3, width, pconfig->layout.dropdownListTextHeight);
+                            ofRect(0, curY+3, width, lineHeight);
                         }
                         if(i == getParameter().value()) {
                             ofFill();
-                            ofRect(0, curY+3, width, pconfig->layout.dropdownListTextHeight);
+                            ofRect(0, curY+3, width, lineHeight);
                             setBGColor();
                         }
                         
@@ -86,9 +95,22 @@ namespace msa {
                     }
                 }
                 
+                //--------------------------------------------------------------
+                void draw() {
+                    
+                    drawTitle();
+                    
+                    ofTranslate(0, height);
+                    drawList();
+                    
+                    layout.height = height = titleHeight + listHeight();
+                }
+                
             protected:
                 ParameterNamedIndex *paramT;
                 int mouseOverIndex;
+                float lineHeight;
+                float titleHeight;
             };
             
         }

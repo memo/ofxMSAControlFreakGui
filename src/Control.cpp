@@ -10,7 +10,7 @@ namespace msa {
             Control::Control(Container *parent, Parameter* parameter) {
                 setParent(parent);
                 setParameter(parameter);
-
+                
                 // by default, use same pconfig as parent
                 if(parent) pconfig = parent->pconfig;
                 
@@ -25,7 +25,7 @@ namespace msa {
                 _alpha = 1;
                 _depth = 0;
                 
-//                setup();
+                //                setup();
                 
                 // we don't want auto events (they will be controlled via the parent panels)
                 disableAllEvents();
@@ -194,10 +194,12 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Control::drawTextCentered(string s, ofColor *c) {
+            void Control::drawTextCentered(string s, ofColor *c, int x, int y, int w, int h) {
                 s = s.empty() ? getName() : s;
                 ofRectangle r = getTextRect(0, 0, s);
-                drawText(-r.x + width/2 - r.width/2, -r.y + height/2 - r.height/2, s, c);
+                if(!w) w = width;
+                if(!h) h = height;
+                drawText(-r.x + w/2 - r.width/2, -r.y + h/2 - r.height/2, s, c);
                 
             }
             
@@ -221,11 +223,22 @@ namespace msa {
             //            }
             
             //--------------------------------------------------------------
-            void Control::drawBorder(ofColor *c) {
+            void Control::drawBG(ofColor *c, int x, int y, int w, int h) {
+                ofFill();
+                setColor(c ? c : pconfig->colors.bg);
+                if(!w) w = width;
+                if(!h) h = height;
+                ofRect(0, 0, w, h);
+            }
+            
+            //--------------------------------------------------------------
+            void Control::drawBorder(ofColor *c, int x, int y, int w, int h) {
                 ofNoFill();
                 setColor(c ? c : pconfig->colors.border);
                 glLineWidth(1.0);
-                ofRect(0, 0, width, height);
+                if(!w) w = width;
+                if(!h) h = height;
+                ofRect(0, 0, w, h);
             }
             
             //--------------------------------------------------------------

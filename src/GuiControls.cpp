@@ -32,7 +32,7 @@ namespace msa {
                 pagesButton->layout.doIncludeInContainerRect = false;
                 addControl(pagesButton);
                 
-                pagesDropdown = new Options(this, "pages");
+                pagesDropdown = new OptionsBoxes(this, "pages");
                 pagesDropdown->layout.positionMode = LayoutSettings::kFixed;
                 pagesDropdown->layout.doIncludeInContainerRect = false;
                 pagesDropdown->setZ(1e100);

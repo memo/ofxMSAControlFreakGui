@@ -1,37 +1,35 @@
 #pragma once
 
-#include "ofxMSAControlFreakGui/src/Control.h"
+#include "ofxMSAControlFreakGui/src/Controls/OptionsBase.h"
 #include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
             
-            class DropdownList : public Control {
+            class OptionsDropdownList : public OptionsBase {
             public:
                 
                 //--------------------------------------------------------------
-                DropdownList(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL)) {
-                    paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
+                OptionsDropdownList(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s, NULL)) {
+                    lineHeight = pconfig->layout.dropdownListTextHeight;
+                    titleHeight = pconfig->layout.buttonHeight;
                 }
                 
                 //--------------------------------------------------------------
-                DropdownList(Container *parent, ParameterNamedIndex* p) : Control(parent, p) {
-                    paramT = p;
+                OptionsDropdownList(Container *parent, ParameterNamedIndex* p) : OptionsBase(parent, p) {
+                    lineHeight = pconfig->layout.dropdownListTextHeight;
+                    titleHeight = pconfig->layout.buttonHeight;
                 }
 
                 //--------------------------------------------------------------
-                void setMode(ParameterNamedIndex::Mode mode) {
-                    paramT->setMode(mode);
+                void onPress(int x, int y, int button) {
                 }
                 
                 //--------------------------------------------------------------
                 void onDragOutside(int x, int y, int button) {
-                    int a = this->y + height;
-                    int b = this->y + height + pconfig->layout.dropdownListTextHeight * paramT->size();
-                    int v = //floor(ofMap(y + pconfig->layout.dropdownListTextHeight/2, a, b, 0, paramT->size()-1, true));
-                        floor(ofMap(y, a, b, 0, paramT->size(), true));
-                    paramT->set(v);
+                    onMouseMove(x, y);
+//                    paramT->set(v);
                 }
                 
                 //--------------------------------------------------------------
@@ -73,8 +71,6 @@ namespace msa {
                     }
                 }
                 
-            protected:
-                ParameterNamedIndex *paramT;
             };
             
         }

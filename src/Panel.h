@@ -9,6 +9,7 @@ namespace msa {
             class BoolBase;
             class LayoutManager;
             class PanelPresetManager;
+            class OptionsBase;
 
             class Panel : public Container {
             public:
@@ -31,7 +32,7 @@ namespace msa {
                 BoolBase *collapseAllButton;
                 BoolBase *loadButton;
                 BoolBase *saveButton;
-                List *presetDropdown;
+                OptionsBase *presetDropdown;
                 
                 PanelPresetManager *presetManager;
                 

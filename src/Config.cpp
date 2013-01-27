@@ -13,7 +13,7 @@ namespace msa {
                 
                 layout.buttonHeight			= 27;
                 layout.sliderHeight         = 8;
-                layout.dropdownListTextHeight	= 15;
+                layout.dropdownListTextHeight	= 20;
                 
                 layout.textPos              = ofVec2f(5, 16);
                 layout.padding              = ofVec2f(3, 0);

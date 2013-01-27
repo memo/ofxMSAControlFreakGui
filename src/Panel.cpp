@@ -48,7 +48,7 @@ namespace msa {
                 loadButton->getParameter().trackVariable(&presetManager->bLoadOpen);
                 addControl(loadButton);
                 
-                presetDropdown = new List(this, "presets");
+                presetDropdown = new OptionsList(this, "presets");
                 presetDropdown->layout.positionMode = LayoutSettings::kAbsolute;
                 presetDropdown->layout.doIncludeInContainerRect = false;
                 presetDropdown->setZ(1e100);
