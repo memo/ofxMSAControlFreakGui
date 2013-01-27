@@ -12,13 +12,15 @@ namespace msa {
             //--------------------------------------------------------------
             Gui::Gui() : Container(NULL, "ofxMSAControlFreakGui") {
                 doDefaultKeys = false;
-//                currentPageIndex = false;
                 doDraw = true;
                 _pActiveControl = NULL;
                 pconfig = ConfigPtr(new Config);
+                
                 pLayoutManager = LayoutManagerPtr(new LayoutManager);
-                _pGuiControls = new GuiControls(this);
-                addControl(_pGuiControls);
+                
+                _pGuiControls = GuiControlsPtr(new GuiControls(this));
+                addControl(_pGuiControls.get());
+                
                 enableAllEvents();
             }
             
@@ -26,14 +28,6 @@ namespace msa {
             Gui::~Gui() {
                 for(int i=0; i<pages.size(); i++) delete pages[i];
             }
-            
-            //--------------------------------------------------------------
-            //            void Gui::setup() {
-            //                isSetup = true;
-            ////                show();
-            ////                ofAddListener(ofEvents().keyPressed, this, &Gui::keyPressed);
-            //            }
-            
             
             //--------------------------------------------------------------
             bool Gui::checkOkToRun() {
@@ -121,13 +115,7 @@ namespace msa {
             Page& Gui::getCurrentPage() {
                 return getPage(getCurrentPageIndex());
             }
-            
-            //--------------------------------------------------------------
-            //            Page& Gui::addPage(string name) {
-            //                Page* page(new Page(NULL, name));
-            //                return addPage(page);
-            //            }
-            
+
             //--------------------------------------------------------------
             Page& Gui::addPage(ParameterGroup &parameters) {
                 ofLogVerbose() << "msa::ControlFreak::gui::Gui::addPage(ParameterGroup): " << parameters.getPath();
@@ -170,15 +158,6 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            //            bool Container::isActive() {
-            //                bool b = pactiveControl == titleButton;//pactiveControl != NULL;
-            //                return parent ? b | parent->isActive() : b;
-            //            }
-            
-            
-            
-            
-            //--------------------------------------------------------------
             void Gui::update() {
                 if(!checkOkToRun()) return;
                 //                if(!isSetup) setup();
@@ -211,14 +190,23 @@ namespace msa {
                 pLayoutManager->boundRect.set(pconfig->layout.scrollbarWidth + pconfig->layout.padding.x, pconfig->layout.padding.y, 0, 0);  // use full width and height of window
                 
                 // iterate all controls on page, set position and add to render queue
-                pLayoutManager->begin();
+                pLayoutManager->begin(*this);
                 pLayoutManager->prepareContainer(page);
                 pLayoutManager->prepareContainer(*_pGuiControls);
-                pLayoutManager->update();
+                pLayoutManager->end();
                 
                 // sort and draw
                 Renderer::instance().draw();
                 
+                ofPopStyle();
+                
+                ofPushStyle();
+                ofSetRectMode(OF_RECTMODE_CORNER);
+                ofNoFill();
+                ofSetColor(0, 255 ,0);
+                ofRect(page.x, page.y, page.width, page.height);
+                ofSetColor(0, 0, 255);
+                ofRect(x, y, width, height);
                 ofPopStyle();
             }
             
@@ -310,6 +298,13 @@ namespace msa {
 //                }
             }
             
+            
+            //--------------------------------------------------------------
+            void Gui::showControlOptions(Control *targetControl) {
+                ofLogNotice() << "Gui::showControlOptions " << (int)targetControl;
+                _pGuiControls->_pControlOptions->show(targetControl);
+            }
+
             
         }
     }

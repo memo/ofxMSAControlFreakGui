@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                OptionsBase(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL)) {
+                OptionsBase(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s)) {
                     paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                     init();
                 }
@@ -65,7 +65,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 void drawTitle() {
                     height = titleHeight;
-//                    drawBG(pconfig->colors.toggle.full);
+//                    drawBg(pconfig->colors.toggle.full);
 //                    drawBorder();
 //                    drawTextCentered();
                     height = titleHeight;
@@ -83,7 +83,7 @@ namespace msa {
                     ofTranslate(0, titleHeight);
                     
                     height = listHeight();
-                    drawBG();
+                    drawBg();
                     drawBorder();
                     ofFill();
                     

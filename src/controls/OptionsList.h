@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                OptionsList(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s, NULL)) {
+                OptionsList(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s)) {
                     lineHeight = pconfig->layout.dropdownListTextHeight;
                     titleHeight = pconfig->layout.buttonHeight;
                 }

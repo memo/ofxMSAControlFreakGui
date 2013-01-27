@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                OptionsBoxes(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s, NULL)) {
+                OptionsBoxes(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s)) {
                     lineHeight = pconfig->layout.buttonHeight;
                     titleHeight = pconfig->layout.buttonHeight;
                 }

@@ -23,6 +23,7 @@ namespace msa {
                 
                 friend class Container;
                 friend class Renderer;
+                friend class LayoutManager;
 
 
                 ConfigPtr pconfig;
@@ -81,7 +82,7 @@ namespace msa {
                 bool doTooltip(int millis = 500);
                 void setTooltip(string s="");
                 
-                void drawBG(ofColor *c = NULL, int x=0, int y=0, int w=0, int h=0);
+                void drawBg(ofColor *c = NULL, int x=0, int y=0, int w=0, int h=0);
                 void drawBorder(ofColor *c = NULL, int x=0, int y=0, int w=0, int h=0);
                 void drawText(int x, int y, string s = "", ofColor *c = NULL);
                 void drawTextCentered(string s="", ofColor *c = NULL, int x=0, int y=0, int w=0, int h=0);

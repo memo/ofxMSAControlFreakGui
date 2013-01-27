@@ -14,7 +14,7 @@ namespace msa {
                 float barThickness;
                 
                 //--------------------------------------------------------------
-                ScrollBar(Container *parent) : Control(parent, new ParameterFloat("ScrollBar", NULL)) {
+                ScrollBar(Container *parent) : Control(parent, new ParameterFloat("ScrollBar")) {
                     getParameter().setClamp(true);
                     barThickness = 0.2; // default value
                 }

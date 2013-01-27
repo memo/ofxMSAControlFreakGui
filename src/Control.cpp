@@ -223,7 +223,7 @@ namespace msa {
             //            }
             
             //--------------------------------------------------------------
-            void Control::drawBG(ofColor *c, int x, int y, int w, int h) {
+            void Control::drawBg(ofColor *c, int x, int y, int w, int h) {
                 ofFill();
                 setColor(c ? c : pconfig->colors.bg);
                 if(!w) w = width;

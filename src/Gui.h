@@ -1,18 +1,19 @@
 
 
 #include "ofxMSAControlFreakGui/src/Container.h"
+#include "ofxMSAControlFreakGui/src/GuiControls.h"
 
 namespace msa {
     namespace ControlFreak {
         namespace gui {
-            
-            class GuiControls;
             
             class Gui : public Container {
             public:
                 
                 friend class GuiControls;
                 friend class Container;
+                
+                LayoutManagerPtr pLayoutManager;
                 
                 Gui();
                 ~Gui();
@@ -53,17 +54,17 @@ namespace msa {
                 void keyPressed(int key);
                 void keyReleased(int key);
                 
-                LayoutManagerPtr pLayoutManager;
-                
                 Control* getActiveControl();
+                
+                void showControlOptions(Control *targetControl);
                 
             private:
                 bool    doDefaultKeys;
-//                int     currentPageIndex;
                 bool    doDraw;
                 vector<Page*> pages;
-                GuiControls *_pGuiControls;
+                GuiControlsPtr _pGuiControls;
                 
+
                 bool checkOkToRun();
                 void setDraw(bool b);
                 
@@ -74,6 +75,7 @@ namespace msa {
                 
                 Page& addPage(Page* page);
                 int getCurrentPageIndex();
+                
             };
             
         }

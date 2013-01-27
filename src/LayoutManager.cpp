@@ -16,14 +16,14 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            void LayoutManager::begin() {
+            void LayoutManager::begin(Container &root) {
                 _curHead.set(boundRect.position); // start in top left
-                _curRect.set(0, 0, 0, 0);
-                //                panelDepth = 0;
+                //                proot = &root;
+                root.set(0, 0, 0, 0);
             }
             
             //--------------------------------------------------------------
-            void LayoutManager::update() {
+            void LayoutManager::end() {
                 _scrollY += (scrollY - _scrollY) * 0.1;
             }
             
@@ -49,7 +49,7 @@ namespace msa {
                         ofVec2f controlPos(newHead + controlOffset);
                         float postHeight = (control.height + control.layout.paddingPost.y + control.pconfig->layout.padding.y) * curScale.y;
                         if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
-                            newHead.x = _curRect.getRight() + control.layout.paddingPost.x + control.pconfig->layout.padding.x;
+                            newHead.x = control.getParent()->getRight() + control.layout.paddingPost.x + control.pconfig->layout.padding.x;
                             newHead.y = boundRect.y;
                             controlPos = newHead + controlOffset;
                         }
@@ -75,38 +75,32 @@ namespace msa {
                         
                 }
                 
-                //                        if(control.layout.positionMode) {
-                // if forced to be new column, or the height of the control is going to reach across the bottom of the screen, start new column
-                //                            if(control.newColumn || (doWrap && _curHead.y + control.height > maxPos.y)) {
-                //                                _curHead.x = _curRect.x + _curRect.width + pconfig->layout.padding.x;
-                //                                _curHead.y = boundRect.y;
-                //                            }
-                
-                //                            _curHead += control.layout.position * curScale;
-                
-                //                            control.setPosition(_curHead.x + indent, _curHead.y - _scrollY);
-                //                            _curHead.y += control.height + pconfig->layout.padding.y * curScale.y;
-                //                        } else {
-                //                            control.setPosition(container.position + control.layout.position);
-                //                        }
-                
-                //                        printf("setting position: %s %f %f %s %f %f\n", control.getParameter().getPath().c_str(), control.x, control.y, container.getParameter().getPath().c_str(), container.x, container.y);
-                
                 Renderer::instance().add(&control);
-                if(control.layout.doIncludeInContainerRect) {
-                    _curRect.growToInclude((ofRectangle&)control);
+                if(control.layout.doIncludeInContainerRect && control.getParent()) {
+                    control.getParent()->growToInclude((ofRectangle&)control);
                 }
+            }
+            
+            //--------------------------------------------------------------
+            void LayoutManager::growParent(Control &control) {
+                //                if(control.visible && control.layout.doIncludeInContainerRect && control.getParent()) {
+                //                    control.getParent()->growToInclude((ofRectangle&)control);
+                //                    Container *c = dynamic_cast<Container*>(&control);
+                //
+                //                }
             }
             
             //--------------------------------------------------------------
             void LayoutManager::prepareContainer(Container &container) {
                 ofVec2f maxPos      = getMaxPos();
                 
-//                // TODO: hack?
-//                // see if this is a panel children container, if so indent
-//                if(container.getParameter().getName().find("_children") != string::npos) {
-//                    panelDepth++;
-//                }
+                //                // TODO: hack?
+                //                // see if this is a panel children container, if so indent
+                //                if(container.getParameter().getName().find("_children") != string::npos) {
+                //                    panelDepth++;
+                //                }
+                
+                if(container.visible == false || container.scale.x < FLT_EPSILON || container.scale.y < FLT_EPSILON) return;
                 
                 Panel *panel = dynamic_cast<Panel*>(&container);
                 
@@ -124,26 +118,32 @@ namespace msa {
                     }
                 }
                 
-                int panelDepth          = container.getDepth();// * pconfig->layout.indent;
-                ofVec2f containerScale  = container.getInheritedScale();//i ? getInheritedScale().y : getParentHeightScale();
+                int panelDepth          = container.getDepth();
+                ofVec2f containerScale  = container.getInheritedScale();
                 
-                // TODO: parent isn't being processed, thats why root doesn't have it.
-                if(containerScale.y > 0) {
-                    prepareControl(container, containerScale, panelDepth, maxPos);
-                    for(int i=0; i<container.getNumControls(); i++) {
-                        Control& control = container.get(i);
-                        if(control.enabled && control.visible) {
-                            Container *c = dynamic_cast<Container*>(&control);
-                            if(c) prepareContainer(*c);
-                            else prepareControl(control, containerScale, panelDepth, maxPos);
-                        }
-
+                //                    if(container.getParent()) {
+                //                        container.getParent()->width = 0;
+                //                        container.getParent()->height = 0;
+                //                    }
+                
+                prepareControl(container, containerScale, panelDepth, maxPos);
+                
+                container.width = 0;
+                container.height = 0;
+                
+                for(int i=0; i<container.getNumControls(); i++) {
+                    Control& control = container.get(i);
+                    if(control.visible) {
+                        Container *c = dynamic_cast<Container*>(&control);
+                        if(c) prepareContainer(*c);
+                        else prepareControl(control, containerScale, panelDepth, maxPos);
                     }
-                    
                 }
                 
+                if(container.getParent()) container.getParent()->growToInclude(container.getRight(), container.getBottom());
+                
             }
-
+            
             
             //--------------------------------------------------------------
             ofVec2f LayoutManager::getMaxPos() {

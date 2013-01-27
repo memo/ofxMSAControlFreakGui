@@ -31,6 +31,7 @@
 #include "ofxMSAControlFreakGui/src/Renderer.h"
 #include "ofxMSAControlFreakGui/src/Gui.h"
 #include "ofxMSAControlFreakGui/src/GuiControls.h"
+#include "ofxMSAControlFreakGui/src/ControlOptions.h"
 
 
 

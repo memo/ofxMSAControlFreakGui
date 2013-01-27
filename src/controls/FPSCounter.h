@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                FPSCounter(Container *parent) : Control(parent, new Parameter("FPS", NULL)) {}
+                FPSCounter(Container *parent) : Control(parent, new Parameter("FPS")) {}
                 
                 //--------------------------------------------------------------
                 void setup() {

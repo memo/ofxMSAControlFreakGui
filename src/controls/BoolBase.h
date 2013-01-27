@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                BoolBase(Container *parent, string s) : Control(parent, new ParameterBool(s, NULL)) {
+                BoolBase(Container *parent, string s) : Control(parent, new ParameterBool(s)) {
                     paramT = dynamic_cast<ParameterBool*>(&getParameter());
                 }
                 

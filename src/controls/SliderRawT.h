@@ -15,6 +15,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 SliderRawT(Container *parent, Parameter* p) : Control(parent, p) {
                     lastMousePos = 0;
+                    sliderPadding = 0;
                 }
                 
                 //--------------------------------------------------------------
@@ -33,10 +34,10 @@ namespace msa {
                     if(!enabled) return;
                     if(isMousePressed()) {
                         if(getParameter().getClamp()) {
-                            getParameter().setMappedFrom(ofGetMouseX(), x, x + width);
+                            getParameter().setMappedFrom(ofGetMouseX(), x + sliderPadding, x + sliderPadding + getSliderWidth());
                         } else {
                             int diff = ofGetMouseX() - lastMousePos;
-                            float pixelMult = (float)getParameter().getRangeLength() / width;
+                            float pixelMult = (float)getParameter().getRangeLength() / getSliderWidth();
                             getParameter() = (T)getParameter() + diff * pixelMult;
                             lastMousePos = ofGetMouseX();
                         }
@@ -83,28 +84,27 @@ namespace msa {
                 void draw() {
                     ofFill();
                     
-                    float barwidth = ofClamp(getParameter().getMappedTo(0, width), 0, width);
+                    int sliderWidth = getSliderWidth();
+                    float barwidth = getParameter().getMappedTo(0, sliderWidth, true);
                     
-                    setBGColor();
-                    ofRect(0, 0, width, height);
+                    drawBg();
                     
                     setSliderColor(false);
-                    ofRect(0, 0, width, pconfig->layout.sliderHeight);
+                    ofRect(sliderPadding, 0, sliderWidth, pconfig->layout.sliderHeight);
                     
                     setSliderColor(true);
-                    ofRect(0, 0, barwidth, pconfig->layout.sliderHeight);
+                    ofRect(sliderPadding, 0, barwidth, pconfig->layout.sliderHeight);
                     
                     string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
                     drawText(pconfig->layout.textPos.x + 10, pconfig->layout.sliderHeight/2 + pconfig->layout.textPos.y, s);
                     
                     
                     if(getParameter().getSnap()) {
-//                        float xinc = ofMap(getParameter().getIncrement(), getParameter().getMin(), getParameter().getMax(), 0, width);
-                        float xinc = width * (float)getParameter().getIncrement() / (float)getParameter().getRangeLength();
+                        float xinc = sliderWidth * (float)getParameter().getIncrement() / (float)getParameter().getRangeLength();
                         if(xinc >=3) {
                             setColor(pconfig->colors.bg[0]);
                             ofSetLineWidth(1);
-                            for(float f=0; f<=width; f+=xinc) {
+                            for(float f=sliderPadding; f<=sliderWidth; f+=xinc) {
                                 ofLine(f, 0, f, pconfig->layout.sliderHeight);
                             }
                         }
@@ -112,18 +112,25 @@ namespace msa {
                     
                     if(getParameter().getClamp()) {
                         setColor(ofColor(pconfig->colors.text[1].r, pconfig->colors.text[1].g, pconfig->colors.text[1].b, 128));
-                        int w = 2;
+                        int w = 3;
                         int h = pconfig->layout.sliderHeight;
-                        ofRect(0, 0, w, h);
-                        ofRect(width-w-1, 0, w, h);
+                        ofRect(sliderPadding, 0, w, h);
+                        ofRect(sliderPadding + sliderWidth-w, 0, w, h);
                     }
                     
                     drawBorder();
                 }
                 
-                
+                int sliderPadding;
             protected:
                 int lastMousePos;
+                
+                
+                //--------------------------------------------------------------
+                int getSliderWidth() {
+                    return width - (2*sliderPadding);
+                }
+
             };
         }
     }
