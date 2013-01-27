@@ -16,7 +16,7 @@ namespace msa {
                 layout.dropdownListTextHeight	= 20;
                 
                 layout.textPos              = ofVec2f(5, 16);
-                layout.padding              = ofVec2f(3, 0);
+                layout.padding              = ofVec2f(3, 3);
                 layout.indent               = 5;
 //                layout.slider2DSize         = ofVec2f(buttonHeight * 4, buttonHeight * 4);
                 

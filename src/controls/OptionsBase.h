@@ -47,7 +47,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void onDragOver(int x, int y, int button) {
-                    onPress(x, y, button);
+                    if(isMousePressed()) onPress(x, y, button);
                 }
                 
                 
@@ -65,13 +65,23 @@ namespace msa {
                 //--------------------------------------------------------------
                 void drawTitle() {
                     height = titleHeight;
-                    drawBG(pconfig->colors.toggle.full);
+//                    drawBG(pconfig->colors.toggle.full);
+//                    drawBorder();
+//                    drawTextCentered();
+                    height = titleHeight;
+                    
+                    ofFill();
+                    setBGColor();
+                    ofRect(0, 0, width, height);
+                    
+                    drawText(pconfig->layout.textPos.x, pconfig->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
                     drawBorder();
-                    drawTextCentered();
                 }
                 
                 //--------------------------------------------------------------
                 void drawList() {
+                    ofTranslate(0, titleHeight);
+                    
                     height = listHeight();
                     drawBG();
                     drawBorder();
@@ -100,7 +110,6 @@ namespace msa {
                     
                     drawTitle();
                     
-                    ofTranslate(0, height);
                     drawList();
                     
                     layout.height = height = titleHeight + listHeight();
