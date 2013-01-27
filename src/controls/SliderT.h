@@ -81,8 +81,8 @@ namespace msa {
                     
                     if(decButton->getParameter().value()) slider->dec(1);
                     if(incButton->getParameter().value()) slider->inc(1);
-                    if(snapButton->getParameter().hasChanged()) slider->getParameter().update();
-                    if(clampButton->getParameter().hasChanged()) slider->getParameter().update();
+//                    if(snapButton->getParameter().hasChanged()) slider->getParameter().update();
+//                    if(clampButton->getParameter().hasChanged()) slider->getParameter().update();
                     if(moreButton->getParameter().value()) {
                         //                            ofSystemAlertDialog("Hello");
                     }

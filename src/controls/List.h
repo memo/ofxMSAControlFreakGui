@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                List(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL), true) {
+                List(Container *parent, string s) : Control(parent, new ParameterNamedIndex(s, NULL)) {
                     paramT = dynamic_cast<ParameterNamedIndex*>(&getParameter());
                     init();
                 }

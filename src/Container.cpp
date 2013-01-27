@@ -9,11 +9,11 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Container::Container(Container *parent, string s) : Control(parent, new ParameterGroup(s, NULL), true) {
+            Container::Container(Container *parent, string s) : Control(parent, new ParameterGroup(s, NULL)) {
             }
             
             //--------------------------------------------------------------
-            Container::Container(Container *parent, Parameter* p, bool bOwnsParameter):Control(parent, p, bOwnsParameter) {
+            Container::Container(Container *parent, Parameter* p):Control(parent, p) {
             }
             
             //--------------------------------------------------------------

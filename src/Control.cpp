@@ -7,9 +7,9 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            Control::Control(Container *parent, Parameter* parameter, bool bOwnsParameter) {
+            Control::Control(Container *parent, Parameter* parameter) {
                 setParent(parent);
-                setParameter(parameter, bOwnsParameter);
+                setParameter(parameter);
 
                 // by default, use same pconfig as parent
                 if(parent) pconfig = parent->pconfig;
@@ -33,7 +33,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             Control::~Control() {
-                if(_bOwnsParameter && _pparameter) delete _pparameter;
             }
             
             
@@ -231,7 +230,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Control::_update() {
-                if(_bOwnsParameter) getParameter().update();
                 update();
             }
             
@@ -284,9 +282,8 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void Control::setParameter(Parameter* parameter, bool bOwner) {
+            void Control::setParameter(Parameter* parameter) {
                 _pparameter = parameter;
-                _bOwnsParameter = bOwner;
             }
             
             

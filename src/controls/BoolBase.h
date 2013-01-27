@@ -11,7 +11,7 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                BoolBase(Container *parent, string s) : Control(parent, new ParameterBool(s, NULL), true) {
+                BoolBase(Container *parent, string s) : Control(parent, new ParameterBool(s, NULL)) {
                     paramT = dynamic_cast<ParameterBool*>(&getParameter());
                 }
                 
@@ -54,7 +54,7 @@ namespace msa {
                 }
                 
                 //--------------------------------------------------------------
-                void draw() {
+                void checkBang() {
                     if(paramT->getMode() == ParameterBool::kBang && getParameter().value()) getParameter().set(false);
                 }
                 

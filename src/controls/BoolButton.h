@@ -26,7 +26,7 @@ namespace msa {
                     drawTextCentered();
                     drawBorder();
                     
-                    BoolBase::draw();
+                    checkBang();
                 }
             };
             

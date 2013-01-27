@@ -30,7 +30,7 @@ namespace msa {
 //                    drawBorder(pconfig->colors.text);
                     drawBorder();
                     
-                    BoolBase::draw();
+                    checkBang();
                 }
             };
             

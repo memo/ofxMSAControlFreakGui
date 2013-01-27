@@ -33,7 +33,7 @@ namespace msa {
 
                 LayoutSettings layout;
                 
-                Control(Container *parent, Parameter* p, bool bOwnsParameter = false);
+                Control(Container *parent, Parameter* p);
                 ~Control();
                 
                 Container *getParent() const;     // parent panel
@@ -99,12 +99,9 @@ namespace msa {
                 Container *_pparent;
                 Gui *_proot;
                 Parameter *_pparameter;
-                bool _bOwnsParameter;    // whether the control owns the parameter or not. TODO: this is a bit hackish?
-//                bool _active;
-                
                 
                 void setParent(Container *parent);
-                void setParameter(Parameter *parameter, bool bOwner = false);
+                void setParameter(Parameter *parameter);
             };
             
             

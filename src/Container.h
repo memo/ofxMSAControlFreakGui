@@ -32,7 +32,7 @@ namespace msa {
                 friend class Panel;
                 
                 Container(Container *parent, string s);
-                Container(Container *parent, Parameter* p, bool bOwnsParameter = false);
+                Container(Container *parent, Parameter* p);
                 ~Container();
                 
                 void clear();
