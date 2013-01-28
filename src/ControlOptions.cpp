@@ -8,63 +8,73 @@ namespace msa {
             
             //--------------------------------------------------------------
             ControlOptions::ControlOptions(Container *parent) : Container(parent, new Parameter("Control Options")) {
-                disableAllEvents();
-                width = 0;
-                height = 0;
-                
                 layout.positionMode = LayoutSettings::kFixed;
                 layout.doIncludeInContainerRect = false;
                 
-                titleButton = new BoolTitle(this, getName());
-                titleButton->layout.positionMode = LayoutSettings::kAbsolute;
-                titleButton->setZ(1e100);
-                addControl(titleButton);
+                addControl(titleButton = new BoolTitle(this, getName()));
+                titleButton->enabled = false;
                 
-                snapButton = new BoolToggle(this, "snap");
-                snapButton->layout.positionMode = LayoutSettings::kAbsolute;
-                snapButton->setZ(2);
-                addControl(snapButton);
+                addControl(snapButton = new BoolToggle(this, "snap"));
+                addControl(clampButton = new BoolToggle(this, "clamp"));
                 
-                clampButton = new BoolToggle(this, "clamp");
-                clampButton->layout.positionMode = LayoutSettings::kAbsolute;
-                clampButton->setZ(1e100);
-                addControl(clampButton);
-
-                listenersDropdown = new OptionsDropdownList(this, "listeners");
-                listenersDropdown->layout.positionMode = LayoutSettings::kAbsolute;
-                listenersDropdown->layout.doIncludeInContainerRect = false;
-                listenersDropdown->setZ(1e100);
-                listenersDropdown->setMode(ParameterNamedIndex::kDropdown);
-                addControl(listenersDropdown);
+                string controllerNames[] = {"<add MIDI>", "<add OSC>", "<add DMX>" };
+                listenersParam = new ParameterNamedIndex("listeners");
+                listenersParam->setLabels(3, controllerNames);
+                listenersParam->setClamp(false);
+                listenersParam->set(-1);
+                addControl(listenersDropdown = new OptionsDropdownList(this, listenersParam));
                 
-                sendersDropdown = new OptionsDropdownList(this, "senders");
-                sendersDropdown->layout.positionMode = LayoutSettings::kAbsolute;
-                sendersDropdown->layout.doIncludeInContainerRect = false;
-                sendersDropdown->setZ(1e100);
-                sendersDropdown->setMode(ParameterNamedIndex::kDropdown);
-                addControl(sendersDropdown);
+                sendersParam = new ParameterNamedIndex("senders");
+                sendersParam->setLabels(3, controllerNames);
+                sendersParam->setClamp(false);
+                sendersParam->set(-1);
+                addControl(sendersDropdown = new OptionsDropdownList(this, sendersParam));
                 
                 show(NULL);
             }
             
             //--------------------------------------------------------------
+            void ControlOptions::onPressOutside(int x, int y, int button) {
+//                show(NULL);
+            }
+            
+            //--------------------------------------------------------------
             void ControlOptions::show(Control *targetControl) {
-                this->targetControl = targetControl;
-                visible = targetControl != NULL;
+                this->_pTargetControl = this->_pTargetControl == targetControl ? NULL : targetControl;  // if sending the same one, set to NULL to close
+                visible = _pTargetControl != NULL;
+                if(_pTargetControl) {
+                    titleButton->getParameter().setName(_pTargetControl->getName());
+                    snapButton->getParameter() = _pTargetControl->getParameter().getSnap();
+                    clampButton->getParameter() = _pTargetControl->getParameter().getClamp();
+                }
             }
             
             //--------------------------------------------------------------
             void ControlOptions::update() {
                 Container::update();
                 
-                if(targetControl == NULL) return;
+                if(_pTargetControl == NULL) return;
                 
                 // set positions and layout
                 int s = titleButton->height * 0.7;
                 int y = (titleButton->height - s)/2;
                 int p = 3;
                 
-                layout.setPosition(getRight(), getBottom());
+                layout.setPosition(_pTargetControl->getRight() + 10, min(_pTargetControl->getCenter().y, ofGetHeight() - height));
+                
+                if(snapButton->getParameter().hasChanged()) _pTargetControl->getParameter().setSnap(snapButton->getParameter());
+                if(clampButton->getParameter().hasChanged()) _pTargetControl->getParameter().setClamp(clampButton->getParameter());
+                
+                if(listenersParam->hasChanged()) {
+                    // if 'add' is selected, bring up appropiate dialog
+                    // if another one is selected, bring up edit dialog
+                    listenersParam->set(-1);
+                }
+                
+                if(sendersParam->hasChanged()) {
+                    sendersParam->set(-1);
+                }
+
                 
 //                collapseAllButton->layout.set(p, y, s, s);
 //                saveButton->layout.set(titleButton->width - (s + p) * 2, y, s, s);
@@ -110,6 +120,16 @@ namespace msa {
 //                        presetManager->close();
 //                    }
 //                }
+                
+            }
+            
+            //--------------------------------------------------------------
+            void ControlOptions::draw() {
+                if(_pTargetControl) {
+                    ofSetLineWidth(1);
+                    ofSetColor(255, 0, 0);
+                    ofLine(0, 0, _pTargetControl->getRight() - x, _pTargetControl->getCenter().y - y);
+                }
                 
             }
             

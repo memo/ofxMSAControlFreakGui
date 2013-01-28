@@ -15,8 +15,8 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void setup() {
-                    width   = pconfig->layout.columnWidth;
-                    height  = pconfig->layout.buttonHeight;
+                    width   = getConfig()->layout.columnWidth;
+                    height  = getConfig()->layout.buttonHeight;
                 }
 
                 //--------------------------------------------------------------

@@ -12,14 +12,14 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 OptionsBoxes(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s)) {
-                    lineHeight = pconfig->layout.buttonHeight;
-                    titleHeight = pconfig->layout.buttonHeight;
+                    lineHeight = getConfig()->layout.buttonHeight;
+                    titleHeight = getConfig()->layout.buttonHeight;
                 }
                 
                 //--------------------------------------------------------------
                 OptionsBoxes(Container *parent, ParameterNamedIndex* p) : OptionsBase(parent, p) {
-                    lineHeight = pconfig->layout.buttonHeight;
-                    titleHeight = pconfig->layout.buttonHeight;
+                    lineHeight = getConfig()->layout.buttonHeight;
+                    titleHeight = getConfig()->layout.buttonHeight;
                 }
                 
             };

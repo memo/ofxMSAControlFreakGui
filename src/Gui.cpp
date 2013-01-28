@@ -14,9 +14,6 @@ namespace msa {
                 doDefaultKeys = false;
                 doDraw = true;
                 _pActiveControl = NULL;
-                pconfig = ConfigPtr(new Config);
-                
-                pLayoutManager = LayoutManagerPtr(new LayoutManager);
                 
                 _pGuiControls = GuiControlsPtr(new GuiControls(this));
                 addControl(_pGuiControls.get());
@@ -79,6 +76,7 @@ namespace msa {
                 if(pages.size()) {
                     _pGuiControls->pagesDropdown->getParameter() = (i-1 + pages.size()) % pages.size();
                 }
+                showControlOptions(NULL);
             }
             
             int Gui::getCurrentPageIndex() {
@@ -145,6 +143,8 @@ namespace msa {
                 if(_pActiveControl) {
                     _pActiveControl->setZ(1e100);
                 }
+                
+//                showControlOptions(NULL);
             }
             
             //--------------------------------------------------------------
@@ -176,38 +176,30 @@ namespace msa {
                 ofDisableNormalizedTexCoords();
                 ofDisableLighting();
                 glDisable(GL_DEPTH_TEST);
-                //                glDisableClientState(GL_COLOR_ARRAY);
-                
-                
+
                 Renderer::instance().clearControls();
                 
-                Page &page = getCurrentPage();
-                
-                // create layout manager for the page if one doesn't exist
-                if(!pLayoutManager) pLayoutManager = LayoutManagerPtr(new LayoutManager);
-                
-                // configure layout manager
-                pLayoutManager->boundRect.set(pconfig->layout.scrollbarWidth + pconfig->layout.padding.x, pconfig->layout.padding.y, 0, 0);  // use full width and height of window
-                
                 // iterate all controls on page, set position and add to render queue
-                pLayoutManager->begin(*this);
-                pLayoutManager->prepareContainer(page);
-                pLayoutManager->prepareContainer(*_pGuiControls);
-                pLayoutManager->end();
+                Page &page = getCurrentPage();
+                page.layout.x = getConfig()->layout.scrollbarWidth;
+                pLayoutManager->clearParentRect(*this);
+                page.arrangeControls();
+                _pGuiControls->arrangeControls();
                 
                 // sort and draw
                 Renderer::instance().draw();
                 
                 ofPopStyle();
                 
-                ofPushStyle();
-                ofSetRectMode(OF_RECTMODE_CORNER);
-                ofNoFill();
-                ofSetColor(0, 255 ,0);
-                ofRect(page.x, page.y, page.width, page.height);
-                ofSetColor(0, 0, 255);
-                ofRect(x, y, width, height);
-                ofPopStyle();
+                // draw debug boxes around containers
+//                ofPushStyle();
+//                ofSetRectMode(OF_RECTMODE_CORNER);
+//                ofNoFill();
+//                ofSetColor(0, 255 ,0);
+//                ofRect(page.x, page.y, page.width, page.height);
+//                ofSetColor(0, 0, 255);
+//                ofRect(x, y, width, height);
+//                ofPopStyle();
             }
             
             //--------------------------------------------------------------

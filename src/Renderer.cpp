@@ -75,18 +75,18 @@ namespace msa {
 //                printf("drawTooltip: %s\n", tooltip.s.c_str());
                 if(tooltip.s.empty()) return;
                 
-                Config *pconfig = tooltip.control->pconfig.get();
+                Config &config = *tooltip.control->getConfig();
                 
-                int x = tooltip.x + pconfig->tooltip.offset.x;
-                int y = tooltip.y + pconfig->tooltip.offset.y;
+                int x = tooltip.x + config.tooltip.offset.x;
+                int y = tooltip.y + config.tooltip.offset.y;
                 
                 ofPushStyle();
                 ofSetRectMode(OF_RECTMODE_CORNER);
-                ofRectangle r = pconfig->font.getStringBoundingBox(tooltip.s, x, y);
-                r.x -= pconfig->tooltip.padding.x;
-                r.y -= pconfig->tooltip.padding.y;
-                r.width += pconfig->tooltip.padding.width;
-                r.height += pconfig->tooltip.padding.height;
+                ofRectangle r = config.font.getStringBoundingBox(tooltip.s, x, y);
+                r.x -= config.tooltip.padding.x;
+                r.y -= config.tooltip.padding.y;
+                r.width += config.tooltip.padding.width;
+                r.height += config.tooltip.padding.height;
                 
                 // make sure tooltip doesn't go offscreen
                 ofVec2f diff;
@@ -101,16 +101,16 @@ namespace msa {
                 
                 
                 ofSetLineWidth(1);
-                ofSetColor(pconfig->tooltip.bgColor);
+                ofSetColor(config.tooltip.bgColor);
                 ofFill();
                 ofRect(r);
                 
-                ofSetColor(pconfig->tooltip.borderColor);
+                ofSetColor(config.tooltip.borderColor);
                 ofNoFill();
                 ofRect(r);
                 
-                ofSetColor(pconfig->tooltip.textColor);
-                pconfig->drawString(tooltip.s, x, y);
+                ofSetColor(config.tooltip.textColor);
+                config.drawString(tooltip.s, x, y);
                 
                 ofPopStyle();
                 tooltip.s = "";

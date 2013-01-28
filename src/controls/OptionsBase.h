@@ -31,23 +31,29 @@ namespace msa {
                 void setMode(ParameterNamedIndex::Mode mode) {
                     paramT->setMode(mode);
                 }
-                
+
+                //--------------------------------------------------------------
+                void update(int x, int y, int button) {
+                    onMouseMove(x, y);
+                    if(mouseOverIndex >= 0 && mouseOverIndex < paramT->size())
+                        paramT->set(mouseOverIndex);
+                }
+
                 //--------------------------------------------------------------
                 void onPress(int x, int y, int button) {
-                    onMouseMove(x, y);
-                    paramT->set(mouseOverIndex);
+                    update(x, y, button);
                 }
                 
                 //--------------------------------------------------------------
                 void onMouseMove(int x, int y) {
                     int a = this->y + titleHeight;
                     int b = a + listHeight();
-                    mouseOverIndex = floor(ofMap(y, a, b, 0, paramT->size(), true));
+                    mouseOverIndex = floor(ofMap(y, a, b, 0, paramT->size()));
                 }
                 
                 //--------------------------------------------------------------
                 void onDragOver(int x, int y, int button) {
-                    if(isMousePressed()) onPress(x, y, button);
+                    if(isMousePressed()) update(x, y, button);
                 }
                 
                 
@@ -65,7 +71,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 void drawTitle() {
                     height = titleHeight;
-//                    drawBg(pconfig->colors.toggle.full);
+//                    drawBg(getConfig()->colors.toggle.full);
 //                    drawBorder();
 //                    drawTextCentered();
                     height = titleHeight;
@@ -74,7 +80,7 @@ namespace msa {
                     setBGColor();
                     ofRect(0, 0, width, height);
                     
-                    drawText(pconfig->layout.textPos.x, pconfig->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
+                    drawText(getConfig()->layout.textPos.x, getConfig()->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
                     drawBorder();
                 }
                 
@@ -93,15 +99,15 @@ namespace msa {
                         float curY = i * lineHeight;
                         if(i == mouseOverIndex) {
                             ofNoFill();
-                            ofRect(0, curY+3, width, lineHeight);
+                            ofRect(0, curY, width, lineHeight);
                         }
                         if(i == getParameter().value()) {
                             ofFill();
-                            ofRect(0, curY+3, width, lineHeight);
+                            ofRect(0, curY, width, lineHeight);
                             setBGColor();
                         }
                         
-                        pconfig->drawString(paramT->getLabel(i), pconfig->layout.textPos.x, curY + pconfig->layout.textPos.y);
+                        getConfig()->drawString(paramT->getLabel(i), getConfig()->layout.textPos.x, curY + getConfig()->layout.textPos.y);
                     }
                 }
                 

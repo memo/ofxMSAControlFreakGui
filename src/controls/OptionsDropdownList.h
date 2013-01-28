@@ -12,20 +12,24 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 OptionsDropdownList(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s)) {
-                    lineHeight = pconfig->layout.dropdownListTextHeight;
-                    titleHeight = pconfig->layout.buttonHeight;
+                    lineHeight = getConfig()->layout.dropdownListTextHeight;
+                    titleHeight = getConfig()->layout.buttonHeight;
+                    isOpen = false;
                 }
                 
                 //--------------------------------------------------------------
                 OptionsDropdownList(Container *parent, ParameterNamedIndex* p) : OptionsBase(parent, p) {
-                    lineHeight = pconfig->layout.dropdownListTextHeight;
-                    titleHeight = pconfig->layout.buttonHeight;
+                    lineHeight = getConfig()->layout.dropdownListTextHeight;
+                    titleHeight = getConfig()->layout.buttonHeight;
+                    isOpen = false;
                 }
 
-//                //--------------------------------------------------------------
-//                void onPress(int x, int y, int button) {
-//                }
-//                
+                //--------------------------------------------------------------
+                void onPress(int x, int y, int button) {
+                    isOpen ^= true;
+                    update(x, y, button);
+                }
+//
 //                //--------------------------------------------------------------
 //                void onDragOutside(int x, int y, int button) {
 //                    onMouseMove(x, y);
@@ -40,7 +44,7 @@ namespace msa {
 //                    setBGColor();
 //                    ofRect(0, 0, width, height);
 //                    
-//                    drawText(pconfig->layout.textPos.x, pconfig->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
+//                    drawText(getConfig()->layout.textPos.x, getConfig()->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
 //                    drawBorder();
 //                    
 //                    int ty = height/3;
@@ -53,10 +57,13 @@ namespace msa {
                     
                     ofTriangle(width - ty - tl, ty, width - ty, ty, width - ty - tl/2, height - ty);
                     
-                    if(isActive()) drawList();
+                    if(isOpen) drawList();
                     
-                    layout.height = height = titleHeight + listHeight() * isActive();
+                    layout.height = height = titleHeight + listHeight() * isOpen;
                 }
+                
+            protected:
+                bool isOpen;
                 
             };
             

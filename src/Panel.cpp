@@ -13,7 +13,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Panel::init() {
-                disableAllEvents();
                 width = 0;
                 height = 0;
                 paramT = dynamic_cast<ParameterGroup*>(&getParameter());
@@ -21,7 +20,7 @@ namespace msa {
                 presetManager = new PanelPresetManager(this);
                 
                 titleButton = new BoolTitle(this, getName());
-                titleButton->layout.positionMode = LayoutSettings::kAbsolute;
+//                titleButton->layout.positionMode = LayoutSettings::kAbsolute;
                 titleButton->setZ(1);
                 titleButton->getParameter().trackVariable(&paramT->isOpen());
                 addControl(titleButton);
@@ -56,9 +55,7 @@ namespace msa {
                 addControl(presetDropdown);
                 
                 children = new Container(this, getName() + "_children");
-                children->layout.doAffectFlow = false;
                 children->scale.y = 0;  // everything start closed
-                //                children->layout.set(0, 0, 1, 3);
                 addControl(children);
                 
                 children->addParameterChildren(*paramT);

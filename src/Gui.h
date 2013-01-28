@@ -1,5 +1,6 @@
 
 
+#include "ofxMSAControlFreakGui/src/Config.h"
 #include "ofxMSAControlFreakGui/src/Container.h"
 #include "ofxMSAControlFreakGui/src/GuiControls.h"
 
@@ -13,7 +14,7 @@ namespace msa {
                 friend class GuiControls;
                 friend class Container;
                 
-                LayoutManagerPtr pLayoutManager;
+                Config config;
                 
                 Gui();
                 ~Gui();

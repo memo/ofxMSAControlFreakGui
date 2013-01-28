@@ -14,33 +14,32 @@ namespace msa {
             
             // for auto-layout
             class LayoutManager {
+            public:
+                virtual ~LayoutManager() {}
+
             protected:
                 friend class Gui;
                 friend class GuiControls;
+                friend class Container;
                 
-                int scrollY;
+                int targetScrollY;  // set this one
+                int scrollY;   // actual one, lerps to targetScrollY 
                 bool doWrap;
-                ofRectangle boundRect;
+                ofVec2f     _curHead;
                 
-//                Container *proot;
-
                 LayoutManager();
                 
-                void begin(Container &root);
-                void end();
                 
-//                ofRectangle getCurRect() { return _curRect; }
+                void clearParentRect(Container &parent);
+                virtual void update();
                 
-                int _scrollY;   // actual one, scrollY lerps to this
-//                int panelDepth;
-                ofVec2f     _curHead;
-//                ofRectangle _curRect;
                 
-                ofVec2f getMaxPos();
-                ofVec2f clampPoint(ofVec2f p);
-                void prepareControl(Control &control, ofVec2f &containerScale, int panelDepth, ofVec2f &maxPos);
-                void prepareContainer(Container &container);
-                void growParent(Control &control);
+                virtual void arrangeControls(Container &container); // this is the main function which is called
+                
+                virtual void prepareContainerRecursively(Container &container);
+                virtual void positionControl(Control &control, ofVec2f &parentScale, int panelDepth);
+                virtual void addToRenderer(Control &control);
+                virtual void growParent(Control &control);
             };
             
             

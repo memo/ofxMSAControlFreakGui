@@ -10,15 +10,24 @@ namespace msa {
             
             //--------------------------------------------------------------
             Container::Container(Container *parent, string s) : Control(parent, new ParameterGroup(s)) {
+                init();
             }
             
             //--------------------------------------------------------------
             Container::Container(Container *parent, Parameter* p):Control(parent, p) {
+                init();
             }
             
             //--------------------------------------------------------------
             Container::~Container() {
                 clear();
+            }
+            
+            //--------------------------------------------------------------
+            void Container::init() {
+                pLayoutManager = LayoutManagerPtr(new LayoutManager);
+                layout.width = 0;
+                layout.height = 0;
             }
             
             //--------------------------------------------------------------
@@ -92,7 +101,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Content& Container::addContent(Parameter& p, ofBaseDraws &content, float fixwidth) {
-                if(fixwidth == -1) fixwidth = pconfig->layout.columnWidth;
+                if(fixwidth == -1) fixwidth = getConfig()->layout.columnWidth;
                 return (Content&)addControl(new Content(this, &p, content, fixwidth));
             }
             
@@ -208,7 +217,7 @@ namespace msa {
             //--------------------------------------------------------------
             void Container::update() {
                 Control::update();
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) get(i)._update();
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) get(i)._update();
             }
             
             
@@ -221,9 +230,9 @@ namespace msa {
                 //                if(_pActiveControl)
                 //                    _pActiveControl->_mouseMoved(e);
                 //                else {
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.enabled && c.visible) c._mouseMoved(e);
+                    if(c.enabled && c.isVisible()) c._mouseMoved(e);
                     //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                 }
                 //                }
@@ -239,9 +248,9 @@ namespace msa {
                 //                if(_pActiveControl)
                 //                    _pActiveControl->_mousePressed(e);
                 //                else {
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.enabled && c.visible) {
+                    if(c.enabled && c.isVisible()) {
                         c._mousePressed(e);
                         if(c.isMouseOver()) {
                             getRoot()->setActiveControl(&c);
@@ -262,9 +271,9 @@ namespace msa {
                 //                if(_pActiveControl)
                 //                    _pActiveControl->_mouseDragged(e);
                 //                else {
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.enabled && c.visible) c._mouseDragged(e);
+                    if(c.enabled && c.isVisible()) c._mouseDragged(e);
                     //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                 }
                 //                }
@@ -280,9 +289,9 @@ namespace msa {
                 //                if(_pActiveControl)
                 //                    _pActiveControl->_mouseReleased(e);
                 //                else {
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.enabled && c.visible) c._mouseReleased(e);
+                    if(c.enabled && c.isVisible()) c._mouseReleased(e);
                 }
                 //                }
                 
@@ -300,9 +309,9 @@ namespace msa {
                 bool keyRight	= e.key == OF_KEY_RIGHT;
                 bool keyEnter	= e.key == OF_KEY_RETURN;
                 
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.enabled && c.visible && c.isMouseOver()) {
+                    if(c.enabled && c.isVisible() && c.isMouseOver()) {
                         if(keyUp)		c.onKeyUp();
                         if(keyDown)		c.onKeyDown();
                         if(keyLeft)		c.onKeyLeft();
@@ -318,11 +327,18 @@ namespace msa {
                 ofKeyEventArgs e;
                 e.key = key;
                 
-                if(getInheritedScale().y>0.9) for(int i=getNumControls()-1; i>=0; --i) {
+                if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
-                    if(c.enabled && c.visible /*&& c.isMouseOver()*/) c._keyReleased(e);
+                    if(c.enabled && c.isVisible() /*&& c.isMouseOver()*/) c._keyReleased(e);
                 }
             }
+            
+            
+            //--------------------------------------------------------------
+            void Container::arrangeControls() {
+                if(pLayoutManager) pLayoutManager->arrangeControls(*this);
+            }
+
             
             
         }

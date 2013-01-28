@@ -19,16 +19,24 @@ namespace msa {
                 ControlOptions(Container *parent);
                 
                 void update();
-                void show(Control *targetControl);
+                void draw();
+                
+                void show(Control *_pTargetControl);
+                
+                void onPressOutside(int x, int y, int button);
+
                 
             protected:
-                Control  *targetControl;
+                Control  *_pTargetControl;
                 
                 BoolBase *titleButton;   // button which controls the title
                 BoolBase *snapButton;
                 BoolBase *clampButton;
                 OptionsBase *listenersDropdown;
                 OptionsBase *sendersDropdown;
+                
+                ParameterNamedIndex *listenersParam;
+                ParameterNamedIndex *sendersParam;
             };
             
             

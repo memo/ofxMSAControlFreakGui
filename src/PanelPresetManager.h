@@ -62,7 +62,7 @@ namespace msa {
                     bLoadOpen = false;
                     presetsNamedIndex->clearLabels();
                     readDir();
-                    presetsNamedIndex->addLabel("*** NEW ***");
+                    presetsNamedIndex->addLabel("<CREATE NEW>");
                 }
 
                 //--------------------------------------------------------------

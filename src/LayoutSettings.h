@@ -10,9 +10,9 @@ namespace msa {
             public:
 
                 enum Mode {
-                    kRelative,  // normal (controls are placed in a free flowing manner, like html)
-                    kAbsolute,  // relative to container
-                    kFixed      // relative to screen
+                    kRelative,  // normal (controls are placed in a free flowing manner, like html, layout.position is offset off calculated)
+                    kAbsolute,  // layout.position is relative to container
+                    kFixed      // layout.position is relative to screen
                 };
                 
                 Mode     positionMode;

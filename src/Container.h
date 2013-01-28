@@ -30,11 +30,17 @@ namespace msa {
             public:
                 
                 friend class Panel;
+                friend class Gui;
+                friend class LayoutManager;
+                
+                LayoutManagerPtr pLayoutManager;    // point this to a new LayoutManager if you want to change the way the controls are automatically updated
+                
                 
                 Container(Container *parent, string s);
                 Container(Container *parent, Parameter* p);
                 ~Container();
                 
+                void init();
                 void clear();
 
                 // adding
@@ -80,6 +86,7 @@ namespace msa {
                 
                 void addParameter(Parameter& p);
                 void addParameterChildren(ParameterGroup& parameters);
+                void arrangeControls();
             };
             
         }

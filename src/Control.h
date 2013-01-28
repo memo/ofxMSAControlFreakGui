@@ -26,7 +26,6 @@ namespace msa {
                 friend class LayoutManager;
 
 
-                ConfigPtr pconfig;
                 bool    visible;
                 bool    doIsolateOnActive;   // fade other controls if this is active
                 char	keyboardShortcut;
@@ -47,10 +46,14 @@ namespace msa {
                 ofVec2f getInheritedScale();// inherited scale
                 ofVec2f getParentScale();   // inherited scale of parent
 
+                Config *getConfig();
+
                 void setZ(int z);    // draw order (+ve is more forward)
                 int getZ() const;          // get z depth;
                 int popZ();          // restore z to previous value
                 int getInheritedZ() const;
+                
+                bool isVisible() const;
                 
                 
                 string getName();
@@ -101,6 +104,7 @@ namespace msa {
                 Container *_pparent;
                 Gui *_proot;
                 Parameter *_pparameter;
+                string name;
                 
                 void setParent(Container *parent);
                 void setParameter(Parameter *parameter);

@@ -90,30 +90,30 @@ namespace msa {
                     drawBg();
                     
                     setSliderColor(false);
-                    ofRect(sliderPadding, 0, sliderWidth, pconfig->layout.sliderHeight);
+                    ofRect(sliderPadding, 0, sliderWidth, getConfig()->layout.sliderHeight);
                     
                     setSliderColor(true);
-                    ofRect(sliderPadding, 0, barwidth, pconfig->layout.sliderHeight);
+                    ofRect(sliderPadding, 0, barwidth, getConfig()->layout.sliderHeight);
                     
                     string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
-                    drawText(pconfig->layout.textPos.x + 10, pconfig->layout.sliderHeight/2 + pconfig->layout.textPos.y, s);
+                    drawText(getConfig()->layout.textPos.x + 10, getConfig()->layout.sliderHeight/2 + getConfig()->layout.textPos.y, s);
                     
                     
                     if(getParameter().getSnap()) {
                         float xinc = sliderWidth * (float)getParameter().getIncrement() / (float)getParameter().getRangeLength();
                         if(xinc >=3) {
-                            setColor(pconfig->colors.bg[0]);
+                            setColor(getConfig()->colors.bg[0]);
                             ofSetLineWidth(1);
                             for(float f=sliderPadding; f<=sliderWidth; f+=xinc) {
-                                ofLine(f, 0, f, pconfig->layout.sliderHeight);
+                                ofLine(f, 0, f, getConfig()->layout.sliderHeight);
                             }
                         }
                     }
                     
                     if(getParameter().getClamp()) {
-                        setColor(ofColor(pconfig->colors.text[1].r, pconfig->colors.text[1].g, pconfig->colors.text[1].b, 128));
+                        setColor(ofColor(getConfig()->colors.text[1].r, getConfig()->colors.text[1].g, getConfig()->colors.text[1].b, 128));
                         int w = 3;
-                        int h = pconfig->layout.sliderHeight;
+                        int h = getConfig()->layout.sliderHeight;
                         ofRect(sliderPadding, 0, w, h);
                         ofRect(sliderPadding + sliderWidth-w, 0, w, h);
                     }

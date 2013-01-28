@@ -38,7 +38,7 @@ namespace msa {
                     setBGColor();
                     ofRect(height, 0, width - height, height);
                     
-//                    drawText(height + pconfig->layout.textPos.x, pconfig->layout.textPos.y);
+//                    drawText(height + getConfig()->layout.textPos.x, getConfig()->layout.textPos.y);
                     
                     drawTextCentered();
                     drawBorder();

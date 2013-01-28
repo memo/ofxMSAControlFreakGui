@@ -12,14 +12,14 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 OptionsList(Container *parent, string s) : OptionsBase(parent, new ParameterNamedIndex(s)) {
-                    lineHeight = pconfig->layout.dropdownListTextHeight;
-                    titleHeight = pconfig->layout.buttonHeight;
+                    lineHeight = getConfig()->layout.dropdownListTextHeight;
+                    titleHeight = getConfig()->layout.buttonHeight;
                 }
                 
                 //--------------------------------------------------------------
                 OptionsList(Container *parent, ParameterNamedIndex* p) : OptionsBase(parent, p) {
-                    lineHeight = pconfig->layout.dropdownListTextHeight;
-                    titleHeight = pconfig->layout.buttonHeight;
+                    lineHeight = getConfig()->layout.dropdownListTextHeight;
+                    titleHeight = getConfig()->layout.buttonHeight;
                 }
                 
             };
