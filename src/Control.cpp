@@ -183,6 +183,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             ofColor Control::setBorderColor() {
+                if(getRoot() && getRoot()->getControlOptionsTarget() == this) return setToggleColor(true);
                 return setColor(getConfig()->colors.border);
             }
             
@@ -250,7 +251,8 @@ namespace msa {
             //--------------------------------------------------------------
             void Control::drawBorder(ofColor *c, int x, int y, int w, int h) {
                 ofNoFill();
-                setColor(c ? c : getConfig()->colors.border);
+                if(c) setColor(c);
+                else setBorderColor();
                 glLineWidth(1.0);
                 if(!w) w = width;
                 if(!h) h = height;
@@ -266,16 +268,16 @@ namespace msa {
             void Control::_draw() {
                 if(!isVisible()) return;
                 
-                bool bTimeToChange = getStateChangeMillis() > getConfig()->colors.fade.delayMillis;
-                bool bAControlIsActive = getRoot()->getActiveControl() && getRoot()->getActiveControl()->doIsolateOnActive;
-                bool bThisIsActive = getParentActive();
-                
+//                bool bTimeToChange = getStateChangeMillis() > getConfig()->colors.fade.delayMillis;
+//                bool bAControlIsActive = getRoot()->getActiveControl() && getRoot()->getActiveControl()->doIsolateOnActive;
+//                bool bThisIsActive = getParentActive();
+//                
 //                float targetAlpha = bTimeToChange && bAControlIsActive && !bThisIsActive ? getConfig()->colors.fade.alpha : 1.0f;
 //                float diff = (targetAlpha - _alpha);
 //                _alpha += diff * getConfig()->colors.fade.speed;
 //                if(fabsf(diff) < 0.01) _alpha = targetAlpha;
-//                
-//                if(_alpha < 0.001) return;
+                
+                if(_alpha < 0.001) return;
                 
                 
                 setTooltip();

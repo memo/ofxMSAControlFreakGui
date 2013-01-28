@@ -13,10 +13,10 @@ namespace msa {
             Gui::Gui() : Container(NULL, "ofxMSAControlFreakGui") {
                 doDefaultKeys = false;
                 doDraw = true;
-                _pActiveControl = NULL;
+                //                _pActiveControl = NULL;
                 
-                _pGuiControls = GuiControlsPtr(new GuiControls(this));
-                addControl(_pGuiControls.get());
+                _pGuiControls = new GuiControls(this);
+                addControl(_pGuiControls);
                 
                 enableAllEvents();
             }
@@ -79,7 +79,7 @@ namespace msa {
                 showControlOptions(NULL);
             }
             
-            int Gui::getCurrentPageIndex() {
+            int Gui::getCurrentPageIndex() const {
                 return (int)_pGuiControls->pagesDropdown->getParameter()+1;
             }
             
@@ -95,7 +95,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            int Gui::getNumPages() {
+            int Gui::getNumPages() const {
                 return pages.size();
             }
             
@@ -113,7 +113,7 @@ namespace msa {
             Page& Gui::getCurrentPage() {
                 return getPage(getCurrentPageIndex());
             }
-
+            
             //--------------------------------------------------------------
             Page& Gui::addPage(ParameterGroup &parameters) {
                 ofLogVerbose() << "msa::ControlFreak::gui::Gui::addPage(ParameterGroup): " << parameters.getPath();
@@ -133,25 +133,47 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Gui::setActiveControl(Control *control) {
-                ofLogVerbose() << "msa::ControlFreak::Gui::Gui::setActiveControl: " << (control ? control->getParameter().getPath() : "NULL");
-                // if old control exists, put it at the back
-                if(_pActiveControl) _pActiveControl->popZ();
-                
-                _pActiveControl = control;
-                
-                // put new active control at the front
-                if(_pActiveControl) {
-                    _pActiveControl->setZ(1e100);
+                if(control) {
+                    _activeControls.push_back(control);
+                    ofLogVerbose() << "msa::ControlFreak::gui::Gui::setActiveControl: " << (_activeControls.size()-1) << " " << control->getParameter().getPath() << " " << typeid(*control).name();
+                } else {
+                    // if old control exists, put it at the back
+                    //                    for(int i=0; i<_activeControls.size(); i++) {
+                    //                        _activeControls[i]->popZ();
+                    //                    }
+                    _activeControls.clear();
+                    ofLogVerbose() << "msa::ControlFreak::gui::Gui::setActiveControl: " << (_activeControls.size()-1) << " NULL";
                 }
                 
-//                showControlOptions(NULL);
+                //                if(_pActiveControl) _pActiveControl->popZ();
+                
+                //                _pActiveControl = control;
+                //
+                //                // put new active control at the front
+                //                if(_pActiveControl) {
+                //                    _pActiveControl->setZ(1e100);
+                //                }
+                
+                //                showControlOptions(NULL);
             }
             
             //--------------------------------------------------------------
-            Control* Gui::getActiveControl() {
-                return _pActiveControl;
+            vector<Control*>& Gui::getActiveControls() {
+                return _activeControls;
+                
             }
             
+            //--------------------------------------------------------------
+            bool Gui::checkActiveControl(Control *control) const {
+                for(int i=0; i<_activeControls.size(); i++) if(_activeControls[i] == control) return true;
+                return false;
+            }
+            
+            //--------------------------------------------------------------
+            //            bool Gui::getActiveControl(Control *control) {
+            //                return _pActiveControl;
+            //            }
+            //
             //--------------------------------------------------------------
             void Gui::releaseActiveControl() {
                 setActiveControl(NULL);
@@ -176,7 +198,7 @@ namespace msa {
                 ofDisableNormalizedTexCoords();
                 ofDisableLighting();
                 glDisable(GL_DEPTH_TEST);
-
+                
                 Renderer::instance().clearControls();
                 
                 // iterate all controls on page, set position and add to render queue
@@ -192,68 +214,100 @@ namespace msa {
                 ofPopStyle();
                 
                 // draw debug boxes around containers
-//                ofPushStyle();
-//                ofSetRectMode(OF_RECTMODE_CORNER);
-//                ofNoFill();
-//                ofSetColor(0, 255 ,0);
-//                ofRect(page.x, page.y, page.width, page.height);
-//                ofSetColor(0, 0, 255);
-//                ofRect(x, y, width, height);
-//                ofPopStyle();
+                //                ofPushStyle();
+                //                ofSetRectMode(OF_RECTMODE_CORNER);
+                //                ofNoFill();
+                //                ofSetColor(0, 255 ,0);
+                //                ofRect(page.x, page.y, page.width, page.height);
+                //                ofSetColor(0, 0, 255);
+                //                ofRect(x, y, width, height);
+                //                ofPopStyle();
             }
             
             //--------------------------------------------------------------
             void Gui::mouseMoved(int x, int y) {
                 if(!checkOkToRun()) return;
-                
-//                if(getActiveControl()) {
-//                    getActiveControl()->mouseMoved(x, y);
-//                } else {
+
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                if(!getActiveControls().empty()) {
+                    getActiveControls()[0]->_mouseMoved(e);
+                } else {
+//                    for(int i=0; i<Renderer::instance().controls.size(); i++) {
+//                        Control *control = Renderer::instance().controls[i];
+//                        control->_mouseMoved(e);
+//                    }
                     getCurrentPage().mouseMoved(x, y);
                     Container::mouseMoved(x, y);
-//                }
+                }
             }
             
             //--------------------------------------------------------------
             void Gui::mousePressed(int x, int y, int button) {
                 if(!checkOkToRun()) return;
                 
-//                if(getActiveControl()) {
-//                    getActiveControl()->mousePressed(x, y, button);
-//                } else {
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                e.button = button;
+                if(!getActiveControls().empty()) {
+                    getActiveControls()[0]->_mousePressed(e);
+                } else {
+//                    for(int i=0; i<Renderer::instance().controls.size(); i++) {
+//                        Control *control = Renderer::instance().controls[i];
+//                        control->_mousePressed(e);
+//                    }
                     getCurrentPage().mousePressed(x, y, button);
                     Container::mousePressed(x, y, button);
-//                }
+                }
             }
             
             //--------------------------------------------------------------
             void Gui::mouseDragged(int x, int y, int button) {
                 if(!checkOkToRun()) return;
-                
-//                if(getActiveControl()) {
-//                    getActiveControl()->mouseDragged(x, y, button);
-//                } else {
+
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                e.button = button;
+                if(!getActiveControls().empty()) {
+                    getActiveControls()[0]->_mouseDragged(e);
+                } else {
+//                    for(int i=0; i<Renderer::instance().controls.size(); i++) {
+//                        Control *control = Renderer::instance().controls[i];
+//                        control->_mouseDragged(e);
+//                    }
                     getCurrentPage().mouseDragged(x, y, button);
                     Container::mouseDragged(x, y, button);
-//                }
+                }
             }
             
             //--------------------------------------------------------------
             void Gui::mouseReleased(int x, int y, int button) {
                 if(!checkOkToRun()) return;
                 
-//                if(getActiveControl()) {
-//                    getActiveControl()->mouseReleased(x, y, button);
-//                } else {
+                ofMouseEventArgs e;
+                e.x = x;
+                e.y = y;
+                e.button = button;
+                if(!getActiveControls().empty()) {
+                    getActiveControls()[0]->_mouseReleased(e);
+                } else {
+//                    for(int i=0; i<Renderer::instance().controls.size(); i++) {
+//                        Control *control = Renderer::instance().controls[i];
+//                        control->_mouseReleased(e);
+//                    }
                     getCurrentPage().mouseReleased(x, y, button);
                     Container::mouseReleased(x, y, button);
-//                }
+                }
                 releaseActiveControl();
             }
             
             //--------------------------------------------------------------
             void Gui::keyPressed(int key) {
                 if(!pages.size()) return;
+
                 if(doDefaultKeys) {
                     if(key == ' ') {
                         toggleDraw();
@@ -268,26 +322,31 @@ namespace msa {
                     }
                 }
                 
-                if(doDraw) {
-//                    if(getActiveControl()) {
-//                        getActiveControl()->keyPressed(key);
-//                    } else {
-                        getCurrentPage().keyPressed(key);
-                        Container::keyPressed(key);
-//                    }
+                if(!doDraw) return;
+                ofKeyEventArgs e;
+                e.key = key;
+
+                if(!getActiveControls().empty()) {
+                    getActiveControls()[0]->_keyPressed(e);
+                } else {
+                    getCurrentPage().keyPressed(key);
+                    Container::keyPressed(key);
                 }
-                
             }
             
             //--------------------------------------------------------------
             void Gui::keyReleased(int key) {
                 if(!checkOkToRun()) return;
-//                if(getActiveControl()) {
-//                    getActiveControl()->keyReleased(key);
-//                } else {
+                
+                ofKeyEventArgs e;
+                e.key = key;
+
+                if(!getActiveControls().empty()) {
+                    getActiveControls()[0]->_keyReleased(e);
+                } else {
                     getCurrentPage().keyReleased(key);
                     Container::keyReleased(key);
-//                }
+                }
             }
             
             
@@ -296,7 +355,13 @@ namespace msa {
                 ofLogNotice() << "Gui::showControlOptions " << (int)targetControl;
                 _pGuiControls->_pControlOptions->show(targetControl);
             }
-
+            
+            
+            //--------------------------------------------------------------
+            Control *Gui::getControlOptionsTarget() const {
+                return _pGuiControls->_pControlOptions->_pTargetControl;
+            }
+            
             
         }
     }

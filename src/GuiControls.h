@@ -11,14 +11,11 @@ namespace msa {
             class BoolBase;
             class Scrollbar;
             
-            class GuiControls;
-            typedef std::tr1::shared_ptr<GuiControls> GuiControlsPtr;
-
             class GuiControls : public Container {
             private:
                 friend class Gui;
                 
-                ControlOptionsPtr _pControlOptions;
+                ControlOptions *_pControlOptions;
                 
                 GuiControls(Container *parent);
                 

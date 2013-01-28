@@ -9,9 +9,6 @@ namespace msa {
             class BoolBase;
             class OptionsBase;
             
-            class ControlOptions;
-            typedef std::tr1::shared_ptr<ControlOptions> ControlOptionsPtr;
-
             class ControlOptions : public Container {
             public:
                 friend class Gui;

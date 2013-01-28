@@ -37,6 +37,7 @@ namespace msa {
                 static Renderer *renderer;
                 
                 vector<Control*> controls;
+                map<Control*, Control*> controlsMap;    // just to check if it's already added, bit ghetto
                 
                 struct {
                     string s;

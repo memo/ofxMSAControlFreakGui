@@ -254,7 +254,7 @@ namespace msa {
                         c._mousePressed(e);
                         if(c.isMouseOver()) {
                             getRoot()->setActiveControl(&c);
-                            return;    // don't propogate event if this control processed it
+//                            return;    // don't propogate event if this control processed it
                         }
                     }
                 }

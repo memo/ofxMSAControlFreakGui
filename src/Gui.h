@@ -34,7 +34,7 @@ namespace msa {
                 void setPage(int i);				// 1 based index of page
                 void setPage(string name);
                 
-                int getNumPages();
+                int getNumPages() const;
                 Page& getPage(int i);				// 1 based index of page
                 Page& getPage(string name);			// returns page by name
                 Page& getCurrentPage();				// returns current page
@@ -55,27 +55,29 @@ namespace msa {
                 void keyPressed(int key);
                 void keyReleased(int key);
                 
-                Control* getActiveControl();
+                vector<Control*>& getActiveControls();
+                bool checkActiveControl(Control *control) const;
                 
                 void showControlOptions(Control *targetControl);
+                Control *getControlOptionsTarget() const;
                 
             private:
                 bool    doDefaultKeys;
                 bool    doDraw;
                 vector<Page*> pages;
-                GuiControlsPtr _pGuiControls;
+                GuiControls *_pGuiControls;
                 
 
                 bool checkOkToRun();
                 void setDraw(bool b);
                 
-                Control *_pActiveControl; // currently active control (only this control receives events)
+                vector<Control*> _activeControls; // currently active control (only this control receives events)
                 void setActiveControl(Control *control);
                 void releaseActiveControl();
                 
                 
                 Page& addPage(Page* page);
-                int getCurrentPageIndex();
+                int getCurrentPageIndex() const;
                 
             };
             

@@ -39,8 +39,8 @@ namespace msa {
                 scrollbar->getParameter().setTooltip("Scroll " + getPath());
                 
                 
-                _pControlOptions = ControlOptionsPtr(new ControlOptions(this));
-                addControl(_pControlOptions.get());
+                _pControlOptions = new ControlOptions(this);
+                addControl(_pControlOptions);
             }
             
             //--------------------------------------------------------------
@@ -72,12 +72,13 @@ namespace msa {
 //                wrapButton->getParameter().trackVariable(&pLayoutManager->doWrap);
                 
                 // TODO: custom scrollbar layout
-                scrollbar->visible = true;
                 scrollbar->layout.set(0, 0, getConfig()->layout.scrollbarWidth, ofGetHeight());
                 float sbheight = scrollbar->layout.height;
                 int contentHeight = getRoot()->getCurrentPage().height;
                 scrollbar->barThickness = sbheight / contentHeight;
                 pLayoutManager->targetScrollY = scrollbar->barThickness < 1 ? ofMap(scrollbar->getParameter().value(), 0, 1 - scrollbar->barThickness, 0, contentHeight - sbheight * 0.5) : 1;
+                scrollbar->visible = scrollbar->barThickness < 1;
+
                 
                 
                 pagesButton->layout.set(getRoot()->getCurrentPage().getRight(), 0, getConfig()->layout.buttonHeight, getConfig()->layout.buttonHeight);

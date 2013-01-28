@@ -15,10 +15,11 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                SliderT(Container *parent, Parameter* p) : Container(parent, p) {
+                SliderT(Container *parent, Parameter* p) : Container(parent, new Parameter(p->getName() + "_container")) {
                     setZ(-1);
 
                     slider = new SliderRawT<T>(parent, p);
+                    
 //                    slider->layout.positionMode = LayoutSettings::kAbsolute;
                     slider->setZ(0);
                     addControl(slider);

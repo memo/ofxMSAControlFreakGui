@@ -26,13 +26,20 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Renderer::add(Control *c) {
-//                ofLogVerbose() << "Renderer::add: " << c->getPath() << " " << c->x << " " << c->y << " " << c->width  << " " << c->height;
-                controls.push_back(c);
+//                ofLogVerbose() << "Renderer::add: " << c->getPath() << " " << (int)c << " " << c->x << " " << c->y << " " << c->width  << " " << c->height;
+                if(controlsMap.find(c) == controlsMap.end()) {
+                    controls.push_back(c);
+                    controlsMap[c] = c;
+                } else {
+                    ofLogVerbose() << "Renderer::add: " << c->getPath() << " " << (int)c << " " << c->x << " " << c->y << " " << c->width  << " " << c->height;
+                    throw runtime_error("msa::ControlFreak::gui::Renderer::add(Control*): Control already added to renderer");
+                }
             }
             
             //--------------------------------------------------------------
             void Renderer::clearControls() {
                 controls.clear();
+                controlsMap.clear();
             }
 
             //--------------------------------------------------------------
