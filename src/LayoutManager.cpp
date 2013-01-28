@@ -36,6 +36,7 @@ namespace msa {
                 control.width = control.layout.width * curScale.x;// ? control.layout.width : control.getConfig()->layout.columnWidth - indent) * curScale.x;
                 control.height = control.layout.height * curScale.y;// ? control.layout.height : control.getConfig()->layout.buttonHeight) * curScale.y;
                 
+                
                 // TODO: think about scales
                 switch(control.layout.positionMode) {
                     case LayoutSettings::kRelative: // normal (controls are placed in a free flowing manner, like html, layout.position is offset off calculated)
@@ -54,7 +55,8 @@ namespace msa {
                         
                         if(control.layout.doAffectFlow) {
                             _curHead = newHead;
-                            _curHead.y += postHeight;
+                            
+                            if(control.height != 0) _curHead.y += postHeight;   // dont do padding if height is 0
                         }
                         
                     }
@@ -67,7 +69,6 @@ namespace msa {
                     case LayoutSettings::kFixed: // layout.position is relative to screen
                         control.setPosition(control.layout.position);
                         break;
-                        
                 }
             }
             

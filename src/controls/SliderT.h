@@ -15,11 +15,10 @@ namespace msa {
             public:
                 
                 //--------------------------------------------------------------
-                SliderT(Container *parent, Parameter* p) : Container(parent, new Parameter(p->getName() + "_container")) {
+                SliderT(Container *parent, Parameter* p) : Container(parent, p) {
                     setZ(-1);
 
                     slider = new SliderRawT<T>(parent, p);
-                    
 //                    slider->layout.positionMode = LayoutSettings::kAbsolute;
                     slider->setZ(0);
                     addControl(slider);
@@ -48,16 +47,16 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void update() {
-                    int p = 0;
+                    int p = getConfig()->layout.padding.x;
                     int h = slider->height / 2;
                     int w = slider->height / 2;
-                    int y = 0;//slider->height - h - p;
+                    int y = getConfig()->layout.padding.y;
                     
                     slider->sliderPadding = w;
                     
                     decButton->layout.set(0, y, w, h);
-                    incButton->layout.set(slider->width - (w + p), y, w, h);
-                    moreButton->layout.set(slider->width - (w + p), h, w, h);
+                    incButton->layout.set(slider->width - w, y, w, h);
+                    moreButton->layout.set(slider->width - (w), y + h, w, h);
                     
                     if(decButton->getParameter().value()) slider->dec(1);
                     if(incButton->getParameter().value()) slider->inc(1);

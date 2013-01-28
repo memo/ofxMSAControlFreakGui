@@ -233,7 +233,7 @@ namespace msa {
                 if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
                     if(c.enabled && c.isVisible()) c._mouseMoved(e);
-                    //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
+//                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                 }
                 //                }
             }
@@ -254,7 +254,7 @@ namespace msa {
                         c._mousePressed(e);
                         if(c.isMouseOver()) {
                             getRoot()->setActiveControl(&c);
-//                            return;    // don't propogate event if this control processed it
+                            return;    // don't propogate event if this control processed it
                         }
                     }
                 }
@@ -274,7 +274,7 @@ namespace msa {
                 if(getInheritedScale().y > 1 - FLT_EPSILON) for(int i=getNumControls()-1; i>=0; --i) {
                     Control &c = get(i);
                     if(c.enabled && c.isVisible()) c._mouseDragged(e);
-                    //                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
+                        if(get(i).isMouseOver()) return;    // don't propogate event if this control processed it
                 }
                 //                }
             }
