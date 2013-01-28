@@ -50,7 +50,7 @@ namespace msa {
                     int p = getConfig()->layout.padding.x;
                     int h = slider->height / 2;
                     int w = slider->height / 2;
-                    int y = getConfig()->layout.padding.y;
+                    int y = 0;//getConfig()->layout.padding.y;
                     
                     slider->sliderPadding = w;
                     

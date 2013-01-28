@@ -277,9 +277,6 @@ namespace msa {
 //                _alpha += diff * getConfig()->colors.fade.speed;
 //                if(fabsf(diff) < 0.01) _alpha = targetAlpha;
                 
-                if(_alpha < 0.001) return;
-                
-                
                 setTooltip();
                 
                 // make sure all controls land on perfect pixels
@@ -291,13 +288,11 @@ namespace msa {
                     ofEnableAlphaBlending();
                     ofPushMatrix(); {
                         ofTranslate(x, y);
-                        ofVec2f s(getInheritedScale());
-                        ofScale(s.x, s.y, 1);
+//                        ofVec2f s(getInheritedScale());   // TODO: enable this (Checking why everything is blurred a bit)
+//                        ofScale(s.x, s.y, 1);
                         
                         ofPushMatrix(); {
                             draw();
-                            //                drawBorder();
-                            //                drawTextCentered(getParameter().getName() + " " + ofToString(getInheritedZ()));
                         } ofPopMatrix();
                         
                     } ofPopMatrix();

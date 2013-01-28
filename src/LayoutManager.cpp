@@ -126,18 +126,17 @@ namespace msa {
                     float openSpeed = 0.1f;
                     if(panel->titleButton->getParameter().value()) {
                         //                    if(scale.y<0.95) scale.y += (1-scale.y) * openSpeed;
-                        if(panel->children->scale.y < 1 - FLT_EPSILON) panel->children->scale.y += openSpeed;
+                        if(panel->children->scale.y < 0.99) panel->children->scale.y += openSpeed;
                         else panel->children->scale.y = 1.0f;
                     } else {
                         //                    if(scale.y > 0.05) scale.y += (0-scale.y) * openSpeed;
-                        if(panel->children->scale.y > FLT_EPSILON) panel->children->scale.y -= openSpeed;
+                        if(panel->children->scale.y > 0.01) panel->children->scale.y -= openSpeed;
                         else panel->children->scale.y = 0.0f;
                     }
                 }
                 
                 int panelDepth          = container.getDepth();
                 ofVec2f containerScale  = container.getInheritedScale();
-
                 
                 positionControl(container, containerScale, panelDepth);
                 
@@ -155,26 +154,7 @@ namespace msa {
                 }
                 addToRenderer(container);
                 growParent(container);
-                
-//                if(container.getRoot()) container.getRoot()->pLayoutManager->_curHead = _curHead;
             }
-            
-            
-            //--------------------------------------------------------------
-//            ofVec2f LayoutManager::getMaxPos() {
-//                if(doWrap) {
-//                    return ofVec2f(boundRect.width ? boundRect.x + boundRect.width : ofGetWidth(), boundRect.height ? boundRect.y + boundRect.height : ofGetHeight());
-//                } else {
-//                    return ofVec2f(1e100, 1e100);
-//                }
-//            }
-            
-            //--------------------------------------------------------------
-//            ofVec2f LayoutManager::clampPoint(ofVec2f p) {
-//                ofVec2f maxPos(getMaxPos());
-//                return ofVec2f(ofClamp(p.x, boundRect.getLeft(), maxPos.x), ofClamp(p.y, boundRect.getTop(), maxPos.y));
-//            }
-            
             
         }
     }
