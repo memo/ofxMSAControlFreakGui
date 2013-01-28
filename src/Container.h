@@ -86,7 +86,7 @@ namespace msa {
                 
                 void addParameter(Parameter& p);
                 void addParameterChildren(ParameterGroup& parameters);
-                void arrangeControls();
+                void arrangeControls(bool bResetHead);
             };
             
         }

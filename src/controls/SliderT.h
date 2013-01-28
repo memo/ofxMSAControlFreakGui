@@ -17,10 +17,7 @@ namespace msa {
                 //--------------------------------------------------------------
                 SliderT(Container *parent, Parameter* p) : Container(parent, p) {
                     setZ(-1);
-//                    layout.positionMode = LayoutSettings::kAbsolute;
-//                    layout.width = 1;
-//                    layout.height = 1;
-                    
+
                     slider = new SliderRawT<T>(parent, p);
 //                    slider->layout.positionMode = LayoutSettings::kAbsolute;
                     slider->setZ(0);

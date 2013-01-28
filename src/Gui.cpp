@@ -183,8 +183,8 @@ namespace msa {
                 Page &page = getCurrentPage();
                 page.layout.x = getConfig()->layout.scrollbarWidth;
                 pLayoutManager->clearParentRect(*this);
-                page.arrangeControls();
-                _pGuiControls->arrangeControls();
+                page.arrangeControls(true);
+                _pGuiControls->arrangeControls(true);
                 
                 // sort and draw
                 Renderer::instance().draw();

@@ -51,7 +51,6 @@ namespace msa {
                         //                        }
                         control.setPosition(controlPos);
                         control.x += indent * curScale.x;
-//                        control.y -= scrollY;
                         
                         if(control.layout.doAffectFlow) {
                             _curHead = newHead;
@@ -85,24 +84,26 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void LayoutManager::arrangeControls(Container &container) {
-                _curHead.set(container.layout.x, container.layout.y);
+            void LayoutManager::arrangeControls(Container &container, bool bResetHead) {
 
                 switch(container.layout.positionMode) {
                     case LayoutSettings::kRelative: // normal (controls are placed in a free flowing manner, like html, layout.position is offset off calculated)
+////                        if(container.getParent())
+////                            _curHead += ofVec2f(container.getParent()->getLeft(), container.getParent()->getBottom());
 //                        if(container.getParent())
-//                            _curHead += ofVec2f(container.getParent()->getLeft(), container.getParent()->getBottom());
-                        if(container.getRoot())
-                            _curHead += container.getRoot()->pLayoutManager->_curHead;
+//                            _curHead += container.getParent()->pLayoutManager->_curHead;
+                        if(bResetHead) _curHead.set(container.layout.x, container.layout.y - scrollY);
                         
                         break;
                         
                     case LayoutSettings::kAbsolute: // layout.position is relative to container
                         if(container.getParent())
                             _curHead += ofVec2f(container.getParent()->getLeft(), container.getParent()->getTop());
+                        break;
 
                         
                     case LayoutSettings::kFixed: // layout.position is relative to screen
+                        _curHead.set(container.layout.x, container.layout.y);
                         break;
                         
                 }
@@ -143,7 +144,7 @@ namespace msa {
                     Control& control = container.get(i);
                     if(control.isVisible()) {
                         Container *c = dynamic_cast<Container*>(&control);
-                        if(c) c->arrangeControls();//prepareContainerRecursively(*c);
+                        if(c) c->arrangeControls(false);//prepareContainerRecursively(*c);
                         else {
                             positionControl(control, containerScale, panelDepth);
                             addToRenderer(control);
@@ -154,7 +155,7 @@ namespace msa {
                 addToRenderer(container);
                 growParent(container);
                 
-                if(container.getRoot()) container.getRoot()->pLayoutManager->_curHead = _curHead;
+//                if(container.getRoot()) container.getRoot()->pLayoutManager->_curHead = _curHead;
             }
             
             

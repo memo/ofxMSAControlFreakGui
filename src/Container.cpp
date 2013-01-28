@@ -25,7 +25,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Container::init() {
-                pLayoutManager = LayoutManagerPtr(new LayoutManager);
+                pLayoutManager = getParent() ? getParent()->pLayoutManager : LayoutManagerPtr(new LayoutManager);
                 layout.width = 0;
                 layout.height = 0;
             }
@@ -335,8 +335,8 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            void Container::arrangeControls() {
-                if(pLayoutManager) pLayoutManager->arrangeControls(*this);
+            void Container::arrangeControls(bool bResetHead) {
+                if(pLayoutManager) pLayoutManager->arrangeControls(*this, bResetHead);
             }
 
             

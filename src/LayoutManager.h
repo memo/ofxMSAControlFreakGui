@@ -34,7 +34,7 @@ namespace msa {
                 virtual void update();
                 
                 
-                virtual void arrangeControls(Container &container); // this is the main function which is called
+                virtual void arrangeControls(Container &container, bool bResetHead); // this is the main function which is called
                 
                 virtual void prepareContainerRecursively(Container &container);
                 virtual void positionControl(Control &control, ofVec2f &parentScale, int panelDepth);
