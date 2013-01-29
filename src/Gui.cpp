@@ -11,7 +11,6 @@ namespace msa {
             
             //--------------------------------------------------------------
             Gui::Gui() : Container(NULL, "ofxMSAControlFreakGui") {
-                doDefaultKeys = false;
                 doDraw = true;
                 //                _pActiveControl = NULL;
                 
@@ -19,6 +18,7 @@ namespace msa {
                 addControl(_pGuiControls);
                 
                 enableAllEvents();
+                setDefaultKeys(true);
             }
             
             //--------------------------------------------------------------
