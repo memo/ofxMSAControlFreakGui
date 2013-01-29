@@ -80,10 +80,10 @@ namespace msa {
                 scrollbar->visible = scrollbar->barThickness < 1;
 
                 
-                
+                pagesButton->visible = getRoot()->getNumPages() > 1;
                 pagesButton->layout.set(getRoot()->getCurrentPage().getRight(), 0, getConfig()->layout.buttonHeight, getConfig()->layout.buttonHeight);
                 pagesDropdown->layout.set(pagesButton->layout.getRight(), pagesButton->layout.getTop(), getConfig()->layout.columnWidth, getConfig()->layout.buttonHeight);
-                pagesDropdown->visible = pagesDropdown->enabled = pagesButton->getParameter().value();
+                pagesDropdown->visible = pagesButton->getParameter().value();
                 
                 if(pagesButton->getParameter().hasChanged()) {
                     if(pagesButton->getParameter().value()) {
