@@ -110,7 +110,7 @@ namespace msa {
                 }
 
                 prepareContainerRecursively(container);
-                update();
+//                update();
             }
             
             //--------------------------------------------------------------

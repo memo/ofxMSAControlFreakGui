@@ -18,7 +18,7 @@ namespace msa {
                 addControl(_pGuiControls);
                 
                 enableAllEvents();
-                setDefaultKeys(true);
+                setDefaultKeys(false);
             }
             
             //--------------------------------------------------------------
@@ -207,6 +207,7 @@ namespace msa {
                 pLayoutManager->clearParentRect(*this);
                 page.arrangeControls(true);
                 _pGuiControls->arrangeControls(true);
+                pLayoutManager->update();
                 
                 // sort and draw
                 Renderer::instance().draw();
