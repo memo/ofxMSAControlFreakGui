@@ -76,7 +76,7 @@ namespace msa {
                 if(pages.size()) {
                     _pGuiControls->pagesDropdown->getParameter() = (i-1 + pages.size()) % pages.size();
                 }
-                showControlOptions(NULL);
+                showControlProperties(NULL);
             }
             
             int Gui::getCurrentPageIndex() const {
@@ -154,7 +154,7 @@ namespace msa {
                 //                    _pActiveControl->setZ(1e100);
                 //                }
                 
-                //                showControlOptions(NULL);
+                //                showControlProperties(NULL);
             }
             
             //--------------------------------------------------------------
@@ -352,15 +352,15 @@ namespace msa {
             
             
             //--------------------------------------------------------------
-            void Gui::showControlOptions(Control *targetControl) {
-                ofLogNotice() << "Gui::showControlOptions " << (int)targetControl;
-                _pGuiControls->_pControlOptions->show(targetControl);
+            void Gui::showControlProperties(Control *targetControl) {
+                ofLogNotice() << "Gui::showControlProperties " << (int)targetControl;
+                _pGuiControls->_pControlProperties->show(targetControl);
             }
             
             
             //--------------------------------------------------------------
-            Control *Gui::getControlOptionsTarget() const {
-                return _pGuiControls->_pControlOptions->_pTargetControl;
+            Control *Gui::getControlPropertiesTarget() const {
+                return _pGuiControls->_pControlProperties->_pTargetControl;
             }
             
             

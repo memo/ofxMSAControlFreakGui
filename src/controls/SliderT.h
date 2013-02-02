@@ -61,7 +61,7 @@ namespace msa {
                     if(decButton->getParameter().value()) slider->dec(1);
                     if(incButton->getParameter().value()) slider->inc(1);
                     if(moreButton->getParameter().value()) {
-                        getRoot()->showControlOptions(this);
+                        getRoot()->showControlProperties(this);
                     }
                 }
 

@@ -7,7 +7,7 @@ namespace msa {
         namespace gui {
             
             //--------------------------------------------------------------
-            ControlOptions::ControlOptions(Container *parent) : Container(parent, new Parameter("Control Options")) {
+            ControlProperties::ControlProperties(Container *parent) : Container(parent, new Parameter("Control Options")) {
                 layout.positionMode = LayoutSettings::kFixed;
                 layout.doIncludeInContainerRect = false;
                 
@@ -34,12 +34,12 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void ControlOptions::onPressOutside(int x, int y, int button) {
+            void ControlProperties::onPressOutside(int x, int y, int button) {
 //                show(NULL);
             }
             
             //--------------------------------------------------------------
-            void ControlOptions::show(Control *targetControl) {
+            void ControlProperties::show(Control *targetControl) {
                 this->_pTargetControl = this->_pTargetControl == targetControl ? NULL : targetControl;  // if sending the same one, set to NULL to close
                 visible = _pTargetControl != NULL;
                 if(_pTargetControl) {
@@ -50,7 +50,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void ControlOptions::update() {
+            void ControlProperties::update() {
                 Container::update();
                 
                 if(_pTargetControl == NULL) return;
@@ -124,7 +124,7 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            void ControlOptions::draw() {
+            void ControlProperties::draw() {
                 if(_pTargetControl) {
                     ofSetLineWidth(1);
                     ofSetColor(255, 0, 0);

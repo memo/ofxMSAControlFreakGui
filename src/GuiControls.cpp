@@ -39,8 +39,8 @@ namespace msa {
                 scrollbar->getParameter().setTooltip("Scroll " + getPath());
                 
                 
-                _pControlOptions = new ControlOptions(this);
-                addControl(_pControlOptions);
+                _pControlProperties = new ControlProperties(this);
+                addControl(_pControlProperties);
             }
             
             //--------------------------------------------------------------

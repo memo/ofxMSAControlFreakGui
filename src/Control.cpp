@@ -183,7 +183,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             ofColor Control::setBorderColor() {
-                if(getRoot() && getRoot()->getControlOptionsTarget() == this) return setToggleColor(true);
+                if(getRoot() && getRoot()->getControlPropertiesTarget() == this) return setToggleColor(true);
                 return setColor(getConfig()->colors.border);
             }
             

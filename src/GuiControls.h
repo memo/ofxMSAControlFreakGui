@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofxMSAControlFreakGui/src/Container.h"
-#include "ofxMSAControlFreakGui/src/ControlOptions.h"
+#include "ofxMSAControlFreakGui/src/ControlProperties.h"
 
 namespace msa {
     namespace ControlFreak {
@@ -15,7 +15,7 @@ namespace msa {
             private:
                 friend class Gui;
                 
-                ControlOptions *_pControlOptions;
+                ControlProperties *_pControlProperties;
                 
                 GuiControls(Container *parent);
                 

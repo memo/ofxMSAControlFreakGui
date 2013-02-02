@@ -58,8 +58,8 @@ namespace msa {
                 vector<Control*>& getActiveControls();
                 bool checkActiveControl(Control *control) const;
                 
-                void showControlOptions(Control *targetControl);
-                Control *getControlOptionsTarget() const;
+                void showControlProperties(Control *targetControl);
+                Control *getControlPropertiesTarget() const;
                 
             private:
                 bool    doDefaultKeys;

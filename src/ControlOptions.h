@@ -9,11 +9,11 @@ namespace msa {
             class BoolBase;
             class OptionsBase;
             
-            class ControlOptions : public Container {
+            class ControlProperties : public Container {
             public:
                 friend class Gui;
                 
-                ControlOptions(Container *parent);
+                ControlProperties(Container *parent);
                 
                 void update();
                 void draw();
