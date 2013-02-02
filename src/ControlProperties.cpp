@@ -43,7 +43,7 @@ namespace msa {
                 this->_pTargetControl = this->_pTargetControl == targetControl ? NULL : targetControl;  // if sending the same one, set to NULL to close
                 visible = _pTargetControl != NULL;
                 if(_pTargetControl) {
-                    titleButton->getParameter().setName(_pTargetControl->getName());
+                    titleButton->getParameter().setName("'" + _pTargetControl->getName() + "' properties");
                     snapButton->getParameter() = _pTargetControl->getParameter().getSnap();
                     clampButton->getParameter() = _pTargetControl->getParameter().getClamp();
                 }
