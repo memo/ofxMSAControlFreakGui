@@ -69,10 +69,12 @@ namespace msa {
                     // if 'add' is selected, bring up appropiate dialog
                     // if another one is selected, bring up edit dialog
                     listenersParam->set(-1);
+//                    if(listenersParam>=0) ofSystemAlertDialog("Coming soon!");
                 }
                 
                 if(sendersParam->hasChanged()) {
                     sendersParam->set(-1);
+//                    if(sendersParam>=0) ofSystemAlertDialog("Coming soon!");
                 }
 
                 
