@@ -111,7 +111,11 @@ namespace msa {
                         presetManager->openLoad();
                     }
                     presetDropdown->layout.x = loadButton->layout.getRight();
-                    if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) paramT->loadXmlSchema(presetManager->getPresetName());
+                    if(presetDropdown->getParameter().hasChanged() || presetDropdown->isMousePressed()) {
+                        paramT->loadXmlSchema(presetManager->getPresetName());
+                        presetManager->close();
+                    }
+
                 }
                 
                 // save preset
