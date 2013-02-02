@@ -18,11 +18,11 @@ namespace msa {
                 addControl(clampButton = new BoolToggle(this, "clamp"));
                 
                 string controllerNames[] = {"<add MIDI>", "<add OSC>", "<add DMX>" };
-                listenersParam = new ParameterNamedIndex("listeners");
-                listenersParam->setLabels(3, controllerNames);
-                listenersParam->setClamp(false);
-                listenersParam->set(-1);
-                addControl(listenersDropdown = new OptionsDropdownList(this, listenersParam));
+                receiversParam = new ParameterNamedIndex("receivers");
+                receiversParam->setLabels(3, controllerNames);
+                receiversParam->setClamp(false);
+                receiversParam->set(-1);
+                addControl(receiversDropdown = new OptionsDropdownList(this, receiversParam));
                 
                 sendersParam = new ParameterNamedIndex("senders");
                 sendersParam->setLabels(3, controllerNames);
@@ -65,11 +65,11 @@ namespace msa {
                 if(snapButton->getParameter().hasChanged()) _pTargetControl->getParameter().setSnap(snapButton->getParameter());
                 if(clampButton->getParameter().hasChanged()) _pTargetControl->getParameter().setClamp(clampButton->getParameter());
                 
-                if(listenersParam->hasChanged()) {
+                if(receiversParam->hasChanged()) {
                     // if 'add' is selected, bring up appropiate dialog
                     // if another one is selected, bring up edit dialog
-                    listenersParam->set(-1);
-//                    if(listenersParam>=0) ofSystemAlertDialog("Coming soon!");
+                    receiversParam->set(-1);
+//                    if(receiversParam>=0) ofSystemAlertDialog("Coming soon!");
                 }
                 
                 if(sendersParam->hasChanged()) {

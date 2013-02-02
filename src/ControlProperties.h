@@ -29,10 +29,10 @@ namespace msa {
                 BoolBase *titleButton;   // button which controls the title
                 BoolBase *snapButton;
                 BoolBase *clampButton;
-                OptionsBase *listenersDropdown;
+                OptionsBase *receiversDropdown;
                 OptionsBase *sendersDropdown;
                 
-                ParameterNamedIndex *listenersParam;
+                ParameterNamedIndex *receiversParam;
                 ParameterNamedIndex *sendersParam;
             };
             
