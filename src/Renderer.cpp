@@ -3,7 +3,7 @@
 
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             Renderer *Renderer::renderer = NULL;
@@ -32,7 +32,7 @@ namespace msa {
                     controlsMap[c] = c;
                 } else {
                     ofLogVerbose() << "Renderer::add: " << c->getPath() << " " << (int)c << " " << c->x << " " << c->y << " " << c->width  << " " << c->height;
-                    throw runtime_error("msa::ControlFreak::gui::Renderer::add(Control*): Control already added to renderer");
+                    throw runtime_error("msa::controlfreak::gui::Renderer::add(Control*): Control already added to renderer");
                 }
             }
             

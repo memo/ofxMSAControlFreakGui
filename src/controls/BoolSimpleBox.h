@@ -3,7 +3,7 @@
 #include "ofxMSAControlFreakGui/src/controls/BoolBase.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class BoolSimpleBox : public BoolBase {

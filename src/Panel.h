@@ -3,7 +3,7 @@
 #include "ofxMSAControlFreakGui/src/Container.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class BoolBase;

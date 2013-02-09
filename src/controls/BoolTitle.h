@@ -4,7 +4,7 @@
 #include "ofxMSAControlFreakGui/src/Renderer.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class BoolTitle : public BoolBase {

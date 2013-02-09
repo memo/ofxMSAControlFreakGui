@@ -5,7 +5,7 @@
 
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class Slider2d : public Control {

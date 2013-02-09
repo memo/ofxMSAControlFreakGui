@@ -5,7 +5,7 @@
 #include "ofxMSAControlFreakGui/src/GuiControls.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class Gui : public Container {

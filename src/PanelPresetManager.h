@@ -4,7 +4,7 @@
 
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class Panel;
@@ -46,7 +46,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void openLoad() {
-                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::openLoad";
+                    ofLogNotice() << "msa::controlfreak::gui::PanelPresetManager::openLoad";
                     checkPresetsControl();
                     bLoadOpen = true;
                     bSaveOpen = false;
@@ -56,7 +56,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void openSave() {
-                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::openSave";
+                    ofLogNotice() << "msa::controlfreak::gui::PanelPresetManager::openSave";
                     checkPresetsControl();
                     bSaveOpen = true;
                     bLoadOpen = false;
@@ -67,14 +67,14 @@ namespace msa {
 
                 //--------------------------------------------------------------
                 void close() {
-                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::close";
+                    ofLogNotice() << "msa::controlfreak::gui::PanelPresetManager::close";
                     bSaveOpen = false;
                     bLoadOpen = false;
                 }
 
                 //--------------------------------------------------------------
                 void readDir() {
-                    ofLogNotice() << "msa::ControlFreak::gui::PanelPresetManager::readDir";
+                    ofLogNotice() << "msa::controlfreak::gui::PanelPresetManager::readDir";
                     checkPresetsControl();
                     
                     ParameterGroup *panelParams = dynamic_cast<ParameterGroup*>(&panel->getParameter());
@@ -82,7 +82,7 @@ namespace msa {
                         vector<string> presetsList = panelParams->getPresetsList();
                         for(int i=0; i<presetsList.size(); i++) presetsNamedIndex->addLabel(presetsList[i]);
                     } else {
-                        ofLogError() << "msa::ControlFreak::gui::PanelPresetManager::readDir - no PanelParams";
+                        ofLogError() << "msa::controlfreak::gui::PanelPresetManager::readDir - no PanelParams";
                     }
                         
                 }

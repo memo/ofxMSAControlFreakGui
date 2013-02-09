@@ -3,7 +3,7 @@
 #include "ofxMSAControlFreakGui/src/Control.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
 //            class ColorPicker : public Control {

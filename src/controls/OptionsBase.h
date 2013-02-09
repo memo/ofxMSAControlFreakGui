@@ -4,7 +4,7 @@
 #include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             class OptionsBase : public Control {

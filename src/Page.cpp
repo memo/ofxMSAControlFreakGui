@@ -2,7 +2,7 @@
 #include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             //--------------------------------------------------------------

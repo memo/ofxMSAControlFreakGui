@@ -4,7 +4,7 @@
 
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             
@@ -144,7 +144,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             void Container::addParameter(Parameter& p) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameter: " << getPath() << ": " << p.getPath();
+                ofLogVerbose() << "msa::controlfreak::gui::Container::addParameter: " << getPath() << ": " << p.getPath();
                 // TODO: if parameter already exists, remove it first, or update it
                 
                 if(typeid(p) == typeid(ParameterGroup)) {
@@ -200,12 +200,12 @@ namespace msa {
                 }
                 
                 
-                ofLogWarning() << "msa::ControlFreak::gui::Container::add: unknown type adding parameter " << p.getPath() << " " << p.getTypeName();
+                ofLogWarning() << "msa::controlfreak::gui::Container::add: unknown type adding parameter " << p.getPath() << " " << p.getTypeName();
             }
             
             //--------------------------------------------------------------
             void Container::addParameterChildren(ParameterGroup& parameters) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Container::addParameterChildren: " << getPath() << ": " << parameters.getPath();
+                ofLogVerbose() << "msa::controlfreak::gui::Container::addParameterChildren: " << getPath() << ": " << parameters.getPath();
                 
                 int np = parameters.size();
                 for(int i=0; i<np; i++) {

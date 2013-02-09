@@ -4,7 +4,7 @@
 
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             //            Gui gui;
@@ -116,7 +116,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::addPage(ParameterGroup &parameters) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Gui::addPage(ParameterGroup): " << parameters.getPath();
+                ofLogVerbose() << "msa::controlfreak::gui::Gui::addPage(ParameterGroup): " << parameters.getPath();
                 Page* page(new Page(this, &parameters));
                 addPage(page);
                 page->init();
@@ -125,7 +125,7 @@ namespace msa {
             
             //--------------------------------------------------------------
             Page& Gui::addPage(Page* page) {
-                ofLogVerbose() << "msa::ControlFreak::gui::Gui::addPage(Page*): " << page->getParameter().getPath();
+                ofLogVerbose() << "msa::controlfreak::gui::Gui::addPage(Page*): " << page->getParameter().getPath();
                 pages.push_back(page);
                 return *page;
             }
@@ -135,14 +135,14 @@ namespace msa {
             void Gui::setActiveControl(Control *control) {
                 if(control) {
                     _activeControls.push_back(control);
-                    ofLogVerbose() << "msa::ControlFreak::gui::Gui::setActiveControl: " << (_activeControls.size()-1) << " " << control->getParameter().getPath() << " " << typeid(*control).name();
+                    ofLogVerbose() << "msa::controlfreak::gui::Gui::setActiveControl: " << (_activeControls.size()-1) << " " << control->getParameter().getPath() << " " << typeid(*control).name();
                 } else {
                     // if old control exists, put it at the back
                     //                    for(int i=0; i<_activeControls.size(); i++) {
                     //                        _activeControls[i]->popZ();
                     //                    }
                     _activeControls.clear();
-                    ofLogVerbose() << "msa::ControlFreak::gui::Gui::setActiveControl: " << (_activeControls.size()-1) << " NULL";
+                    ofLogVerbose() << "msa::controlfreak::gui::Gui::setActiveControl: " << (_activeControls.size()-1) << " NULL";
                 }
                 
                 //                if(_pActiveControl) _pActiveControl->popZ();

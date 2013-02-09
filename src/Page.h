@@ -3,7 +3,7 @@
 #include "ofxMSAControlFreakGui/src/Panel.h"
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             

@@ -10,7 +10,7 @@
 //#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 //
 //namespace msa {
-//    namespace ControlFreak {
+//    namespace controlfreak {
 //        namespace gui {
 //            
 //            ColorPicker::ColorPicker(Container *parent, Parameter* p) : Control(parent, p) {

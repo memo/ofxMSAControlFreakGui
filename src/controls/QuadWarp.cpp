@@ -4,7 +4,7 @@
 #define MOUSE_DISTANCE		10.0f
 
 namespace msa {
-    namespace ControlFreak {
+    namespace controlfreak {
         namespace gui {
             
             //---------------------------------------------------------------------
