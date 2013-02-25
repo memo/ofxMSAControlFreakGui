@@ -1,10 +1,16 @@
+//                                      __
+//     ____ ___  ___  ____ ___  ____   / /__   __
+//    / __ `__ \/ _ \/ __ `__ \/ __ \ / __/ | / /
+//   / / / / / /  __/ / / / / / /_/ // /_ | |/ /
+//  /_/ /_/ /_/\___/_/ /_/ /_/\____(_)__/ |___/
 //
-//  Renderer.cpp
-//  ofxMSAControlFreak example
 //
-//  Created by Memo Akten on 28/12/2012.
+//  Created by Memo Akten, www.memo.tv
 //
+//  ofxMSAControlFreakGui
 //
+
+
 
 #pragma once
 
