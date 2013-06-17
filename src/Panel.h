@@ -36,6 +36,18 @@ namespace msa {
                 
                 void update();
                 void showPanel(bool bOpen, bool bRecursive = false);
+                
+                bool saveXMLValues( string filename = "" );
+                bool loadXMLValues( string filename = "" );
+                
+                bool saveXMLValues( int slot );
+                bool loadXMLValues( int slot );
+                
+                bool saveXMLSchema( string filename = "" );
+                bool loadXMLSchema( string filename = "" );
+                
+                bool saveXMLSchema( int slot );
+                bool loadXMLSchema( int slot );
 
             protected:
                 ParameterGroup  *paramT;

@@ -144,6 +144,53 @@ namespace msa {
 
             }
             
+            //--------------------------------------------------------------
+            bool Panel::saveXMLValues( string filename )
+            {
+                return paramT->saveXmlValues( filename );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::loadXMLValues( string filename )
+            {
+                return paramT->loadXmlValues( filename );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::saveXMLValues( int slot )
+            {
+                return paramT->saveXmlValues( slot );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::loadXMLValues( int slot )
+            {
+                return paramT->loadXmlValues( slot );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::saveXMLSchema( string filename )
+            {
+                paramT->saveXmlSchema( filename );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::loadXMLSchema( string filename )
+            {
+                paramT->loadXmlSchema( filename );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::saveXMLSchema( int slot )
+            {
+                paramT->saveXmlSchema( slot );
+            }
+            
+            //--------------------------------------------------------------
+            bool Panel::loadXMLSchema( int slot )
+            {
+                paramT->loadXmlSchema( slot );
+            }
             
         }
     }
