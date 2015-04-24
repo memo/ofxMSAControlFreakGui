@@ -97,25 +97,25 @@ namespace msa {
                     ofFill();
                     
                     setBGColor();
-                    ofDrawRect(0, 0, width, height);
+                    ofDrawRectangle(0, 0, width, height);
                     
                     setSliderColor(false);
-                    ofDrawRect(0, 0, width, height);
+                    ofDrawRectangle(0, 0, width, height);
                     
                     setSliderColor(true);
                     int dbarY = getParameter().value() * height;
                     int dbarT = barThickness * height;
-                    ofDrawRect(0, dbarY, width, dbarT);
+                    ofDrawRectangle(0, dbarY, width, dbarT);
                     
                     setColor(ofColor(0, 100));
                     int dbarC = dbarY + dbarT/2;   // center
 
-//                    ofCircle(width/2, dbarY + dbarT/2, width/2, width*0.4);
+//                    ofDrawCircle(width/2, dbarY + dbarT/2, width/2, width*0.4);
                     int lineCount = 3;
                     int lineSpace = 4;
                     ofSetLineWidth(1);
                     for(int yy=dbarC - lineCount*lineSpace; yy <= dbarC + lineCount*lineSpace; yy += lineSpace) {
-                        ofLine(0, yy, width, yy);
+                        ofDrawLine(0, yy, width, yy);
                     }
                     
                     drawBorder();

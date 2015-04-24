@@ -142,7 +142,7 @@ namespace msa {
                 if(_pTargetControl) {
                     ofSetLineWidth(1);
                     ofSetColor(255, 0, 0);
-                    ofLine(0, 0, _pTargetControl->getRight() - x, _pTargetControl->getCenter().y - y);
+                    ofDrawLine(0, 0, _pTargetControl->getRight() - x, _pTargetControl->getCenter().y - y);
                 }
                 
             }

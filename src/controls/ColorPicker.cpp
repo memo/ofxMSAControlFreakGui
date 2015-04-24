@@ -117,7 +117,7 @@
 //                    ofEnableAlphaBlending();
 //                    ofFill();
 //                    setEmptyColor();
-//                    ofDrawRect(0, startY, width, getConfig()->layout.sliderHeight*1.8);
+//                    ofDrawRectangle(0, startY, width, getConfig()->layout.sliderHeight*1.8);
 //                    
 //                    
 //                    switch(i) {
@@ -127,7 +127,7 @@
 //                        case 3:glColor3f(get(i), get(i), get(i)); break;
 //                    }
 //                    
-//                    ofDrawRect(0, startY, barwidth[i], getConfig()->layout.sliderHeight * 1.8);
+//                    ofDrawRectangle(0, startY, barwidth[i], getConfig()->layout.sliderHeight * 1.8);
 //                    
 //                    int iover = (getMouseY() - y) / getConfig()->layout.sliderHeight/2;
 //                    bool isOver = iover == i;
@@ -145,11 +145,11 @@
 //                ofFill();
 //                
 //                setBGColor();
-//                ofDrawRect(0, startY, width, getConfig()->layout.sliderTextHeight);
+//                ofDrawRectangle(0, startY, width, getConfig()->layout.sliderTextHeight);
 //                
 //                glColor3f(get(0), get(1), get(2));
-//                //	ofDrawRect(0, startY+getConfig()->layout.sliderTextHeight, width, getConfig()->layout.sliderTextHeight * 1.5);
-//                ofDrawRect(150, startY + 3, width - 150 -3, getConfig()->layout.sliderTextHeight - 8);
+//                //	ofDrawRectangle(0, startY+getConfig()->layout.sliderTextHeight, width, getConfig()->layout.sliderTextHeight * 1.5);
+//                ofDrawRectangle(150, startY + 3, width - 150 -3, getConfig()->layout.sliderTextHeight - 8);
 //                
 //                setTextColor();
 //                getConfig()->drawString(getName(), 3, startY + 14);

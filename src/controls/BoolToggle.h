@@ -34,21 +34,21 @@ namespace msa {
                                         
                     ofFill();
                     setToggleColor(getParameter().value());
-                    ofDrawRect(0, 0, height, height);
+                    ofDrawRectangle(0, 0, height, height);
                     
                     if(getParameter().value()) {
                         setTextColor();
                         if(bDrawCross) {
                             ofSetLineWidth(2);
-                            ofLine(0, 0, height, height);
-                            ofLine(height, 0, 0, height);
+                            ofDrawLine(0, 0, height, height);
+                            ofDrawLine(height, 0, 0, height);
                         } else {
-                            ofCircle(height/2, height/2, height/4);
+                            ofDrawCircle(height/2, height/2, height/4);
                         }
                     }
                     
                     setBGColor();
-                    ofDrawRect(height, 0, width - height, height);
+                    ofDrawRectangle(height, 0, width - height, height);
                     
 //                    drawText(height + getConfig()->layout.textPos.x, getConfig()->layout.textPos.y);
                     

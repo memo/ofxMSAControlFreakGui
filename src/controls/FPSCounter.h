@@ -39,7 +39,7 @@ namespace msa {
                     ofEnableAlphaBlending();
                     ofFill();
                     setBGColor();
-                    ofDrawRect(0, 0, width, height);
+                    ofDrawRectangle(0, 0, width, height);
                     
                     drawText(3, 15, "FPS: " + ofToString(ofGetFrameRate()));
                     drawBorder();

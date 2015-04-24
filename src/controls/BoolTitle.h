@@ -34,7 +34,7 @@ namespace msa {
                     // draw bg
                     ofFill();
                     setToggleColor(getParameter().value());
-                    ofDrawRect(0, 0, width, height);
+                    ofDrawRectangle(0, 0, width, height);
                     
 //                    drawText(40, 15);
                     drawTextCentered();

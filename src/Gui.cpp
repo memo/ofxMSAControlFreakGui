@@ -231,9 +231,9 @@ namespace msa {
                 //                ofSetRectMode(OF_RECTMODE_CORNER);
                 //                ofNoFill();
                 //                ofSetColor(0, 255 ,0);
-                //                ofDrawRect(page.x, page.y, page.width, page.height);
+                //                ofDrawRectangle(page.x, page.y, page.width, page.height);
                 //                ofSetColor(0, 0, 255);
-                //                ofDrawRect(x, y, width, height);
+                //                ofDrawRectangle(x, y, width, height);
                 //                ofPopStyle();
             }
             

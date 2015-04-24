@@ -34,11 +34,11 @@ namespace msa {
                     ofPushMatrix();
                     ofScale(width, height);
                     ofFill();
-                    ofCircle(0.5, 0.5, 0.5);
+                    ofDrawCircle(0.5, 0.5, 0.5);
                     if(isMouseOver()) {
                         ofNoFill();
                         setColor(ofColor(255));
-                        ofCircle(0.5, 0.5, 0.5);
+                        ofDrawCircle(0.5, 0.5, 0.5);
                     }
                     ofPopMatrix();
 

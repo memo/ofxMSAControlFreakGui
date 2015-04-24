@@ -54,7 +54,7 @@ namespace msa {
 //                    height = titleHeight;
 //                    ofFill();
 //                    setBGColor();
-//                    ofDrawRect(0, 0, width, height);
+//                    ofDrawRectangle(0, 0, width, height);
 //                    
 //                    drawText(getConfig()->layout.textPos.x, getConfig()->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
 //                    drawBorder();
@@ -67,7 +67,7 @@ namespace msa {
                     int ty = height/3;
                     int tl = ty*1.5;
                     
-                    ofTriangle(width - ty - tl, ty, width - ty, ty, width - ty - tl/2, height - ty);
+                    ofDrawTriangle(width - ty - tl, ty, width - ty, ty, width - ty - tl/2, height - ty);
                     
                     if(isOpen) drawList();
                     

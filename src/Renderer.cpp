@@ -122,11 +122,11 @@ namespace msa {
                 ofSetLineWidth(1);
                 ofSetColor(config.tooltip.bgColor);
                 ofFill();
-                ofDrawRect(r);
+                ofDrawRectangle(r);
                 
                 ofSetColor(config.tooltip.borderColor);
                 ofNoFill();
-                ofDrawRect(r);
+                ofDrawRectangle(r);
                 
                 ofSetColor(config.tooltip.textColor);
                 config.drawString(tooltip.s, x, y);

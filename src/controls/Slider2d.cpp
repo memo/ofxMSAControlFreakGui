@@ -106,21 +106,21 @@ namespace msa {
 //                
 //                ofFill();
 //                setColor(getConfig()->colors.slider.full);
-//                ofDrawRect(0, 0, width, height - getConfig()->layout.slider2DTextHeight);
+//                ofDrawRectangle(0, 0, width, height - getConfig()->layout.slider2DTextHeight);
 //                
 //                ofFill();
 //                setBGColor();
-//                ofDrawRect(0, height-getConfig()->layout.slider2DTextHeight, width, getConfig()->layout.slider2DTextHeight);
+//                ofDrawRectangle(0, height-getConfig()->layout.slider2DTextHeight, width, getConfig()->layout.slider2DTextHeight);
 //                
 //                setTextColor();
 //                getConfig()->drawString(name+"\nx:"+ofToString(value->x, 2)+"\ny:"+ofToString(value->y, 2), 3, height+15-getConfig()->layout.slider2DTextHeight);
 //                
 //                setTextColor();
-//                ofCircle(pointv.x-x, pointv.y-y, 2);
+//                ofDrawCircle(pointv.x-x, pointv.y-y, 2);
 //                
 //                setTextColor();
-//                ofLine(pointv.x-x, 0, pointv.x-x, height-getConfig()->layout.slider2DTextHeight);
-//                ofLine(0, pointv.y-y,width, pointv.y-y);
+//                ofDrawLine(pointv.x-x, 0, pointv.x-x, height-getConfig()->layout.slider2DTextHeight);
+//                ofDrawLine(0, pointv.y-y,width, pointv.y-y);
 //                
 //                glPopMatrix();
 //                ofDisableAlphaBlending();
