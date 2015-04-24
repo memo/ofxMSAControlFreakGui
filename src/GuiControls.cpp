@@ -62,6 +62,10 @@ namespace msa {
             
             //--------------------------------------------------------------
             void GuiControls::update() {
+                if(!getRoot()) {
+                    ofLogError() << "GuiControls::update - there is no root!!";
+                    return;
+                }
                 Container::update();
                 
 //                LayoutManager* pLayoutManager = getRoot()->pLayoutManager.get();
