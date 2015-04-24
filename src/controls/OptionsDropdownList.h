@@ -54,7 +54,7 @@ namespace msa {
 //                    height = titleHeight;
 //                    ofFill();
 //                    setBGColor();
-//                    ofRect(0, 0, width, height);
+//                    ofDrawRect(0, 0, width, height);
 //                    
 //                    drawText(getConfig()->layout.textPos.x, getConfig()->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
 //                    drawBorder();

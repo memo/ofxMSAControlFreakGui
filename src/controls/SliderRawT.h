@@ -102,10 +102,10 @@ namespace msa {
                     drawBg();
                     
                     setSliderColor(false);
-                    ofRect(sliderPadding, 0, sliderWidth, getConfig()->layout.sliderHeight);
+                    ofDrawRect(sliderPadding, 0, sliderWidth, getConfig()->layout.sliderHeight);
                     
                     setSliderColor(true);
-                    ofRect(sliderPadding, 0, barwidth, getConfig()->layout.sliderHeight);
+                    ofDrawRect(sliderPadding, 0, barwidth, getConfig()->layout.sliderHeight);
                     
                     string s = getParameter().getName() + ": " + ofToString((T)getParameter().value());
                     drawText(getConfig()->layout.textPos.x + 10, getConfig()->layout.sliderHeight/2 + getConfig()->layout.textPos.y, s);
@@ -126,8 +126,8 @@ namespace msa {
                         setColor(ofColor(getConfig()->colors.text[1].r, getConfig()->colors.text[1].g, getConfig()->colors.text[1].b, 128));
                         int w = 3;
                         int h = getConfig()->layout.sliderHeight;
-                        ofRect(sliderPadding, 0, w, h);
-                        ofRect(sliderPadding + sliderWidth-w, 0, w, h);
+                        ofDrawRect(sliderPadding, 0, w, h);
+                        ofDrawRect(sliderPadding + sliderWidth-w, 0, w, h);
                     }
                     
                     drawBorder();

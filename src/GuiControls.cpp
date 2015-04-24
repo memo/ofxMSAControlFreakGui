@@ -111,7 +111,7 @@ namespace msa {
             void GuiControls::draw() {
 //                ofSetColor(255, 0 ,0);
 //                ofNoFill();
-//                ofRect(x, y, width, height);
+//                ofDrawRect(x, y, width, height);
             }
 
         }

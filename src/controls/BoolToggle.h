@@ -34,7 +34,7 @@ namespace msa {
                                         
                     ofFill();
                     setToggleColor(getParameter().value());
-                    ofRect(0, 0, height, height);
+                    ofDrawRect(0, 0, height, height);
                     
                     if(getParameter().value()) {
                         setTextColor();
@@ -48,7 +48,7 @@ namespace msa {
                     }
                     
                     setBGColor();
-                    ofRect(height, 0, width - height, height);
+                    ofDrawRect(height, 0, width - height, height);
                     
 //                    drawText(height + getConfig()->layout.textPos.x, getConfig()->layout.textPos.y);
                     

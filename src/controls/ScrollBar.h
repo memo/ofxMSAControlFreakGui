@@ -97,15 +97,15 @@ namespace msa {
                     ofFill();
                     
                     setBGColor();
-                    ofRect(0, 0, width, height);
+                    ofDrawRect(0, 0, width, height);
                     
                     setSliderColor(false);
-                    ofRect(0, 0, width, height);
+                    ofDrawRect(0, 0, width, height);
                     
                     setSliderColor(true);
                     int dbarY = getParameter().value() * height;
                     int dbarT = barThickness * height;
-                    ofRect(0, dbarY, width, dbarT);
+                    ofDrawRect(0, dbarY, width, dbarT);
                     
                     setColor(ofColor(0, 100));
                     int dbarC = dbarY + dbarT/2;   // center

@@ -42,14 +42,14 @@ namespace msa {
                 ofEnableAlphaBlending();
                 ofFill();
                 glColor4f(0, 0, 0, 0.8f);
-                ofRect(0, 0, width, fixheight);
+                ofDrawRect(0, 0, width, fixheight);
                 
                 ofSetHexColor(0xffffff);
                 content->draw(0, 0, width, fixheight);
                 
                 ofFill();
                 setBGColor();
-                ofRect(0, fixheight, width, getConfig()->layout.buttonHeight);
+                ofDrawRect(0, fixheight, width, getConfig()->layout.buttonHeight);
                 
                 setTextColor();
                 getConfig()->drawString(getName(), 3, fixheight + 15);

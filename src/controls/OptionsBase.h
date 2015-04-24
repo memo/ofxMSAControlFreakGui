@@ -90,7 +90,7 @@ namespace msa {
                     
                     ofFill();
                     setBGColor();
-                    ofRect(0, 0, width, height);
+                    ofDrawRect(0, 0, width, height);
                     
                     drawText(getConfig()->layout.textPos.x, getConfig()->layout.textPos.y, getName() + ": " + paramT->getSelectedLabel());
                     drawBorder();
@@ -111,11 +111,11 @@ namespace msa {
                         float curY = i * lineHeight;
                         if(i == mouseOverIndex) {
                             ofNoFill();
-                            ofRect(0, curY, width, lineHeight);
+                            ofDrawRect(0, curY, width, lineHeight);
                         }
                         if(i == getParameter().value()) {
                             ofFill();
-                            ofRect(0, curY, width, lineHeight);
+                            ofDrawRect(0, curY, width, lineHeight);
                             setBGColor();
                         }
                         

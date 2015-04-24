@@ -106,11 +106,11 @@ namespace msa {
 //                
 //                ofFill();
 //                setColor(getConfig()->colors.slider.full);
-//                ofRect(0, 0, width, height - getConfig()->layout.slider2DTextHeight);
+//                ofDrawRect(0, 0, width, height - getConfig()->layout.slider2DTextHeight);
 //                
 //                ofFill();
 //                setBGColor();
-//                ofRect(0, height-getConfig()->layout.slider2DTextHeight, width, getConfig()->layout.slider2DTextHeight);
+//                ofDrawRect(0, height-getConfig()->layout.slider2DTextHeight, width, getConfig()->layout.slider2DTextHeight);
 //                
 //                setTextColor();
 //                getConfig()->drawString(name+"\nx:"+ofToString(value->x, 2)+"\ny:"+ofToString(value->y, 2), 3, height+15-getConfig()->layout.slider2DTextHeight);

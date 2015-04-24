@@ -257,7 +257,7 @@ namespace msa {
                 setColor(c ? c : getConfig()->colors.bg);
                 if(!w) w = width;
                 if(!h) h = height;
-                ofRect(0, 0, w, h);
+                ofDrawRect(0, 0, w, h);
             }
             
             //--------------------------------------------------------------
@@ -268,7 +268,7 @@ namespace msa {
                 glLineWidth(1.0);
                 if(!w) w = width;
                 if(!h) h = height;
-                ofRect(0, 0, w, h);
+                ofDrawRect(0, 0, w, h);
             }
             
             //--------------------------------------------------------------
