@@ -3,7 +3,7 @@ ofxMSAControlFreakGui
 
 Introduction
 ------------
-OpenGL Gui to display [ofxMSAControlFreak](https://github.com/memo/ofxMSAControlFreak) parameters. Integration with gui is one line of code: ```gui.addPage(tutorial.params);``` See the [example](https://github.com/memo/ofxMSAControlFreakGui/blob/master/example/src/example-Gui.cpp) for details.
+OpenGL Gui to display [ofxMSAControlFreak](https://github.com/memo/ofxMSAControlFreak) parameters. Integration with gui is one line of code: ```gui.addPage(params);``` See the [example](https://github.com/memo/ofxMSAControlFreakGui/blob/master/example/src/example-Gui.cpp) for details.
 
 
 Dependencies
