@@ -11,7 +11,7 @@
 //
 
 
-#include "ofxMSAControlFreakGui.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 
 

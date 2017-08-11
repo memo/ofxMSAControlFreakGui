@@ -11,7 +11,7 @@
 //
 
 
-#include "ofxMSAControlFreakGui.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 
 namespace msa {
@@ -91,9 +91,9 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            ColorPicker& Container::addColorPicker(Parameter& p) {
-                //                return (ColorPicker&)add(new ColorPicker(this, &p));
-            }
+            //ColorPicker& Container::addColorPicker(Parameter& p) {
+            //    //                return (ColorPicker&)add(new ColorPicker(this, &p));
+            //}
             
             //--------------------------------------------------------------
             OptionsDropdownList& Container::addDropdownList(ParameterNamedIndex& p) {
@@ -122,9 +122,9 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            QuadWarp& Container::addQuadWarper(Parameter& p) {
-                //                return (QuadWarp&)add(new QuadWarp(this, &p));
-            }
+            //QuadWarp& Container::addQuadWarper(Parameter& p) {
+            //    //                return (QuadWarp&)add(new QuadWarp(this, &p));
+            //}
             
             //--------------------------------------------------------------
             SliderInt& Container::addSliderInt(ParameterInt& p) {
@@ -137,9 +137,9 @@ namespace msa {
             }
             
             //--------------------------------------------------------------
-            Slider2d& Container::addSlider2d(Parameter& p) {
-                //                return (Slider2d&)add(new Slider2d(this, &p));
-            }
+            //Slider2d& Container::addSlider2d(Parameter& p) {
+            //    //                return (Slider2d&)add(new Slider2d(this, &p));
+            //}
             
             //--------------------------------------------------------------
             //            BoolTitle& Container::addTitle(Parameter& p) {

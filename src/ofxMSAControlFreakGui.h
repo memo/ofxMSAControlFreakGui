@@ -16,8 +16,7 @@
 
 #include "ofMain.h"
 
-#include "ofxMSAControlFreak.h"
-
+#include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
 
 #include "MSAControlFreakGui/Config.h"
 #include "MSAControlFreakGui/Control.h"

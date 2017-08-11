@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "MSAControlFreakGui/controls/BoolBase.h"
+#include "BoolBase.h"
 
 namespace msa {
     namespace controlfreak {

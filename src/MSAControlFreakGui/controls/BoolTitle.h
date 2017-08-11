@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "MSAControlFreakGui/controls/BoolBase.h"
-#include "MSAControlFreakGui/Renderer.h"
+#include "BoolBase.h"
+#include "ofxMSAControlFreakGui/src/MSAControlFreakGui/Renderer.h"
 
 namespace msa {
     namespace controlfreak {

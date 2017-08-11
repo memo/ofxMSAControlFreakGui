@@ -12,11 +12,9 @@
 
 #pragma once
 
-#include "ofxMSAInteractiveObject.h"
-
-#include "MSAControlFreakGui/LayoutSettings.h"
-
-#include "ofxMSAControlFreak.h"
+#include "ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.h"
+#include "ofxMSAControlFreak/src/ofxMSAControlFreak.h"
+#include "LayoutSettings.h"
 
 namespace msa {
     namespace controlfreak {

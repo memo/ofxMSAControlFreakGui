@@ -12,8 +12,7 @@
 
 #pragma once
 
-#include "ofxMSAControlFreak.h"
-#include "MSAControlFreakGui/controls/OptionsBase.h"
+#include "OptionsBase.h"
 
 namespace msa {
     namespace controlfreak {

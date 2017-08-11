@@ -12,8 +12,7 @@
 
 #pragma once
 
-#include "ofxMSAControlFreak.h"
-#include "MSAControlFreakGui/Control.h"
+#include "ofxMSAControlFreakGui/src/MSAControlFreakGui/Control.h"
 
 namespace msa {
     namespace controlfreak {
@@ -67,7 +66,7 @@ namespace msa {
                 
                 //--------------------------------------------------------------
                 void checkBang() {
-                    if(paramT->getMode() == ParameterBool::kBang && getParameter().value()) getParameter().set(false);
+                    if(paramT->getMode() == ParameterBool::kBang && (bool)getParameter().value()) getParameter().set(false);
                 }
                 
             protected:

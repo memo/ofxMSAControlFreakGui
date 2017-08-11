@@ -12,9 +12,9 @@
 
 
 
-#include "MSAControlFreakGui/Config.h"
-#include "MSAControlFreakGui/Container.h"
-#include "MSAControlFreakGui/GuiControls.h"
+#include "Config.h"
+#include "Container.h"
+#include "GuiControls.h"
 
 namespace msa {
     namespace controlfreak {

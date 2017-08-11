@@ -10,7 +10,7 @@
 //  ofxMSAControlFreakGui
 //
 
-#include "ofxMSAControlFreakGui.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
 
 
 namespace msa {
@@ -75,7 +75,7 @@ namespace msa {
             
             
             void Config::drawString(string s, float x, float y) {
-                if(!font.isLoaded()) font.loadFont("fonts/Verdana.ttf", 8, false, false, false);
+                if(!font.isLoaded()) font.load("fonts/Verdana.ttf", 8, false, false, false);
                 if(!font.isLoaded()) ofDrawBitmapString(s, floor(x), floor(y));
                 else font.drawString(s, floor(x), floor(y));
             }

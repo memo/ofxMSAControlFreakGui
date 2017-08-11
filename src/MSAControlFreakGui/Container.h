@@ -12,9 +12,9 @@
 
 #pragma once
 
-#include "ofxMSAOrderedPointerMap.h"
-#include "MSAControlFreakGui/Control.h"
-#include "MSAControlFreakGui/LayoutManager.h"
+#include "ofxMSAOrderedPointerMap/src/ofxMSAOrderedPointerMap.h"
+#include "Control.h"
+#include "LayoutManager.h"
 
 
 namespace msa {

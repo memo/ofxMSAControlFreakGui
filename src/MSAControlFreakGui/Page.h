@@ -12,16 +12,11 @@
 
 #pragma once
 
-#include "MSAControlFreakGui/Panel.h"
+#include "Panel.h"
 
 namespace msa {
     namespace controlfreak {
         namespace gui {
-            
-            
-//            typedef Panel Page;
-            
-//            class Gui;
             class Container;
             
             class Page : public Panel {
@@ -29,8 +24,6 @@ namespace msa {
                 Page(Container *parent, ParameterGroup *p) : Panel(parent, p, false) {}
                 
             protected:
-//                int index;
-                
             };
             
             

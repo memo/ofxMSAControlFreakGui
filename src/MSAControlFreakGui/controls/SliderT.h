@@ -12,11 +12,9 @@
 
 #pragma once
 
-#include "ofxMSAControlFreak.h"
-
-#include "MSAControlFreakGui/Container.h"
-#include "MSAControlFreakGui/controls/BoolSimpleBox.h"
-#include "MSAControlFreakGui/controls/SliderRawT.h"
+#include "ofxMSAControlFreakGui/src/MSAControlFreakGui/Container.h"
+#include "BoolSimpleBox.h"
+#include "SliderRawT.h"
 
 namespace msa {
     namespace controlfreak {

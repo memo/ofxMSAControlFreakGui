@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "MSAControlFreakGui/Panel.h"
+#include "Panel.h"
 
 
 namespace msa {

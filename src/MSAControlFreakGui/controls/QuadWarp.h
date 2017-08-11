@@ -12,8 +12,7 @@
 
 #pragma once
 
-#include "ofxMSAControlFreak.h"
-#include "MSAControlFreakGui/Control.h"
+#include "ofxMSAControlFreakGui/src/MSAControlFreakGui/Control.h"
 
 
 namespace msa {

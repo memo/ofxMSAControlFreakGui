@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "MSAControlFreakGui/Container.h"
-#include "MSAControlFreakGui/ControlProperties.h"
+#include "Container.h"
+#include "ControlProperties.h"
 
 namespace msa {
     namespace controlfreak {

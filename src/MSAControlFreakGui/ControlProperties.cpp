@@ -11,8 +11,8 @@
 //
 
 
-#include "ofxMSAControlFreakGui.h"
-#include "MSAControlFreakGui/PanelPresetManager.h"
+#include "ofxMSAControlFreakGui/src/ofxMSAControlFreakGui.h"
+#include "PanelPresetManager.h"
 
 namespace msa {
     namespace controlfreak {
