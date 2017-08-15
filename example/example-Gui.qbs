@@ -17,10 +17,9 @@ Project{
 
         of.addons: [
             'ofxXmlSettings',
-            'ofxMSACore',
+            'ofxMSAOrderedPointerMap',
             'ofxMSAControlFreak',
             'ofxMSAControlFreakGui',
-            'ofxMSAOrderedPointerMap',
             'ofxMSAInteractiveObject',
         ]
 
