@@ -12,7 +12,7 @@
 // I just put everything in this file so I can keep this code separate and reuse it in different addons
 
 
-class ofApp : public ofSimpleApp {
+class ofApp : public ofBaseApp {
 public:
 
     // declare a Gui

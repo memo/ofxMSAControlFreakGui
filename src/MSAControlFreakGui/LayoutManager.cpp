@@ -54,7 +54,7 @@ namespace msa {
                     case LayoutSettings::kRelative: // normal (controls are placed in a free flowing manner, like html, layout.position is offset off calculated)
                     {
                         ofVec2f newHead(_curHead);
-                        ofVec2f controlOffset((control.layout.position + control.layout.paddingPre) * curScale);
+                        ofVec2f controlOffset((ofVec2f(control.layout.position) + control.layout.paddingPre) * curScale);
                         ofVec2f controlPos(newHead + controlOffset);
                         float postHeight = (control.height + control.layout.paddingPost.y + control.getConfig()->layout.padding.y) * curScale.y;
                         //                        if(control.layout.newColumn || (doWrap && controlPos.y + postHeight > maxPos.y)) {
@@ -62,7 +62,7 @@ namespace msa {
                         //                            newHead.y = boundRect.y;
                         //                            controlPos = newHead + controlOffset;
                         //                        }
-                        control.setPosition(controlPos);
+                        control.setPosition(ofVec3f(controlPos));
                         control.x += indent * curScale.x;
                         
                         if(control.layout.doAffectFlow) {

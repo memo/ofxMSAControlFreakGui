@@ -16,6 +16,7 @@ Project{
         ]
 
         of.addons: [
+            'ofxPoco',
             'ofxXmlSettings',
             'ofxMSAOrderedPointerMap',
             'ofxMSAControlFreak',

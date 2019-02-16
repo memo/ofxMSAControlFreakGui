@@ -119,6 +119,7 @@ namespace msa {
             //--------------------------------------------------------------
             Page& Gui::getPage(string name) {
                 for(int i=0; i<pages.size(); i++) if(name.compare(pages[i]->getName()) == 0) return *pages[i];
+                return *pages[0]; // TODO megahack
             }
             
             //--------------------------------------------------------------
