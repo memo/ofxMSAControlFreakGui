@@ -31,7 +31,7 @@ namespace msa {
                 Gui();
                 ~Gui();
                 
-                void setDefaultKeys(bool b);
+                void setDefaultKeys(bool b=true);
                 
                 void toggleDraw();
                 void show();		// simply calls setDraw(true);
