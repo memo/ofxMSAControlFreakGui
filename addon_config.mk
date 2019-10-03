@@ -26,6 +26,8 @@ common:
 	# or use += in several lines
 	ADDON_DEPENDENCIES = ofxMSAControlFreak
 	ADDON_DEPENDENCIES += ofxMSAInteractiveObject
+	ADDON_DEPENDENCIES += ofxXmlSettings
+
 	
 	# include search paths, this will be usually parsed from the file system
 	# but if the addon or addon libraries need special search paths they can be
