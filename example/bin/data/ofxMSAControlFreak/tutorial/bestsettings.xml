@@ -1,0 +1,57 @@
+<ofxMSAControlFreak version="1.000000000" bFullSchema="0">
+    <Parameter type="class msa::controlfreak::ParameterGroup" name="tutorial">
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat" value="300.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterInt" name="myint" value="7"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="mybool" value="1"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="mybang" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat2" value="0.699999988"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat3" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat4" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat5" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat6" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat7" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat8" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterGroup" name="particles">
+            <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="1"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="count" value="200"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="radius" value="10.000000000"></Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterColoru8" name="bgColor">
+            <Parameter type="class msa::controlfreak::ParameterInt" name="r" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="g" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="b" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="a" value="0"></Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterGroup" name="vision">
+            <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="1"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="brightness" value="0.000000000"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="contrast" value="0.000000000"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterBool" name="flip x" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterBool" name="flip y" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterBool" name="reset" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterGroup" name="preprocessing">
+                <Parameter type="class msa::controlfreak::ParameterGroup" name="blur">
+                    <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="5"></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="9"></Parameter>
+                </Parameter>
+                <Parameter type="class msa::controlfreak::ParameterGroup" name="median">
+                    <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="0"></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="0"></Parameter>
+                </Parameter>
+            </Parameter>
+            <Parameter type="class msa::controlfreak::ParameterGroup" name="optical flow">
+                <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="method" value="0"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterFloat" name="velMult" value="0.000000000"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterInt" name="windowSize" value="0"></Parameter>
+            </Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="unclamped float" value="150.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="animals" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="month" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="days" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="color" value="0"></Parameter>
+    </Parameter>
+</ofxMSAControlFreak>

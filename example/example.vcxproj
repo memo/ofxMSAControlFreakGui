@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
+    <LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+    <TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>example</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxMSAControlFreak\src;..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak;..\..\..\addons\ofxMSAControlFreak\..\;..\..\..\addons\ofxMSAControlFreakGui\src;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls;..\..\..\addons\ofxMSAControlFreakGui\..\;..\..\..\addons\ofxMSAInteractiveObject\src;..\..\..\addons\ofxMSAOrderedPointerMap\src;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxPoco\libs\poco\lib\vs\Win32\Debug;..\..\..\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxMSAControlFreak\src;..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak;..\..\..\addons\ofxMSAControlFreak\..\;..\..\..\addons\ofxMSAControlFreakGui\src;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls;..\..\..\addons\ofxMSAControlFreakGui\..\;..\..\..\addons\ofxMSAInteractiveObject\src;..\..\..\addons\ofxMSAOrderedPointerMap\src;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxPoco\libs\poco\lib\vs\x64\Debug;..\..\..\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxMSAControlFreak\src;..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak;..\..\..\addons\ofxMSAControlFreak\..\;..\..\..\addons\ofxMSAControlFreakGui\src;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls;..\..\..\addons\ofxMSAControlFreakGui\..\;..\..\..\addons\ofxMSAInteractiveObject\src;..\..\..\addons\ofxMSAOrderedPointerMap\src;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxPoco\libs\poco\lib\vs\Win32\Release;..\..\..\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxMSAControlFreak\src;..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak;..\..\..\addons\ofxMSAControlFreak\..\;..\..\..\addons\ofxMSAControlFreakGui\src;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui;..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls;..\..\..\addons\ofxMSAControlFreakGui\..\;..\..\..\addons\ofxMSAInteractiveObject\src;..\..\..\addons\ofxMSAOrderedPointerMap\src;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxPoco\libs\poco\lib\vs\x64\Release;..\..\..\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\example-Gui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ControllerBase.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\Master.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\Parameter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterGroup.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterNamedIndex.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\Utils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Config.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Container.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Control.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\ControlProperties.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\ColorPicker.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\Content.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\QuadWarp.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\Slider2d.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Gui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\GuiControls.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\LayoutManager.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Panel.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Renderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMSAInteractiveObject\src\ofxMSAInteractiveObject.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPoco\src\ofxXmlPoco.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\AnyValue.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ControllerBase.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\Master.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\Parameter.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterBool.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterColorf32.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterColoru8.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterFloat.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterGroup.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterInt.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterNamedIndex.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterNumberValueT.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterValueI.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterValueT.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\ParameterVec3f.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\MSAControlFreak\Utils.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\ofxMSAControlFreak.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreak\src\ofxMSAControlFreakTutorial.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Config.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Container.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Control.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\ControlProperties.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\BoolBase.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\BoolButton.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\BoolSimpleBox.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\BoolSimpleCircle.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\BoolTitle.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\BoolToggle.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\ColorPicker.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\Content.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\FPSCounter.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\OptionsBase.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\OptionsBoxes.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\OptionsDropdownList.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\OptionsList.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\QuadWarp.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\ScrollBar.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\Slider2d.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\SliderRawT.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\controls\SliderT.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Gui.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\GuiControls.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\LayoutManager.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\LayoutSettings.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Page.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Panel.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\PanelPresetManager.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\MSAControlFreakGui\Renderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAControlFreakGui\src\ofxMSAControlFreakGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAInteractiveObject\src\ofxMSAInteractiveObject.h" />
+    <ClInclude Include="..\..\..\addons\ofxMSAOrderedPointerMap\src\ofxMSAOrderedPointerMap.h" />
+    <ClInclude Include="..\..\..\addons\ofxPoco\src\ofxXmlPoco.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="icon.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

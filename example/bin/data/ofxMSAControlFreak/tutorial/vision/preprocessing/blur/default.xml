@@ -1,0 +1,7 @@
+<ofxMSAControlFreak version="1.000000000" bFullSchema="0">
+    <Parameter type="class msa::controlfreak::ParameterGroup" name="blur">
+        <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="5"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="9"></Parameter>
+    </Parameter>
+</ofxMSAControlFreak>

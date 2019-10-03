@@ -1,0 +1,28 @@
+<ofxMSAControlFreak version="1.000000000" bFullSchema="0">
+    <Parameter type="class msa::controlfreak::ParameterGroup" name="vision">
+        <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="1"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="brightness" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="contrast" value="0.000000000"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="flip x" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="flip y" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="reset" value="0"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterGroup" name="preprocessing">
+            <Parameter type="class msa::controlfreak::ParameterGroup" name="blur">
+                <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="5"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="9"></Parameter>
+            </Parameter>
+            <Parameter type="class msa::controlfreak::ParameterGroup" name="median">
+                <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="0"></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="0"></Parameter>
+            </Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterGroup" name="optical flow">
+            <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="method" value="0"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="velMult" value="0.000000000"></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="windowSize" value="0"></Parameter>
+        </Parameter>
+    </Parameter>
+</ofxMSAControlFreak>

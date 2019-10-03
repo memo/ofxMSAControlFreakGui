@@ -1,0 +1,82 @@
+<ofxMSAControlFreak version="1.000000000" bFullSchema="1">
+    <Parameter type="class msa::controlfreak::ParameterGroup" name="tutorial" path="tutorial" tooltip="">
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat" value="300.000000000" min="0.000000000" max="1000.000000000" doClamp="0" inc="3.000000000" doSnap="1" path="tutorial.myfloat" tooltip="I was the first Parameter to be created!"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterInt" name="myint" value="7" min="0" max="100" doClamp="0" inc="1" doSnap="0" path="tutorial.myint" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="mybool" value="1" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.mybool" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterBool" name="mybang" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.mybang" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat2" value="0.699999988" min="0.000000000" max="1.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.myfloat2" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat3" value="0.000000000" min="-1.000000000" max="1.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.myfloat3" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat4" value="0.000000000" min="0.000000000" max="1.000000000" doClamp="0" inc="0.200000003" doSnap="0" path="tutorial.myfloat4" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat5" value="0.000000000" min="0.000000000" max="1.000000000" doClamp="0" inc="0.010000000" doSnap="1" path="tutorial.myfloat5" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat6" value="0.000000000" min="0.000000000" max="1.000000000" doClamp="1" inc="0.010000000" doSnap="0" path="tutorial.myfloat6" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat7" value="0.000000000" min="0.000000000" max="1.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.myfloat7" tooltip="I am an important parameter. I do things"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="myfloat8" value="0.000000000" min="0.000000000" max="50.000000000" doClamp="0" inc="0.010000000" doSnap="1" path="tutorial.myfloat8" tooltip="I am also important! I also do things"></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterGroup" name="particles" path="tutorial.particles" tooltip="">
+            <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="1" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.particles.enabled" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="count" value="200" min="10" max="500" doClamp="0" inc="1" doSnap="0" path="tutorial.particles.count" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="radius" value="10.000000000" min="1.000000000" max="30.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.particles.radius" tooltip=""></Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterColoru8" name="bgColor" path="tutorial.bgColor" tooltip="">
+            <Parameter type="class msa::controlfreak::ParameterInt" name="r" value="0" min="0" max="255" doClamp="0" inc="1" doSnap="0" path="tutorial.bgColor.r" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="g" value="0" min="0" max="255" doClamp="0" inc="1" doSnap="0" path="tutorial.bgColor.g" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="b" value="0" min="0" max="255" doClamp="0" inc="1" doSnap="0" path="tutorial.bgColor.b" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterInt" name="a" value="0" min="0" max="255" doClamp="0" inc="1" doSnap="0" path="tutorial.bgColor.a" tooltip=""></Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterGroup" name="vision" path="tutorial.vision" tooltip="">
+            <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="1" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.enabled" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="brightness" value="0.000000000" min="0.000000000" max="100.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.vision.brightness" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterFloat" name="contrast" value="0.000000000" min="-100.000000000" max="100.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.vision.contrast" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterBool" name="flip x" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.flip x" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterBool" name="flip y" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.flip y" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterBool" name="reset" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.reset" tooltip=""></Parameter>
+            <Parameter type="class msa::controlfreak::ParameterGroup" name="preprocessing" path="tutorial.vision.preprocessing" tooltip="">
+                <Parameter type="class msa::controlfreak::ParameterGroup" name="blur" path="tutorial.vision.preprocessing.blur" tooltip="">
+                    <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.preprocessing.blur.enabled" tooltip=""></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="5" min="3" max="11" doClamp="0" inc="2" doSnap="0" path="tutorial.vision.preprocessing.blur.kernelSize" tooltip=""></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="9" min="1" max="20" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.preprocessing.blur.iterations" tooltip=""></Parameter>
+                </Parameter>
+                <Parameter type="class msa::controlfreak::ParameterGroup" name="median" path="tutorial.vision.preprocessing.median" tooltip="">
+                    <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.preprocessing.median.enabled" tooltip=""></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="kernelSize" value="0" min="3" max="11" doClamp="0" inc="2" doSnap="0" path="tutorial.vision.preprocessing.median.kernelSize" tooltip=""></Parameter>
+                    <Parameter type="class msa::controlfreak::ParameterInt" name="iterations" value="0" min="1" max="20" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.preprocessing.median.iterations" tooltip=""></Parameter>
+                </Parameter>
+            </Parameter>
+            <Parameter type="class msa::controlfreak::ParameterGroup" name="optical flow" path="tutorial.vision.optical flow" tooltip="">
+                <Parameter type="class msa::controlfreak::ParameterBool" name="enabled" value="0" min="0" max="1" doClamp="0" inc="1" doSnap="0" path="tutorial.vision.optical flow.enabled" tooltip=""></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="method" value="0" min="0" max="3" doClamp="1" inc="1" doSnap="0" path="tutorial.vision.optical flow.method" tooltip="" selectedLabel="Lucas-Kanade">
+                    <label0>Lucas-Kanade</label0>
+                    <label1>Horn–Schunck</label1>
+                    <label2>Buxton–Buxton</label2>
+                </Parameter>
+                <Parameter type="class msa::controlfreak::ParameterFloat" name="velMult" value="0.000000000" min="0.000000000" max="10.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.vision.optical flow.velMult" tooltip=""></Parameter>
+                <Parameter type="class msa::controlfreak::ParameterInt" name="windowSize" value="0" min="1" max="11" doClamp="0" inc="2" doSnap="0" path="tutorial.vision.optical flow.windowSize" tooltip=""></Parameter>
+            </Parameter>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterFloat" name="unclamped float" value="150.000000000" min="0.000000000" max="100.000000000" doClamp="0" inc="0.010000000" doSnap="0" path="tutorial.unclamped float" tooltip=""></Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="animals" value="0" min="0" max="4" doClamp="1" inc="1" doSnap="0" path="tutorial.animals" tooltip="" selectedLabel="cow">
+            <label0>cow</label0>
+            <label1>camel</label1>
+            <label2>dolphin</label2>
+            <label3>monkey</label3>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="month" value="0" min="0" max="5" doClamp="1" inc="1" doSnap="0" path="tutorial.month" tooltip="" selectedLabel="january">
+            <label0>january</label0>
+            <label1>february</label1>
+            <label2>march</label2>
+            <label3>april</label3>
+            <label4>may</label4>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="days" value="0" min="0" max="5" doClamp="1" inc="1" doSnap="0" path="tutorial.days" tooltip="" selectedLabel="monday">
+            <label0>monday</label0>
+            <label1>tuesday</label1>
+            <label2>wednesday</label2>
+            <label3>thursday</label3>
+            <label4>friday</label4>
+        </Parameter>
+        <Parameter type="class msa::controlfreak::ParameterNamedIndex" name="color" value="0" min="0" max="3" doClamp="1" inc="1" doSnap="0" path="tutorial.color" tooltip="" selectedLabel="red">
+            <label0>red</label0>
+            <label1>green</label1>
+            <label2>blue</label2>
+        </Parameter>
+    </Parameter>
+</ofxMSAControlFreak>
